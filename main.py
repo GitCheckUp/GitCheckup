@@ -1,14 +1,15 @@
 from github import Github
-import re
+from commit import Commit
 
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
 
 # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
 def get_repo_address():
-    # address = input("Please enter repository address: ")
-    address = "/GitCheckup/GitCheckup"
+    #address = input("Please enter repository address: ")
+    address = "GitCheckUp/GitCheckup"
     address_split = address.split('//')
+
 
     address_blocks = [string.split('/') for string in address_split[1:]] if (len(address_split) > 1) else [string.split('/') for string in address_split]
     result_blocks = []
@@ -29,7 +30,6 @@ def get_repo_address():
 def get_repository(repo_address):
     return git_access.get_repo(repo_address)
 
-
 print("Welcome to GitCheckup!")
 
 while(True):
@@ -44,15 +44,25 @@ while(True):
         break
     except:
         print("Could not find a valid repository with this address. Please ensure there are no typos and the repository is public.")
-        break
 
 commits = repo.get_commits()
 
+commit_list = list(commits)
+commit = commit_list[0]
+
+internal_commit = Commit(commit)
+
+print(internal_commit.additions)
+print(internal_commit.deletions)
+print(internal_commit.changes)
+print(internal_commit.author)
+print(internal_commit.committer)
+print(internal_commit.sha)
+print(internal_commit.files)
+print(internal_commit.parents)
+
 # branches = repo.get_branches()
 # branches_list = list(branches)
-# commit_list = list(commits)
-
-# commit = commit_list[0]
 # branch = branches_list[0]
 
 # comments = commit.commit.message
@@ -60,7 +70,7 @@ commits = repo.get_commits()
 # files = commit.files
 
 # mainc_commits = repo.get_commits("","main.c")
-#print(list(mainc_commits))
+# print(list(mainc_commits))
 
 # for mainc_commit in mainc_commits:
 #     current = repo.get_contents("main.c",mainc_commit.sha)
