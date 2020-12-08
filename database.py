@@ -1,7 +1,9 @@
 from config import *
 import sqlite3
-db_conn = sqlite3.connect(db_path)
-
+try:
+    db_conn = sqlite3.connect(db_path)
+except:
+    print("ERROR: Could not initialize or access the database. Check permissions.")
 class Db_op(object):
     def initialize_table_recent_repos():
         with db_conn:
