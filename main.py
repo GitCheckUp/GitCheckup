@@ -1,5 +1,5 @@
 from github import Github
-from commit import Commit
+import commit
 
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
@@ -9,7 +9,6 @@ def get_repo_address():
     #address = input("Please enter repository address: ")
     address = "GitCheckUp/GitCheckup"
     address_split = address.split('//')
-
 
     address_blocks = [string.split('/') for string in address_split[1:]] if (len(address_split) > 1) else [string.split('/') for string in address_split]
     result_blocks = []
@@ -49,9 +48,9 @@ commits = repo.get_commits()
 
 commit_list = list(commits)
 
-for commit in commit_list:
+for commitObj in commit_list:
 
-    internal_commit = Commit(commit)
+    internal_commit = commit.getCommit(commitObj)
 
     print(internal_commit.additions)
     print(internal_commit.deletions)

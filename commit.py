@@ -35,5 +35,3 @@ class Commit:
             parentList.append(getCommit(commitObject))
 
         self.parents = parentList
-
-        commits[self.sha] = self

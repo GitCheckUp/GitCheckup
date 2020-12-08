@@ -17,5 +17,3 @@ class File:
         self.name = fileData.filename
         self.sha = fileData.sha
         self.status = fileData.status
-
-        files[self.sha] = self

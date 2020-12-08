@@ -14,5 +14,3 @@ class Author:
         self.id = authorData.id
         self.name = authorData.name
         self.email = authorData.email
-
-        authors[self.id] = self
