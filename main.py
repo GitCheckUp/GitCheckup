@@ -54,9 +54,9 @@ while(True):
 commits = repo.get_commits()
 
 # DB test
-DB = db_op()
-db_op.initialize_table_recent_repos()
-db_op.add_to_recent_repos("deneme.urlwr54")
+DB = Db_op()
+Db_op.initialize_table_recent_repos()
+Db_op.add_to_recent_repos("deneme.urlwr54")
 
 
 # error.py test
