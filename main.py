@@ -1,8 +1,16 @@
 from github import Github
+
+import re
+from database import *
+from errors import *
 import commit
+
 
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
+
+
+
 
 # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
 def get_repo_address():
@@ -46,6 +54,16 @@ while(True):
 
 commits = repo.get_commits()
 
+
+# DB test
+DB = Db_op()
+Db_op.initialize_table_recent_repos()
+Db_op.add_to_recent_repos("deneme.urlwr54")
+
+# error.py test
+# new_error = errors(0,1,15654)
+# print(new_error.commit)
+
 commit_list = list(commits)
 
 for commitObj in commit_list:
@@ -61,6 +79,7 @@ for commitObj in commit_list:
     print(internal_commit.files)
     print(internal_commit.parents)
     print("-----------")
+
 
 # branches = repo.get_branches()
 # branches_list = list(branches)
