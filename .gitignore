@@ -226,3 +226,9 @@ fabric.properties
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
+
+.idea/encodings.xml
+.idea/GitCheckup.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
