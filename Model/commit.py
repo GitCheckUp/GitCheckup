@@ -1,5 +1,4 @@
-import author
-import file
+from Model import file, author
 
 commits = {}
 
