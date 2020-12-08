@@ -1,7 +1,10 @@
 from github import Github
+
 import re
 from database import *
 from errors import *
+import commit
+
 
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
@@ -11,8 +14,8 @@ git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
 
 # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
 def get_repo_address():
-    # address = input("Please enter repository address: ")
-    address = "/GitCheckup/GitCheckup"
+    #address = input("Please enter repository address: ")
+    address = "GitCheckUp/GitCheckup"
     address_split = address.split('//')
 
     address_blocks = [string.split('/') for string in address_split[1:]] if (len(address_split) > 1) else [string.split('/') for string in address_split]
@@ -34,7 +37,6 @@ def get_repo_address():
 def get_repository(repo_address):
     return git_access.get_repo(repo_address)
 
-
 print("Welcome to GitCheckup!")
 
 while(True):
@@ -49,26 +51,38 @@ while(True):
         break
     except:
         print("Could not find a valid repository with this address. Please ensure there are no typos and the repository is public.")
-        break
 
 commits = repo.get_commits()
+
 
 # DB test
 DB = Db_op()
 Db_op.initialize_table_recent_repos()
 Db_op.add_to_recent_repos("deneme.urlwr54")
 
-
 # error.py test
 # new_error = errors(0,1,15654)
 # print(new_error.commit)
 
+commit_list = list(commits)
+
+for commitObj in commit_list:
+
+    internal_commit = commit.getCommit(commitObj)
+
+    print(internal_commit.additions)
+    print(internal_commit.deletions)
+    print(internal_commit.changes)
+    print(internal_commit.author)
+    print(internal_commit.committer)
+    print(internal_commit.sha)
+    print(internal_commit.files)
+    print(internal_commit.parents)
+    print("-----------")
+
 
 # branches = repo.get_branches()
 # branches_list = list(branches)
-# commit_list = list(commits)
-
-# commit = commit_list[0]
 # branch = branches_list[0]
 
 # comments = commit.commit.message
@@ -76,7 +90,7 @@ Db_op.add_to_recent_repos("deneme.urlwr54")
 # files = commit.files
 
 # mainc_commits = repo.get_commits("","main.c")
-#print(list(mainc_commits))
+# print(list(mainc_commits))
 
 # for mainc_commit in mainc_commits:
 #     current = repo.get_contents("main.c",mainc_commit.sha)
