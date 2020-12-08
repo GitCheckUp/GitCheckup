@@ -48,18 +48,20 @@ while(True):
 commits = repo.get_commits()
 
 commit_list = list(commits)
-commit = commit_list[0]
 
-internal_commit = Commit(commit)
+for commit in commit_list:
 
-print(internal_commit.additions)
-print(internal_commit.deletions)
-print(internal_commit.changes)
-print(internal_commit.author)
-print(internal_commit.committer)
-print(internal_commit.sha)
-print(internal_commit.files)
-print(internal_commit.parents)
+    internal_commit = Commit(commit)
+
+    print(internal_commit.additions)
+    print(internal_commit.deletions)
+    print(internal_commit.changes)
+    print(internal_commit.author)
+    print(internal_commit.committer)
+    print(internal_commit.sha)
+    print(internal_commit.files)
+    print(internal_commit.parents)
+    print("-----------")
 
 # branches = repo.get_branches()
 # branches_list = list(branches)

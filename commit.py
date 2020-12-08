@@ -1,10 +1,22 @@
-from author import Author
-from file import File
+import author
+import file
+
+commits = {}
+
+def getCommit(commitData):
+    sha = commitData.sha
+    if (sha in commits):
+        return commits[sha]
+    else:
+        newFile = Commit(commitData)
+        commits[sha] = newFile
+        return newFile
 
 class Commit:
     def __init__(self, commitData):
-        self.author = Author(commitData.author)
-        self.committer = Author(commitData.committer)
+        self.author = author.getAuthor(commitData.author)
+        self.committer = author.getAuthor(commitData.committer)
+
         self.additions = commitData.stats.additions
         self.deletions = commitData.stats.deletions
         self.changes = commitData.stats.total
@@ -12,17 +24,16 @@ class Commit:
 
         filesObject = commitData.files
         fileList = []
-        for file in list(filesObject):
-            fileList.append(File(file))
+        for fileObject in list(filesObject):
+            fileList.append(file.getFile(fileObject))
 
         self.files = fileList
 
         parentsObject = commitData.parents
         parentList = []
-        for commit in list(parentsObject):
-            parentList.append(Commit(commit))
+        for commitObject in list(parentsObject):
+            parentList.append(getCommit(commitObject))
 
         self.parents = parentList
 
-
-
+        commits[self.sha] = self
