@@ -1,8 +1,13 @@
 from github import Github
 import re
-
+import sqlite3
+from database import *
+#from database import db_op
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
+
+
+
 
 # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
 def get_repo_address():
@@ -47,6 +52,12 @@ while(True):
         break
 
 commits = repo.get_commits()
+
+# DB test
+DB = db_op()
+db_op.initialize_table_recent_repos()
+
+
 
 # branches = repo.get_branches()
 # branches_list = list(branches)
