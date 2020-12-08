@@ -1,7 +1,7 @@
 from github import Github
 from database import *
 from View import usercli
-from errors import *
+from error import *
 from Model import commit
 
 
