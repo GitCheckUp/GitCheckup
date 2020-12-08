@@ -1,8 +1,8 @@
 from github import Github
 import re
-import sqlite3
 from database import *
-#from database import db_op
+from errors import *
+
 # Our GitHub token for accessing the GitHub API
 git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
 
@@ -56,7 +56,12 @@ commits = repo.get_commits()
 # DB test
 DB = db_op()
 db_op.initialize_table_recent_repos()
+db_op.add_to_recent_repos("deneme.urlwr54")
 
+
+# error.py test
+# new_error = errors(0,1,15654)
+# print(new_error.commit)
 
 
 # branches = repo.get_branches()
