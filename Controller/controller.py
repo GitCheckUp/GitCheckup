@@ -1,5 +1,6 @@
 from github import Github
 from Model import icommit
+from Model.analyzer import Analyzer
 
 class Controller:
     def __init__(self, view):
@@ -65,6 +66,9 @@ class Controller:
         internal_commit = icommit.getCommit(branch.commit)
 
         self.view.display(internal_commit.sha)
+
+        analyzer = Analyzer()
+        analyzer.analyze_errors()
 
         # DB test
         # DB = Db_op()
