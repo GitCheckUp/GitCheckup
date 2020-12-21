@@ -1,4 +1,5 @@
 from github import Github
+from Model import icommit
 
 class Controller:
     def __init__(self, view):
@@ -57,35 +58,18 @@ class Controller:
 
         commits = repo.get_commits()
 
-        branch = repo.get_branch(branch = "main")
-        test = repo.get_commits(sha = "main")
-        test2 = repo.get_commits(sha="recent_repos_DB")
-
-        print(len(list(test)))
-        print(len(list(test2)))
-        return
-
         commit_list = list(commits)
 
-        for commitObj in commit_list:
-            internal_commit = commit.getCommit(commitObj)
+        branch = repo.get_branch(branch = "main")
+        
+        internal_commit = icommit.getCommit(branch.commit)
 
-            view.display(internal_commit.additions)
-            view.display(internal_commit.deletions)
-            view.display(internal_commit.changes)
-            view.display(internal_commit.author)
-            view.display(internal_commit.committer)
-            view.display(internal_commit.sha)
-            view.display(internal_commit.files)
-            view.display(internal_commit.parents)
-            view.display("-----------")
-
-
+        self.view.display(internal_commit.sha)
 
         # DB test
-        DB = Db_op()
-        Db_op.initialize_table_recent_repos()
-        Db_op.add_to_recent_repos("deneme.urlwr54")
+        # DB = Db_op()
+        # Db_op.initialize_table_recent_repos()
+        # Db_op.add_to_recent_repos("deneme.urlwr54")
 
         # error.py test
         # new_error = errors(0,1,15654)

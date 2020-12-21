@@ -1,4 +1,4 @@
-from Model import file, author
+from Model import ifile, iauthor
 
 commits = {}
 
@@ -7,14 +7,14 @@ def getCommit(commitData):
     if (sha in commits):
         return commits[sha]
     else:
-        newFile = Commit(commitData)
+        newFile = ICommit(commitData)
         commits[sha] = newFile
         return newFile
 
-class Commit:
+class ICommit:
     def __init__(self, commitData):
-        self.author = author.getAuthor(commitData.author)
-        self.committer = author.getAuthor(commitData.committer)
+        self.author = iauthor.getAuthor(commitData.author)
+        self.committer = iauthor.getAuthor(commitData.committer)
 
         self.additions = commitData.stats.additions
         self.deletions = commitData.stats.deletions
@@ -24,7 +24,7 @@ class Commit:
         filesObject = commitData.files
         fileList = []
         for fileObject in list(filesObject):
-            fileList.append(file.getFile(fileObject))
+            fileList.append(ifile.getFile(fileObject))
 
         self.files = fileList
 

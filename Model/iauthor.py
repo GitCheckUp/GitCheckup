@@ -5,11 +5,11 @@ def getAuthor(authorData):
     if (id in authors):
         return authors[id]
     else:
-        newAuthor = Author(authorData)
+        newAuthor = IAuthor(authorData)
         authors[id] = newAuthor
         return newAuthor
 
-class Author:
+class IAuthor:
     def __init__(self, authorData):
         self.id = authorData.id
         self.name = authorData.name
