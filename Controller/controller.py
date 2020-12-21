@@ -15,7 +15,7 @@ class Controller:
     def get_repo_address(self):
 
         # address = input()
-        address = "GitCheckUp/GitCheckup"
+        address = "GitCheckUp/Demo"
         address_split = address.split('//')
 
         address_blocks = [string.split('/') for string in address_split[1:]] if (len(address_split) > 1) else [
@@ -71,6 +71,7 @@ class Controller:
         irepo = IRepo(repo)
 
         analyzer.analyze_errors(irepo)
+
 
         # DB test
         # DB = Db_op()

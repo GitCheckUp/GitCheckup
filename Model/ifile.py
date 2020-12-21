@@ -1,4 +1,5 @@
 files = {}
+#from github import Github
 
 def getFile(fileData):
     sha = fileData.sha
@@ -17,3 +18,5 @@ class File:
         self.name = fileData.filename
         self.sha = fileData.sha
         self.status = fileData.status
+        
+

@@ -1,5 +1,5 @@
 from Model import ifile, iauthor
-
+from github import Github
 commits = {}
 
 def getCommit(commitData):
@@ -15,7 +15,6 @@ class ICommit:
     def __init__(self, commitData):
         self.author = iauthor.getAuthor(commitData.author)
         self.committer = iauthor.getAuthor(commitData.committer)
-
         self.additions = commitData.stats.additions
         self.deletions = commitData.stats.deletions
         self.changes = commitData.stats.total
