@@ -1,9 +1,4 @@
 from github import Github
-from database import *
-from View import usercli
-from error import *
-from Model import commit
-
 
 class Controller:
     def __init__(self, view):
@@ -44,23 +39,31 @@ class Controller:
 
     def run(self):
 
-        view.display_welcome()
+        self.view.display_welcome()
         # view.display_input_repoAddress()
 
         while True:
             try:
                 repo_address = self.get_repo_address()
             except:
-                view.display_error_repoAddress()
+                self.view.display_error_repoAddress()
                 continue
 
             try:
                 repo = self.get_repository(repo_address)
                 break
             except:
-                view.display_error_repoMissing()
+                self.view.display_error_repoMissing()
 
         commits = repo.get_commits()
+
+        branch = repo.get_branch(branch = "main")
+        test = repo.get_commits(sha = "main")
+        test2 = repo.get_commits(sha="recent_repos_DB")
+
+        print(len(list(test)))
+        print(len(list(test2)))
+        return
 
         commit_list = list(commits)
 
@@ -76,6 +79,8 @@ class Controller:
             view.display(internal_commit.files)
             view.display(internal_commit.parents)
             view.display("-----------")
+
+
 
         # DB test
         DB = Db_op()
@@ -135,13 +140,3 @@ class Controller:
         # + all the possible knowledge about the pushes and commits.
         # + branch name.
         # + people who works on a branch.
-
-
-# Our Main View class, currently user-command line interface.
-view = usercli.CommandLineView()
-
-# The controller class
-controller = Controller(view)
-
-# Start running the program
-controller.run()
