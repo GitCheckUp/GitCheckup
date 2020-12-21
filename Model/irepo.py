@@ -1,18 +1,32 @@
-from icommit import ICommit
+from Model import icommit
+from Model.ibranch import IBranch
+
 class IRepo:
     def __init__(self,repo):
+        self.branchList = []
+        self.commitList = []
+
         commits = repo.get_commits()
-        commit_list = list(commits)
-        myRepo = []
+
+        #TODO: Does not actually give all commits, must fix
+        for commit in list(commits):
+            internal_commit = icommit.getCommit(commit)
+            self.commitList.append(internal_commit)
+
         for branch in repo.get_branches():
-            internal_commit = ICommit.getCommit(branch.commit)
-            current_branch = []
+            ibranch = IBranch(branch)
+            self.branchList.append(ibranch)
+
+        for branch in self.branchList:
+            internal_commit = icommit.getCommit(branch.headCommit)
+            branch_commits = []
             current_commit = internal_commit
-            current_branch.append(current_commit)
             frontier = []
+
             if (current_commit.parents.__len__()):
                 for parent in current_commit.parents:
                     frontier.append(parent)
+
             while frontier.__len__():
                 current_commit = frontier[0]
                 frontier.remove(frontier[0])
@@ -20,6 +34,8 @@ class IRepo:
                     for parent in current_commit.parents:
                         if not (frontier.__contains__(parent)):
                             frontier.append(parent)
-                if not (current_branch.__contains__(current_commit)):
-                    current_branch.append(current_commit)
-            self.myBranches.append(current_branch)
+
+                if not (branch_commits.__contains__(current_commit)):
+                    branch_commits.append(current_commit)
+
+            branch.updateCommitList(branch_commits)

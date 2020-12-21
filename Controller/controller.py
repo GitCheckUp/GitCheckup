@@ -1,6 +1,7 @@
 from github import Github
 from Model import icommit
-from Model.analyzer import Analyzer
+from Model import analyzer
+from Model.irepo import IRepo
 
 class Controller:
     def __init__(self, view):
@@ -67,8 +68,9 @@ class Controller:
 
         self.view.display(internal_commit.sha)
 
-        analyzer = Analyzer()
-        analyzer.analyze_errors()
+        irepo = IRepo(repo)
+
+        analyzer.analyze_errors(irepo)
 
         # DB test
         # DB = Db_op()
