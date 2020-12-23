@@ -1,5 +1,4 @@
 from github import Github
-from Model import icommit
 from Model import analyzer
 from Model.irepo import IRepo
 
@@ -57,16 +56,6 @@ class Controller:
                 break
             except:
                 self.view.display_error_repoMissing()
-
-        commits = repo.get_commits()
-
-        commit_list = list(commits)
-
-        branch = repo.get_branch(branch = "main")
-        
-        internal_commit = icommit.getCommit(branch.commit)
-
-        self.view.display(internal_commit.sha)
 
         irepo = IRepo(repo)
 

@@ -5,6 +5,7 @@ class IRepo:
     def __init__(self,repo):
         self.branchList = []
         self.commitList = []
+        self.commitDict = {}
 
         commits = repo.get_commits()
 
@@ -12,6 +13,7 @@ class IRepo:
         for commit in list(commits):
             internal_commit = icommit.getCommit(commit)
             self.commitList.append(internal_commit)
+            self.commitDict[internal_commit.sha] = internal_commit
 
         for branch in repo.get_branches():
             ibranch = IBranch(branch)

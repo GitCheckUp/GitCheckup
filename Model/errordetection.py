@@ -1,35 +1,45 @@
-import os, sys
+import os, sys, re
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from Model.ierror import IError
-from Model.icommit import *
 from Model.config import *
-def detect__rebase__mergecommit(irepo):
-    for branch in irepo.branchList:
-        print(branch.name, ": ", branch.headCommit.sha)
 
+def detect__revert__mergecommit(irepo):
     errors = []
+    error_id = 0
+    for commit in irepo.commitList:
+        message = commit.message
 
-    error1 = IError(0, 0, 12345678, branch.headCommit)
-    error2 = IError(1, 0, 12345678, branch.headCommit.parents[0])
+        # find all revert commits
+        if (re.search("Revert \"", message) and re.search("This reverts commit", message)):
+            # find the commit that was reverted
+            reverted_commit_sha = re.search("(?<=This reverts commit )[\w]*", message).group(0)
+            reverted_commit = irepo.commitDict[reverted_commit_sha]
 
-    errors.append(error1)
-    errors.append(error2)
+            # if reverted commit has more than 1 parents, it is a merge commit, poor practice detected
+            if(len(reverted_commit.parents) > 1):
+                error = IError(error_id, 0, commit.committer, commit)
+                errors.append(error)
+                error_id += 1
 
     return errors
 
-
 def detect__unnecessary__files(irepo):
+    errors = []
+    error_id = 0
     for c in irepo.commitList:
         for k in c.files:
             if(k.name in Config.unnecessary_file_names):
                 print("FOUND.")
                 print("--->" + k.name)
-                error_detected = IError(2,2,c.committer,c)
+                error_detected = IError(error_id,2,c.committer,c)
+                errors.append(error_detected)
+                error_id += 1
+
+    return errors
     #API dosyanin boyutunu vermiyor. Dolayisiyla 0byte dosya kontrolu yapamiyoruz.
     #Bu fonksiyon, IDE'lerin konfigurasyon dosyalarini tespit ediyor.
     #todo: Regex ile .idea klasorunun tamami ayiklanacak.
-            
 
-detectionAlgorithms = [detect__rebase__mergecommit,detect__unnecessary__files]
+detectionAlgorithms = [detect__revert__mergecommit, detect__unnecessary__files]
 

@@ -1,5 +1,4 @@
 from Model import ifile, iauthor
-from github import Github
 commits = {}
 
 def getCommit(commitData):
@@ -19,6 +18,7 @@ class ICommit:
         self.deletions = commitData.stats.deletions
         self.changes = commitData.stats.total
         self.sha = commitData.sha
+        self.message = commitData.commit.message
 
         filesObject = commitData.files
         fileList = []
