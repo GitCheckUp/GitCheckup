@@ -4,6 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from Model.ierror import IError
 from Model.config import *
 
+
 def detect__revert__mergecommit(irepo):
     errors = []
     error_id = 0
@@ -27,19 +28,34 @@ def detect__revert__mergecommit(irepo):
 def detect__unnecessary__files(irepo):
     errors = []
     error_id = 0
-    for c in irepo.commitList:
-        for k in c.files:
-            if(k.name in Config.unnecessary_file_names):
-                print("FOUND.")
-                print("--->" + k.name)
-                error_detected = IError(error_id,2,c.committer,c)
+
+    for commit in irepo.commitList:
+        for file in commit.files:
+            if(file.name in config.unnecessary_file_names):
+                print("amk")
+            if(file.content.size <= 300):
+                print("aaamk2")
+"""
+    #Investigate all the files in the repository:
+    contents = irepo.repo_itself.get_contents("")
+    while(contents):
+        file_content = contents.pop(0)
+        if(file_content.type == "dir"):  #Look into directories
+            contents.extend(irepo.repo_itself.get_contents(file_content.path))
+        else:
+            if(file_content.name in Config.unnecessary_file_names):
+                error_detected = IError(error_id, 1, c.committer, c)   #Error id=1, IDE config file found.
                 errors.append(error_detected)
                 error_id += 1
+                print(file_content.name)
+            if(file_content.size <= 8):
+                error_detected = IError(error_id, 2, c.committer, c)  # Error id=2, 0 byte file found.
+                errors.append(error_detected)
+                error_id += 1
+                print(file_content.name)
 
-    return errors
-    #API dosyanin boyutunu vermiyor. Dolayisiyla 0byte dosya kontrolu yapamiyoruz.
-    #Bu fonksiyon, IDE'lerin konfigurasyon dosyalarini tespit ediyor.
-    #todo: Regex ile .idea klasorunun tamami ayiklanacak.
+            print(str(file_content.name) +": size -->"+ str(file_content.size))
+"""
 
 detectionAlgorithms = [detect__revert__mergecommit, detect__unnecessary__files]
 

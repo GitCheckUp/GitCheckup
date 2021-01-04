@@ -6,12 +6,13 @@ class IRepo:
         self.branchList = []
         self.commitList = []
         self.commitDict = {}
+        self.repo= repo  #Fix for accessing file content.
 
         commits = repo.get_commits()
 
         #TODO: Does not actually give all commits, must fix
         for commit in list(commits):
-            internal_commit = icommit.getCommit(commit)
+            internal_commit = icommit.getCommit(commit,self.repo)
             self.commitList.append(internal_commit)
             self.commitDict[internal_commit.sha] = internal_commit
 
@@ -41,3 +42,6 @@ class IRepo:
                     branch_commits.append(current_commit)
 
             branch.updateCommitList(branch_commits)
+
+    def get_content(self):
+        return self.repo_itself.get_contents("")

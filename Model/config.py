@@ -3,4 +3,4 @@ class Config:
     recent_posts_limit = 10
 
 
-    unnecessary_file_names=[".idea/misc.xml",".idea/workspace.xml",".idea/vcs.xml",".idea/modules.xml",".idea/inspectionProfiles/profiles_settings.xml"]
+    unnecessary_file_names=["misc.xml","workspace.xml","vcs.xml","modules.xml","profiles_settings.xml"]
