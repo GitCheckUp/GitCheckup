@@ -24,6 +24,30 @@ def detect__revert__mergecommit(irepo):
 
     return errors
 
+def detect__dual__revert(irepo):
+
+    errors = []
+    error_id = 0
+
+    for commit in irepo.commitList:
+        message = commit.message
+
+        #check if the current commit is a revert
+        if (re.search("Revert \"", message) and re.search("This reverts commit", message)):
+            # find the commit that was reverted
+            reverted_commit_sha = re.search("(?<=This reverts commit )[\w]*", message).group(0)
+            reverted_commit = irepo.commitDict[reverted_commit_sha]
+
+            parent_message = reverted_commit.message
+
+            #if parent is also a revert then error occurs
+            if (re.search("Revert \"", parent_message) and re.search("This reverts commit", parent_message)):
+                error = IError(error_id, 1, commit.committer, commit)
+                errors.append(error)
+                error_id += 1
+
+    return errors
+
 def detect__unnecessary__files(irepo):
     errors = []
     error_id = 0
