@@ -43,3 +43,14 @@ def detect__unnecessary__files(irepo):
 
 detectionAlgorithms = [detect__revert__mergecommit, detect__unnecessary__files]
 
+def detect__originmaster__naming(irepo):
+    errors = []
+    error_id = 0
+
+    for e in irepo.branchList:
+        if e.name == "origin/master":
+            detected_error = IError(error_id, 2, e.headCommit.comitter, e.headCommit.message)
+            errors.append(detected_error)
+            error_id += 1
+
+    return errors
