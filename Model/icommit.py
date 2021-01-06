@@ -19,6 +19,7 @@ class ICommit:
         self.changes = commitData.stats.total
         self.sha = commitData.sha
         self.message = commitData.commit.message
+        self.date = commitData.commit.author.date
 
         filesObject = commitData.files
         fileList = []

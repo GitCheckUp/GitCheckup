@@ -56,8 +56,15 @@ class Controller:
             except:
                 self.view.display_error_repoMissing()
 
+        self.view.display_analyzing(repo_address)
         irepo = self.model.get_repo(repo)
 
-        self.model.analyze_errors(irepo)
+        errorDetections = self.model.analyze_errors(irepo)
+
+        totalErrorCount = 0
+        for errorDetection in errorDetections:
+            totalErrorCount += len(errorDetection.errorList)
+
+        self.view.display_errors(errorDetections, totalErrorCount)
 
 

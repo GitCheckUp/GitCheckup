@@ -9,4 +9,4 @@ class Model:
         return IRepo(repo)
 
     def analyze_errors(self, repo):
-        analyzer.analyze_errors(repo)
+        return analyzer.analyze_errors(repo)
