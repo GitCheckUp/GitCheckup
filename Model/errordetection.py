@@ -74,6 +74,9 @@ class ED_RevertRevertCommit(ErrorDetection):
                     error_count += 1
 
 class ED_UnnecessaryFiles(ErrorDetection):
+    """
+    Check if the user commited any unnecessary file, such as IDE configuration files.
+    """
     def __init__(self, irepo):
         super().__init__(irepo)
         self.errorId = 2
@@ -87,14 +90,10 @@ class ED_UnnecessaryFiles(ErrorDetection):
         error_count = 0
         for c in irepo.commitList:
             for k in c.files:
-                if (k.name in Config.unnecessary_file_names):
+                if any(re.compile(regex).match(k.name) for regex in Config.unnecessary_files_regex):
                     error_detected = IError(error_count, self.errorId, c.committer, c, '('+k.name+')')
                     self.errorList.append(error_detected)
                     error_count += 1
-
-        # API dosyanin boyutunu vermiyor. Dolayisiyla 0byte dosya kontrolu yapamiyoruz.
-        # Bu fonksiyon, IDE'lerin konfigurasyon dosyalarini tespit ediyor.
-        # todo: Regex ile .idea klasorunun tamami ayiklanacak.
 
 class ED_OriginMasterBranchName(ErrorDetection):
     def __init__(self, irepo):
