@@ -1,13 +1,13 @@
 from github import Github
-from Model import analyzer
-from Model.irepo import IRepo
+
 
 class Controller:
-    def __init__(self, view):
+    def __init__(self, model, view):
         # Our GitHub token for accessing the GitHub API
         self.git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
 
         self.view = view
+        self.model = model
 
 
     # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
@@ -34,14 +34,13 @@ class Controller:
 
         return result
 
-
     def get_repository(self, repo_address):
         return self.git_access.get_repo(repo_address)
 
-
-    def run(self):
-
+    def welcome_user(self):
         self.view.display_welcome()
+
+    def analyze_repo(self):
         # view.display_input_repoAddress()
 
         while True:
@@ -57,66 +56,8 @@ class Controller:
             except:
                 self.view.display_error_repoMissing()
 
-        irepo = IRepo(repo)
+        irepo = self.model.get_repo(repo)
 
-        analyzer.analyze_errors(irepo)
+        self.model.analyze_errors(irepo)
 
 
-        # DB test
-        # DB = Db_op()
-        # Db_op.initialize_table_recent_repos()
-        # Db_op.add_to_recent_repos("deneme.urlwr54")
-
-        # error.py test
-        # new_error = errors(0,1,15654)
-        # print(new_error.commit)
-
-        # ----------------------------
-
-        # branches = repo.get_branches()
-        # branches_list = list(branches)
-        # branch = branches_list[0]
-
-        # comments = commit.commit.message
-        # date = commit.commit.author.date
-        # files = commit.files
-
-        # mainc_commits = repo.get_commits("","main.c")
-        # print(list(mainc_commits))
-
-        # for mainc_commit in mainc_commits:
-        #     current = repo.get_contents("main.c",mainc_commit.sha)
-        # print(current.decoded_content)
-        # print("\n")
-
-        # branch = repo.get_branch("main")
-        # sad_sha = branch.commit.sha
-
-        # main_commits = repo.get_commits(sad_sha)
-
-        # for main_commit in main_commits:
-        #     print(main_commit)
-
-        # for file in files:
-        # print(file.status)
-        # print(file.filename, "additions:", file.additions, " deletions: ", file.deletions, " changes: ", file.changes)
-
-        # 95b69bfedb00f57db51c5b628ce4d132919eceaa
-
-        # print(comments)
-        # + commit messages
-        # + commit dates
-        # + commit files
-        # + commit file line count added, deleted, changed(added+deleted), same can be gotten for the commit (all files)
-        # + file status (added, removed, modified)
-        # + file modify/remove/add count
-        # + new files within a commit
-        # + all commits in a branch (goes all the way back to root)
-        # + start commit of a branch (performance heavy, have to subtract branch commits from all commits
-        # + code including comments (compare with prev codes). (get all commits for file, then get any version's code)
-        # - local commits
-        # + commits made by various users, commit comparison.
-        # + push date.
-        # + all the possible knowledge about the pushes and commits.
-        # + branch name.
-        # + people who works on a branch.
