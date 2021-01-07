@@ -19,7 +19,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-import git_check_support
+import View.usergui_support as usergui_support
 import os.path
 
 def vp_start_gui():
@@ -29,9 +29,12 @@ def vp_start_gui():
     prog_call = sys.argv[0]
     prog_location = os.path.split(prog_call)[0]
     root = tk.Tk()
+    p1 = tk.PhotoImage(file='/View/icon.png')
+    #root.iconphoto(False, p1)
+    usergui_support.set_Tk_var()
     top = Toplevel1 (root)
-    git_check_support.init(root, top)
-    root.mainloop()
+    usergui_support.init(root, top)
+    #root.mainloop()
 
 w = None
 def create_Toplevel1(rt, *args, **kwargs):
@@ -44,8 +47,9 @@ def create_Toplevel1(rt, *args, **kwargs):
     #rt = root
     root = rt
     w = tk.Toplevel (root)
+    usergui_support.set_Tk_var()
     top = Toplevel1 (w)
-    git_check_support.init(w, top, *args, **kwargs)
+    usergui_support.init(w, top, *args, **kwargs)
     return (w, top)
 
 def destroy_Toplevel1():
@@ -79,6 +83,30 @@ class Toplevel1:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
 
+
+        self.Frame1 = tk.Frame(top)
+        self.Frame1.place(relx=0.0, rely=0.167, relheight=0.842, relwidth=1.006)
+        self.Frame1.configure(background="#ffffff")
+        self.Frame1.configure(highlightbackground="#ffffff")
+        self.Frame1.configure(highlightcolor="#ffffff")
+
+        self.Scrolledtext1 = ScrolledText(self.Frame1)
+        self.Scrolledtext1.place(relx=0.012, rely=0.079, relheight=0.901
+                , relwidth=0.975)
+        self.Scrolledtext1.configure(background="white")
+        self.Scrolledtext1.configure(font="TkTextFont")
+        self.Scrolledtext1.configure(foreground="black")
+        self.Scrolledtext1.configure(highlightbackground="#d9d9d9")
+        self.Scrolledtext1.configure(highlightcolor="black")
+        self.Scrolledtext1.configure(insertbackground="black")
+        self.Scrolledtext1.configure(insertborderwidth="3")
+        self.Scrolledtext1.configure(selectbackground="blue")
+        self.Scrolledtext1.configure(selectforeground="white")
+        self.Scrolledtext1.configure(wrap="none")
+
+
+
+
         self.Button1 = tk.Button(top)
         self.Button1.place(relx=0.8, rely=0.067, height=44, width=157)
         self.Button1.configure(activebackground="#24292e")
@@ -101,9 +129,8 @@ class Toplevel1:
         self.Button1.configure(relief="flat")
         self.Button1.configure(state='active')
         self.Button1.configure(text='''Analyze''')
-        self.tooltip_font = "TkDefaultFont"
-        self.Button1_tooltip = \
-        ToolTip(self.Button1, self.tooltip_font, '''Analyze the given repository.''')
+        self.Button1.configure(command=lambda :usergui_support.analyze_button(self.Scrolledtext1))
+
 
         self.Entry1 = tk.Entry(top)
         self.Entry1.place(relx=0.075, rely=0.083, height=30, relwidth=0.705)
@@ -117,6 +144,7 @@ class Toplevel1:
         self.Entry1.configure(insertbackground="black")
         self.Entry1.configure(selectbackground="blue")
         self.Entry1.configure(selectforeground="white")
+        self.Entry1.configure(textvariable=usergui_support.gui_repo)
 
         self.Label1 = tk.Label(top)
         self.Label1.place(relx=0.013, rely=0.017, height=31, width=145)
@@ -130,7 +158,7 @@ class Toplevel1:
         self.Label1.configure(foreground="#ffffff")
         self.Label1.configure(highlightbackground="#d9d9d9")
         self.Label1.configure(highlightcolor="black")
-        photo_location = os.path.join(prog_location,"../Users/anilg/Documents/GitHub/GitCheckup/View/fork.png")
+        photo_location = os.path.join(prog_location,"View/fork.png")
         global _img0
         _img0 = tk.PhotoImage(file=photo_location)
         self.Label1.configure(image=_img0)
@@ -138,25 +166,6 @@ class Toplevel1:
         self.Label1.configure(padx="8")
         self.Label1.configure(text='''Repository:''')
 
-        self.Frame1 = tk.Frame(top)
-        self.Frame1.place(relx=0.0, rely=0.167, relheight=0.842, relwidth=1.006)
-        self.Frame1.configure(background="#ffffff")
-        self.Frame1.configure(highlightbackground="#ffffff")
-        self.Frame1.configure(highlightcolor="#ffffff")
-
-        self.Scrolledtext1 = ScrolledText(self.Frame1)
-        self.Scrolledtext1.place(relx=0.012, rely=0.079, relheight=0.901
-                , relwidth=0.975)
-        self.Scrolledtext1.configure(background="white")
-        self.Scrolledtext1.configure(font="TkTextFont")
-        self.Scrolledtext1.configure(foreground="black")
-        self.Scrolledtext1.configure(highlightbackground="#d9d9d9")
-        self.Scrolledtext1.configure(highlightcolor="black")
-        self.Scrolledtext1.configure(insertbackground="black")
-        self.Scrolledtext1.configure(insertborderwidth="3")
-        self.Scrolledtext1.configure(selectbackground="blue")
-        self.Scrolledtext1.configure(selectforeground="white")
-        self.Scrolledtext1.configure(wrap="none")
 
         self.Label2 = tk.Label(self.Frame1)
         self.Label2.place(relx=0.012, rely=0.02, height=22, width=70)
@@ -164,7 +173,7 @@ class Toplevel1:
         self.Label2.configure(activeforeground="#ffffff")
         self.Label2.configure(background="#ffffff")
         self.Label2.configure(disabledforeground="#ffffff")
-        self.Label2.configure(font="-family {Arial} -size 10 -weight bold -slant italic")
+        self.Label2.configure(font="-family {Arial} -size 10 -weight bold")
         self.Label2.configure(foreground="#000000")
         self.Label2.configure(highlightbackground="#d9d9d9")
         self.Label2.configure(highlightcolor="black")

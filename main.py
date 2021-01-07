@@ -2,18 +2,22 @@ from View import usercli
 from Model import model
 from Controller.controller import Controller
 import sys
-sys.path.append("..")
-
-
+#sys.path.append("..")
+from View import usergui
+rt = None
 model = model.Model()
 # Our Main View class, currently user-command line interface.
-view = usercli.CommandLineView()
+#view = usercli.CommandLineView()
 
+#view=usergui.create_Toplevel1(root, *args, **kwargs)
+view=usergui.create_Toplevel1(rt)[0]
+#git_check.vp_start_gui()
+controller = Controller(model,view)
 # The controller class
-controller = Controller(model, view)
+#controller = Controller(model, view)
 
-controller.welcome_user()
-controller.analyze_repo()
+#controller.welcome_user()
+#controller.analyze_repo()
 
 
 

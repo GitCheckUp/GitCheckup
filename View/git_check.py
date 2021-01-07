@@ -19,7 +19,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-import git_check_support
+import usergui_support
 import os.path
 
 def vp_start_gui():
@@ -32,7 +32,7 @@ def vp_start_gui():
     p1 = tk.PhotoImage(file='icon.png')
     root.iconphoto(False, p1)
     top = Toplevel1 (root)
-    git_check_support.init(root, top)
+    usergui_support.init(root, top)
     root.mainloop()
 
 w = None
@@ -47,7 +47,7 @@ def create_Toplevel1(rt, *args, **kwargs):
     root = rt
     w = tk.Toplevel (root)
     top = Toplevel1 (w)
-    git_check_support.init(w, top, *args, **kwargs)
+    usergui_support.init(w, top, *args, **kwargs)
     return (w, top)
 
 def destroy_Toplevel1():
