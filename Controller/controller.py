@@ -5,20 +5,16 @@ class Controller:
     def __init__(self, model, view):
         # Our GitHub token for accessing the GitHub API
         self.git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
+
         self.view = view
         self.model = model
-        self.start_gui()
 
-    def start_gui(self):
-        self.view.mainloop()
 
     # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
-    def get_repo_address(self,address=None):
+    def get_repo_address(self):
 
         # address = input()
-        if(address==None):
-            address = "GitCheckUp/Demo"    #Default value for test.
-
+        address = "GitCheckUp/Demo"
         address_split = address.split('//')
 
         address_blocks = [string.split('/') for string in address_split[1:]] if (len(address_split) > 1) else [
@@ -41,6 +37,8 @@ class Controller:
     def get_repository(self, repo_address):
         return self.git_access.get_repo(repo_address)
 
+    def welcome_user(self):
+        self.view.display_welcome()
 
     def analyze_repo(self):
         # view.display_input_repoAddress()
