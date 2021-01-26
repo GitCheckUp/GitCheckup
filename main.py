@@ -1,4 +1,5 @@
 from View import usercli
+from View import usergui
 from Model import model
 from Controller.controller import Controller
 import sys
@@ -6,14 +7,23 @@ sys.path.append("..")
 
 
 model = model.Model()
+
+
 # Our Main View class, currently user-command line interface.
 view = usercli.CommandLineView()
 
-# The controller class
-controller = Controller(model, view)
+# Initialize Graphical User Interface.
+w = None
+w, top = usergui.create_Toplevel1(w)
 
-controller.welcome_user()
-controller.analyze_repo()
+# The controller class
+controller = Controller(model, view, w, top)
+
+controller.start_gui()
+controller.gui_analyze_repo()
+#controller.welcome_user()
+#controller.analyze_repo()
+
 
 
 
