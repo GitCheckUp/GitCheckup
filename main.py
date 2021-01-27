@@ -1,26 +1,30 @@
-from View import usercli
-from View import usergui
+from View.application import Application
+import threading
+from View.usergui import GuiView
 from Model import model
 from Controller.controller import Controller
 import sys
 sys.path.append("..")
 
-
+event = threading.Event()
+event.func = None
+event.args = None
 model = model.Model()
 
+# The controller class
+controller = Controller(model, event)
+controller.start()
 
 # Our Main View class, currently user-command line interface.
-view = usercli.CommandLineView()
+application = Application(event, controller)
+view = GuiView(event, application)
 
-# Initialize Graphical User Interface.
-w = None
-w, top = usergui.create_Toplevel1(w)
+controller.set_view(view)
 
-# The controller class
-controller = Controller(model, view, w, top)
+application.mainloop()
 
-controller.start_gui()
-controller.gui_analyze_repo()
+#controller.start_gui()
+#controller.gui_analyze_repo()
 #controller.welcome_user()
 #controller.analyze_repo()
 

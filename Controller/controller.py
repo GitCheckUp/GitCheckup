@@ -1,20 +1,29 @@
 from github import Github
+import threading
+from time import sleep
+from queue import Queue
 
-
-class Controller:
-    def __init__(self, model, view, gui_view=None, gui_top=None):
+class Controller(threading.Thread):
+    def __init__(self, model, event):
+        threading.Thread.__init__(self)
         # Our GitHub token for accessing the GitHub API
         self.git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
-        self.gui_view = gui_view
-        self.gui_top = gui_top
-        self.view = view
         self.model = model
+        self.event = event
 
+    def set_view(self, view):
+        self.view = view
+
+    def run(self):
+        while True:
+            self.event.wait()
+
+            self.event.func(*self.event.args)
+
+            self.event.clear()
 
     # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
     def get_repo_address(self,repo_url=None):
-
-        # address = input()
 
         if(repo_url==None or repo_url ==""):
             address = "GitCheckUp/Demo"
@@ -42,24 +51,19 @@ class Controller:
     def get_repository(self, repo_address):
         return self.git_access.get_repo(repo_address)
 
-    def welcome_user(self):
-        self.view.display_welcome()
+    def analyze_repo(self, repo_url):
 
-    def analyze_repo(self):
-        # view.display_input_repoAddress()
+        try:
+            repo_address = self.get_repo_address(repo_url)
+        except:
+            self.view.display_error_repoAddress()
+            return
 
-        while True:
-            try:
-                repo_address = self.get_repo_address()
-            except:
-                self.view.display_error_repoAddress()
-                continue
-
-            try:
-                repo = self.get_repository(repo_address)
-                break
-            except:
-                self.view.display_error_repoMissing()
+        try:
+            repo = self.get_repository(repo_address)
+        except:
+            self.view.display_error_repoMissing()
+            return
 
         self.view.display_analyzing(repo_address)
         irepo = self.model.get_repo(repo)
@@ -72,22 +76,18 @@ class Controller:
 
         self.view.display_errors(errorDetections, totalErrorCount)
 
-    def start_gui(self):
-
-        self.gui_view.mainloop()
-        self.gui_analyze_repo()
-
     def gui_analyze_repo(self):
-        #print(self.get_repo_address(self.gui_top.repo_url))
         try:
-            repo_address = self.get_repo_address(self.gui_top.repo_url)
-            print(self.get_repo_address(self.gui_top.repo_url))
+            repo_address = self.get_repo_address("GitCheckUp/GitCheckup")
+            print(self.get_repo_address("GitCheckUp/GitCheckup"))
         except:
-            pass
+            self.view.display_error_repoAddress()
+            return
         try:
             repo = self.get_repository(repo_address)
         except:
-            pass
+            self.view.display_error_repoMissing()
+            return
 
         irepo = self.model.get_repo(repo)
 
@@ -97,9 +97,7 @@ class Controller:
         for errorDetection in errorDetections:
             totalErrorCount += len(errorDetection.errorList)
 
-        #self.view.display_errors(errorDetections, totalErrorCount)
-        self.gui_top.display_errors(errorDetections, totalErrorCount)
-
+        self.view.display_errors(errorDetections, totalErrorCount)
 
         pass
 
