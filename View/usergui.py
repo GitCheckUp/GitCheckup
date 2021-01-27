@@ -8,21 +8,14 @@ class GuiView():
         self.event = event
         self.application.display_frame(Homepage)
 
-    def display(self, string):
+    def debug(self, string):
         print(string)
 
-    def display_welcome(self):
-        self.application.frame.Scrolledtext1.insert(tk.INSERT, "Welcome to GitCheckup!")
-
-    def display_input_repoAddress(self):
-        pass
-        #print("Please enter repository address: ")
-
     def display_error_repoAddress(self):
-        self.application.frame.Scrolledtext1.insert(tk.INSERT, "Could not read repository address, please enter a valid address.")
+        self.application.frame.Scrolledtext1.insert(tk.INSERT, "Could not read repository address, please enter a valid address.\n")
 
     def display_error_repoMissing(self):
-        self.application.frame.Scrolledtext1.insert(tk.INSERT, "Could not find a valid repository with this address. Please ensure there are no typos and the repository is public.")
+        self.application.frame.Scrolledtext1.insert(tk.INSERT, "Could not find a valid repository with this address. Please ensure there are no typos and the repository is public.\n")
 
     def display_analyzing(self, repoName):
         self.application.frame.Scrolledtext1.insert(tk.INSERT, "Analyzing repo: %s ...\n" % repoName)
