@@ -14,6 +14,8 @@ class Homepage(Frame):
         self.controller = controller
 
         Frame.__init__(self, master)
+        appIcon = tk.PhotoImage(file='./View/icon.png')
+        self.master.iconphoto(False, appIcon)
         self.pack()
 
         self.master.geometry("450x160")
@@ -105,6 +107,12 @@ class Homepage(Frame):
         _img0 = tk.PhotoImage(file=photo_location)
         self.Label1.configure(image=_img0)
         '''
+        #photo_location = "./View/fork.png"
+
+
+        global _forkLogo
+        _forkLogo = tk.PhotoImage(file="./View/fork.png")
+        self.Label1.configure(image=_forkLogo)
         self.Label1.configure(justify='left')
         self.Label1.configure(padx='8')
         self.Label1.configure(text='Repository:')
@@ -129,6 +137,31 @@ class Homepage(Frame):
         self.Scrolledtext1.configure(selectforeground="white")
         self.Scrolledtext1.configure(wrap="word")
 
+        #Output text styling
+        """
+        Sample settings
+        
+        font="-family {Verdana} -size 11 -weight bold -slant italic -underline 1"
+        foreground="#800000"
+        background="#808000"
+        highlightbackground="#d9d9d9"
+        highlightcolor="black"
+        insertbackground="black"
+        selectbackground="blue"
+        selectforeground="white"
+        """
+
+        self.Scrolledtext1.tag_config('analyzing_repo_tag', foreground='#a80f0f', font="-size 13 -weight bold -slant italic")
+        self.Scrolledtext1.tag_config('analysis_complete_message_tag', foreground='#207d39',font="-size 13 -weight bold -slant italic")
+        self.Scrolledtext1.tag_config('result_statistics_tag', foreground='#203b7d',font="-size 12")
+        self.Scrolledtext1.tag_config('seperator_tag', foreground='#a80f0f',font="-size 18")
+        self.Scrolledtext1.tag_config('user_error_report_tag', background='#e8faff',font="-size 11",selectforeground="#a80f0f")
+        self.Scrolledtext1.tag_config('category_of_error_tag', background='#e8ffec',font="-size 13",selectforeground="#a80f0f")
+        self.Scrolledtext1.tag_config('general_error_tag', background='red')
+        self.Scrolledtext1.tag_config('blank_tag', background='white')
+
+
+
         self.Label2 = tk.Label(self.Frame1)
         self.Label2.place(relx=0.012, rely=0.02, height=22, width=70)
         self.Label2.configure(activebackground="#ffffff")
@@ -142,6 +175,8 @@ class Homepage(Frame):
         self.Label2.configure(text='''Summary:''')
 
     def analyze_repo(self):
+        self.Scrolledtext1.delete('1.0',tk.END)  #Clear box before analyzing new repository
         self.event.func = self.controller.analyze_repo
         self.event.args = (self.Entry1.get(),)
         self.event.set()
+        sys.stdout.flush()   #Fix for analyzing another repo
