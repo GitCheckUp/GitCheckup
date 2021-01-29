@@ -99,7 +99,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
         self.errorId = 3
-        self.name = "OriginMasterBranchName"
+        self.name = "OriginMasterMainBranchName"
         self.category = "Branching/Tagging"
         self.errorList = []
 
@@ -109,8 +109,8 @@ class ED_OriginMasterBranchName(ErrorDetection):
         error_count = 0
 
         for e in irepo.branchList:
-            if e.name == "origin/master":
-                detected_error = IError(error_count, self.errorId, e.headCommit.comitter, e.headCommit.message)
+            if e.name == "origin/origin/master" or "origin/origin/main":
+                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit)
                 self.errorList.append(detected_error)
                 error_count += 1
 
