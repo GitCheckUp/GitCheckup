@@ -100,16 +100,6 @@ class Homepage(Frame):
         self.Label1.configure(highlightbackground="#d9d9d9")
         self.Label1.configure(highlightcolor="black")
 
-        '''
-        prog_call = sys.argv[0]
-        prog_location = os.path.split(prog_call)[0]
-        photo_location = os.path.join(prog_location, "./View/fork.png")
-        _img0 = tk.PhotoImage(file=photo_location)
-        self.Label1.configure(image=_img0)
-        '''
-        #photo_location = "./View/fork.png"
-
-
         global _forkLogo
         _forkLogo = tk.PhotoImage(file="./View/fork.png")
         self.Label1.configure(image=_forkLogo)

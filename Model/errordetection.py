@@ -107,13 +107,32 @@ class ED_OriginMasterBranchName(ErrorDetection):
 
     def detect(self, irepo):
         error_count = 0
-
         for e in irepo.branchList:
             if e.name == "origin/origin/master" or "origin/origin/main":
                 detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit)
                 self.errorList.append(detected_error)
                 error_count += 1
 
+
+class ED_HeadBranchName(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 4
+        self.name = "HeadBranchName"
+        self.category = "Branching/Tagging"
+        self.errorList = []
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+        for e in irepo.branchList:
+            if re.findall("/Head$|/head$|/HEAD$", e.name):
+                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit)
+                self.errorList.append(detected_error)
+                error_count += 1
+
+
 def get_error_detections(irepo, filter = "None"):
     if (filter == "None"):
-        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo)]
+        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo)]
