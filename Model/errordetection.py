@@ -153,7 +153,27 @@ class ED_MultipleFileChange(ErrorDetection):
                 self.errorList.append(error_detected)
                 error_count += 1
 
+class ED_UninformativeCommitMessage(ErrorDetection):
+    """
+    Check if the user wrote a commit message less then three words. The message also includes commit title.
+    """
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 2
+        self.name = "UninformativeComment"
+        self.category = "Creating Commits"
+        self.errorList = []
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+        for c in irepo.commitList:
+            if(c.message.count(' ') <3):
+                error_detected = IError(error_count, self.errorId, c.committer, c)
+                self.errorList.append(error_detected)
+                error_count += 1
 
 def get_error_detections(irepo, filter = "None"):
     if (filter == "None"):
-        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo)]
+        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo),ED_UninformativeCommitMessage(irepo)]
