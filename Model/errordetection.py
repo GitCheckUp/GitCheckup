@@ -1,4 +1,5 @@
 import os, sys, re
+import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from Model.ierror import IError
@@ -159,7 +160,7 @@ class ED_UninformativeCommitMessage(ErrorDetection):
     """
     def __init__(self, irepo):
         super().__init__(irepo)
-        self.errorId = 2
+        self.errorId = 6
         self.name = "UninformativeComment"
         self.category = "Creating Commits"
         self.errorList = []
@@ -174,6 +175,63 @@ class ED_UninformativeCommitMessage(ErrorDetection):
                 self.errorList.append(error_detected)
                 error_count += 1
 
+class ED_InfrequentCommitFrequency(ErrorDetection):
+    """
+    Finds average time between subsequent commits, suppose as t.
+    If there is a time of 3t or more between commits, marks it as infrequent commit.
+    Same if t > 7 days.
+    """
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 7
+        self.name = "InfrequentCommitFrequency"
+        self.category = "Creating Commits"
+        self.errorList = []
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+        if (len(irepo.commitList) == 0):
+            return
+
+        """
+        Here, calculate the average time taken.
+        """
+        totalTime = datetime.timedelta()
+        lastCommit = irepo.commitList[-1]
+
+        for c in reversed(irepo.commitList):
+            if (lastCommit == irepo.commitList[-1]):
+                timeBetween = datetime.timedelta()
+            else:
+                timeBetween = c.date - lastCommit.date
+
+            totalTime += timeBetween
+            lastCommit = c
+
+        """
+        Here, we detect the infrequent commits
+        """
+
+        averageTime = totalTime / (len(irepo.commitList) - 1)
+        tripleTime = averageTime * 3
+
+        lastCommit = irepo.commitList[-1]
+
+        for c in reversed(irepo.commitList):
+            if (lastCommit == irepo.commitList[-1]):
+                timeBetween = datetime.timedelta()
+            else:
+                timeBetween = c.date - lastCommit.date
+
+            lastCommit = c
+
+            if (timeBetween > tripleTime or timeBetween > datetime.timedelta(7)):
+                error_detected = IError(error_count, self.errorId, c.committer, c)
+                self.errorList.append(error_detected)
+                error_count += 1
+
 def get_error_detections(irepo, filter = "None"):
     if (filter == "None"):
-        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo),ED_UninformativeCommitMessage(irepo)]
+        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo), ED_UninformativeCommitMessage(irepo), ED_InfrequentCommitFrequency(irepo)]
