@@ -232,6 +232,35 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
                 self.errorList.append(error_detected)
                 error_count += 1
 
+
+class ED_MultiplePushInsteadOne(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 8
+        self.name = "MultiplePush"
+        self.category = "Pushing Commits"
+        self.errorList = []
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        currentCommit = irepo.commitList[0]
+        for commit in irepo.commitList[1:]:
+            if currentCommit.author.id == commit.author.id:
+
+                time_delta = (currentCommit.date - commit.date)
+                total_seconds = time_delta.total_seconds()
+                minutes = total_seconds / 60
+
+                if minutes <= 5:
+                    error_detected = IError(error_count, self.errorId, commit.committer, commit)
+                    self.errorList.append(error_detected)
+                    error_count += 1
+
+            currentCommit = commit
+
 def get_error_detections(irepo, filter = "None"):
     if (filter == "None"):
-        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo), ED_UninformativeCommitMessage(irepo), ED_InfrequentCommitFrequency(irepo)]
+        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo), ED_UninformativeCommitMessage(irepo), ED_InfrequentCommitFrequency(irepo),ED_MultiplePushInsteadOne(irepo)]
