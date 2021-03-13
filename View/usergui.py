@@ -33,6 +33,6 @@ class GuiView():
 
 
             for error in detection.errorList:
-                self.application.frame.Scrolledtext1.insert(tk.INSERT, "User: %s made an error%s at: %s on commit sha: %s with message: %s\n" % (error.user.name, error.extra_info, error.commit.date, error.commit.sha, error.commit.message),"user_error_report_tag")
+                self.application.frame.Scrolledtext1.insert(tk.INSERT, "User: %s (@%s) made an error%s at: %s on commit sha: %s with message: %s\n" % (error.user.name, error.user.username, error.extra_info, error.commit.date, error.commit.sha, error.commit.message),"user_error_report_tag")
 
         self.application.frame.Scrolledtext1.see(tk.END)
