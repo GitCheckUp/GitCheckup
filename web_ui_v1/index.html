@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>GitCheckup</title>
+        <!-- Google Font -->
+        <link
+            href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
+            rel="stylesheet">
+        <!-- Bootstrap 4.2.1 -->
+        <link rel="stylesheet" href="css/plugins/bootstrap.min.css">
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        <!-- Font Awesome -->
+        <link
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            rel="stylesheet">
+        <!-- Main CSS -->
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <!-- Page Loading -->
+        <div class="se-pre-con"></div>
+
+        <!-- ========== Start Navbar ========== -->
+        <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="img/logo.png" alt="">GitCheckup</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#slider">Home
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#get-started">The App</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#benefits">Benefits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#team">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- ========== End Navbar ========== -->
+
+        <!-- ========== Start Slider ========== -->
+         <section class="slider d-flex align-items-center" id="slider">
+            <div id="particles-js"></div>
+            <div class="container text-center">
+                <div class="row d-flex align-items-center mt-60">
+                    <div class="col-lg-12">
+                        <div class="text">
+                            <h1 class="h1-w mb-20">GitCheckup</h1>
+                            <p class="p-w mb-30">Git is a version control system that allows people to work on a project collaboratively and efficiently. Nowadays, Git is used by companies, groups and individual users to work on and store projects, to develop these projects efficiently and with the effort of many people, simultaneously.</p>
+                            <a href="#get-started" class="btn-white d-inline-block">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Slider ========== -->
+
+        <!-- ========== Start Get Started ========== -->
+        <section class="get-started" id="get-started">
+            <p class="p-17-w mb-30">Enter the repository you need to analyze for errors and poor practices.</p>
+        	<form action="#">
+  			<input type="text" id="repo" name="repo" style="min-width:400px;" value="GitCheckup/GitCheckup">
+  			<input type="submit" value="Analyze" class="btn-white d-inline-block">
+			</form> 
+        </section>
+        <!-- ========== End Get Started ========== -->
+
+
+        <!-- ========== Start About ========== -->
+        <section class="about m-section-120" id="about">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+
+                    <div class="col-lg-6">
+                        <h2 class="h2 mb-20">
+                            Results of the analysis</h2>
+                        <p class="p-bk mb-30">
+                        Analysis complete.
+Found 46 errors or poor practices.
+
+
+Found 1 issues of type RevertMergeCommit of category Reverting:
+
+User: Mehmet Kaan Özkan (@qons) made an error at: 2020-12-23 10:17:20 on commit sha: 64024237c0f92c78223e991383c38778dc48baae with message: Revert "Merge remote-tracking branch 'origin/sadness' into main"
+
+This reverts commit 5ab96197c7c797a2db7977d1dc7197d9175f6674, reversing
+changes made to 8229f9230371c33172796f949861d842b53e2805.
+
+Found 0 issues of type RevertRevertCommit of category Reverting:
+
+
+Found 6 issues of type UnnecessaryFiles of category Creating Commits:
+
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/GitCheckup.iml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/inspectionProfiles/profiles_settings.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/misc.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/modules.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/vcs.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: Anıl Güvenç (@anilguvenc) made an error(.idea/workspace.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+
+Found 4 issues of type OriginMasterMainBranchName of category Branching/Tagging:
+
+User: Mehmet Kaan Özkan (@qons) made an error at: 2020-12-23 09:58:19 on commit sha: bb903482929d022cdbec67d32dfd903f2a7312ce with message: ad
+
+ds
+User: Mehmet Kaan Özkan (@qons) made an error at: 2020-12-23 10:17:20 on commit sha: 64024237c0f92c78223e991383c38778dc48baae with message: Revert "Merge remote-tracking branch 'origin/sadness' into main"
+
+This reverts commit 5ab96197c7c797a2db7977d1dc7197d9175f6674, reversing
+changes made to 8229f9230371c33172796f949861d842b53e2805.
+User: Anıl Güvenç (@anilguvenc) made an error at: 2021-03-13 19:05:15 on commit sha: 9a13ec24754e047be511cd828dc88c70829bd768 with message: test_blank_message
+User: Mehmet Kaan Özkan (@qons) made an error at: 2020-12-23 09:59:35 on commit sha: 107f836200d30688d33e808b15f69aeccbc2a1f6 with message: Revert "sdfsef"
+
+This reverts commit 5b4824b806ebe18e8d77ec5add2cb02c9d7174a5.
+
+Found 0 issues of type HeadBranchName of category Branching/Tagging:
+
+
+Found 16 issues of type MultipleFileCommits of category Creating Commits:
+
+User: Anıl Güvenç (@anilguvenc) made an error at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+
+I have added unnecessary files to this commit to test.
+User: None (@umutyldrm) made an error at: 2020-11-03 19:52:46 on commit sha: 02903a88c13290f564d7783d28be090cb1a27406 with message: bişeyler deniyruz
+
+inş çalışır knk
+User: None (@umutyldrm) made an error at: 2020-10-23 18:28:42 on commit sha: ff40a117c0b4f77a55ee9370a84873bd56c3db43 with message: Repetitive
+
+added find repetitive func
+User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-23 18:22:09 on commit sha: 9fed38d481a8f67ed86e121e75435d8041db6686 with message: Small changes
+
+Extended data set.
+Added void return to the algorithms.
+User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-23 18:04:01 on commit sha: 7bc5e9a9d710ed93d25b977bde0703391e8807e5 with message: createData bug fix
+
+added fclose(file_pointer)
+User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 21:54:15 on commit sha: 564f2ec584a2aa6ac5721ff468a4857e24425f49 with message: Main with a working load function
+
+Sample basic menu is included in the main.c
+
+Load function works.
+
+Both shellSort and insertionSort are working.
+
+Co-Authored-By: Mehmet Kaan Özkan <kozkan5624@gmail.com>
+User: Mehmet Kaan Özkan (@qons) made an error at: 2020-10-22 20:26:14 on commit sha: 1f3ed6d129ee964cb17747a9f9a5a86598fb9a45 with message: fix: shellsort compiler dependency
+User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on commit sha: 496cc4ba5d1a68e6beed886b511274693d0419c7 with message: Load file into array function
+
+                        </p>
+                        <a href="#" class="btn-color d-inline-block">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End About ========== -->
+
+<!--
+
+
+        <!-- ========== Start Features ========== 
+        <section class="features" id="features">
+            <div class="container">
+                <div class="row">
+                    <!-- Box-1 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box mb-40">
+                            <img src="img/features/fe-1.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Export Presets</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Box-2 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box mb-40">
+                            <img src="img/features/fe-2.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Grid and Guides</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Box-3 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box mb-40">
+                            <img src="img/features/fe-3.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Pixel Precision</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Box-4 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box">
+                            <img src="img/features/fe-4.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Vector Editing</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Box-5 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box">
+                            <img src="img/features/fe-5.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Cloud Service</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Box-6 
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box">
+                            <img src="img/features/fe-6.png" alt="icon-1">
+                            <h3 class="h3-bk mb-15 mt-15">Iterate at Speed</h3>
+                            <p class="p-bk">
+                                Bog cheeky bugger blow off only a quid
+                                <br>
+                                grub he legged it porkies tosser young
+                                <br>
+                                delinquent argy-bargy.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Features ========== 
+
+
+
+        <!-- ========== Start Work ========== 
+        <section class="about m-section-120" id="about">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="h2 mb-20">
+                            Quick & Easy Process</h2>
+                        <p class="p-bk mb-30">That cheeky bugger down the pub squiffy arse spiffing cup
+                            of char on your bike mate, quaint I Jeffrey I don't want no agro you mug zonked
+                            Richard, barney bobby matie boy David a the full monty. Don't get shirty with me
+                            faff about of char on your bike mate, quaint I Jeffrey I don't want no agro you
+                            mug zonked Richard
+                        </p>
+                        <a href="#" class="btn-color d-inline-block">Contact Us</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="image work-img pr-4">
+                            <img src="https://via.placeholder.com/516x360" alt="about" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Work ========== 
+
+        <!-- ========== Start Benefits ========== 
+        <section class="benefits mb-120" id="benefits">
+            <div class="container text-center">
+                <h2 class="h2 mb-15">Awesome Benefits</h2>
+                <p class="p-bk mb-60">When you buy a dedicated server, you get a machine with resources
+                    <br>
+                    solely allocated to your business.</p>
+                <div class="row">
+                    <!-- Box-1 
+                    <div class="col-md-4">
+                        <div class="box">
+                            <img src="img/benefits/icon1.png" alt="">
+                            <h3 class="h3-bk mb-20 mt-15">Awesome design</h3>
+                            <p class="p-bk">Tosser blag bubble and squeak up the
+                                <br>
+                                duff A bit of how's your father blatant
+                                <br>
+                                morish char cuppa.!</p>
+                        </div>
+                    </div>
+                    <!-- Box-2 
+                    <div class="col-md-4">
+                        <div class="box">
+                            <img src="img/benefits/icon2.png" alt="">
+                            <h3 class="h3-bk mb-20 mt-15">Easy Customize</h3>
+                            <p class="p-bk">Tosser blag bubble and squeak up the
+                                <br>
+                                duff A bit of how's your father blatant
+                                <br>
+                                morish char cuppa.!</p>
+                        </div>
+                    </div>
+                    <!-- Box-3 
+                    <div class="col-md-4">
+                        <div class="box">
+                            <img src="img/benefits/icon3.png" alt="">
+                            <h3 class="h3-bk mb-20 mt-15">Extreme Security</h3>
+                            <p class="p-bk">Tosser blag bubble and squeak up the
+                                <br>
+                                duff A bit of how's your father blatant
+                                <br>
+                                morish char cuppa.!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Benefits ========== 
+
+        <!-- ========== Start Video ========== 
+        <section class="video">
+            <div class="container text-center">
+                <div class="video-icon">
+                    <div class="icon-abs">
+                        <a
+                            href="https://www.youtube.com/watch?v=S6lzo-OWoqI"
+                            class="icon pulse expand video-link">
+                            <i class="fa fa-play" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Video ========== 
+
+        <!-- ========== Start Portfolio ========== 
+        <section class="portfolio">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Box-1 
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box m-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-2
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box m-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-3 
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box m-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-4 
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box p-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-5
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box p-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-6
+                    <div class="col-lg-2 col-sm-6 p-0">
+                        <div class="box p-0">
+                            <div class="single-portfolio-item ">
+                                <img src="https://via.placeholder.com/317x444" alt="" class="img-fluid">
+                                <div class="overlay text-center">
+                                    <div class="content">
+                                        <h3>Brex Logo</h3>
+                                        <p>Brand</p>
+                                        <a href="https://via.placeholder.com/317x444" class="image-link">
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Portfolio ========== 
+
+        <!-- ========== Start Our Team ========== 
+        <section class="team m-section-120" id="team">
+            <div class="container text-center">
+                <h2 class="h2 mb-15">Professional Team</h2>
+                <p class="p-bk mb-60">When you buy a dedicated server, you get a machine with resources
+                    <br>
+                    solely allocated to your business.</p>
+                <div class="row">
+                    <!-- Box-1 
+                    <div class="col-lg-4">
+                        <div class="box bx-shw">
+                            <div class="content">
+                                <img src="https://via.placeholder.com/350x400" alt="team-1" class="img-fluid">
+                                <div class="info">
+                                    <h3 class="h3-blk-sb">Alamin Musa</h3>
+                                    <span class="span-sm">Graphic Designer</span>
+                                </div>
+                            </div>
+                            <div class="overlay">
+                                <div class="social">
+                                    <a href="#"><i class="icon fa fa-facebook" aria-hidden="true"></i></a>
+                                    <a href="#" id="0"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="icon fa fa-dribbble" aria-hidden="true"></i></a>
+                                    <a href="#"><i class="icon fa fa-behance" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Box-2 
+                    <div class="col-lg-4">
+                            <div class="box bx-shw">
+                                <div class="content">
+                                    <img src="https://via.placeholder.com/350x400" alt="team-1" class="img-fluid">
+                                    <div class="info">
+                                        <h3 class="h3-blk-sb">Rabie Elkhair</h3>
+                                        <span class="span-sm">Web Designer</span>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+                                    <div class="social">
+                                        <a href="#"><i class="icon fa fa-facebook" aria-hidden="true"></i></a>
+                                        <a href="#" id="0"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="icon fa fa-dribbble" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="icon fa fa-behance" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Box-3 
+                    <div class="col-lg-4">
+                            <div class="box bx-shw">
+                                <div class="content">
+                                    <img src="https://via.placeholder.com/350x400" alt="team-1" class="img-fluid">
+                                    <div class="info">
+                                        <h3 class="h3-blk-sb">Adil Elsaeed</h3>
+                                        <span class="span-sm">Wordpress Developer</span>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+                                    <div class="social">
+                                        <a href="#"><i class="icon fa fa-facebook" aria-hidden="true"></i></a>
+                                        <a href="#" id="0"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="icon fa fa-dribbble" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="icon fa fa-behance" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Our Team ========== 
+
+        <!-- ========== Start Testimonials ========== 
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>
+
+                            <div class="carousel-inner">
+                                <!-- Item-1 
+                                <div class="carousel-item active text-center">
+                                    <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
+                                    <h3>Alamin Musa</h3>
+                                    <h4>Graphic Designer</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate
+                                        dignissimos dolorem
+                                        <br>
+                                        officiis quo voluptatibus! A assumenda eius excepturi labore minima nesciunt
+                                        quod
+                                        <br>
+                                        ratione, reiciendis repellat sapiente veritatis vero!</p>
+                                </div>
+                                <!-- Item-2 
+                                <div class="carousel-item text-center">
+                                    <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
+                                    <h3>Alamin Musa</h3>
+                                    <h4>Graphic Designer</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate
+                                        dignissimos dolorem
+                                        <br>
+                                        officiis quo voluptatibus! A assumenda eius excepturi labore minima nesciunt
+                                        quod
+                                        <br>
+                                        ratione, reiciendis repellat sapiente veritatis vero!</p>
+                                </div>
+                                <!-- Item-3 
+                                <div class="carousel-item text-center">
+                                    <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
+                                    <h3>Alamin Musa</h3>
+                                    <h4>Graphic Designer</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate
+                                        dignissimos dolorem
+                                        <br>
+                                        officiis quo voluptatibus! A assumenda eius excepturi labore minima nesciunt
+                                        quod
+                                        <br>
+                                        ratione, reiciendis repellat sapiente veritatis vero!</p>
+                                </div>
+
+                            </div>
+                            <a
+                                class="carousel-control-prev control"
+                                data-target="#carouselExampleIndicators"
+                                role="button"
+                                data-slide="prev">
+                                <span
+                                    class="fa fa-angle-left icon d-flex align-items-center justify-content-center"
+                                    aria-hidden="true"></span>
+                                <span class="sr-only ">Previous</span>
+                            </a>
+                            <a
+                                class="carousel-control-next control"
+                                data-target="#carouselExampleIndicators"
+                                role="button"
+                                data-slide="next">
+                                <span
+                                    class="fa fa-angle-right icon d-flex align-items-center justify-content-center"
+                                    aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Testimonials ========== 
+
+
+        <!-- ========== Start About ========== 
+        <section class="about m-section-120" id="about">
+                <div class="container">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-lg-6">
+                            <div class="image pr-4">
+                                <img src="https://via.placeholder.com/516x391" alt="about" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="h2 mb-20">Creative Marketing Solution</h2>
+                            <p class="p-bk mb-30">That cheeky bugger down the pub squiffy arse spiffing cup
+                                of char on your bike mate, quaint I Jeffrey I don't want no agro you mug zonked
+                                Richard, barney bobby matie boy David a the full monty. Don't get shirty with me
+                                faff about of char on your bike mate, quaint I Jeffrey I don't want no agro you
+                                mug zonked Richard
+                            </p>
+                            <a href="#" class="btn-color d-inline-block">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ========== End About ========== 
+
+            <!-- ========== Start Price ========== 
+            <section class="price mb-120" id="price">
+                <div class="container text-center">
+                        <h2 class="h2 mb-15">Table Price</h2>
+                        <p class="p-bk mb-60">When you buy a dedicated server, you get a machine with resources
+                            <br>
+                            solely allocated to your business.</p>
+
+                            <div class="row">
+                                <!-- Box-1 
+                                <div class="col-lg-4">
+                                    <div class="box bx-shw">
+                                        <h3 class="h3-bk mb-30">Basic</h3>
+                                        <img src="img/price/1.svg" alt="" class="img-fluid w-80">
+                                        <h4>15<span>$</span></h4>
+                                        <h5>per month</h5>
+                                        <ul>
+                                            <li>5GB Storage</li>
+                                            <li>Unlimited Domains</li>
+                                            <li>Awesome Support</li>
+                                            <li>Clean Cpanel</li>
+                                        </ul>
+                                        <a href="#" class="btn-color d-inline-block">Get Started</a>
+                                    </div>
+                                </div>
+                                <!-- Box-2 
+                                <div class="col-lg-4">
+                                        <div class="box bx-shw">
+                                            <h3 class="h3-bk mb-30">Ultimate</h3>
+                                            <img src="img/price/2.svg" alt="" class="img-fluid w-80">
+                                            <h4>25<span>$</span></h4>
+                                            <h5>per month</h5>
+                                            <ul>
+                                               <li>5GB Storage</li>
+                                            <li>Unlimited Domains</li>
+                                            <li>Awesome Support</li>
+                                            <li>Clean Cpanel</li>
+                                            </ul>
+                                            <a href="#" class="btn-color d-inline-block">Get Started</a>
+                                        </div>
+                                    </div>
+                                    <!-- Box-3 
+                                <div class="col-lg-4">
+                                        <div class="box bx-shw">
+                                            <h3 class="h3-bk mb-30">Professional</h3>
+                                            <img src="img/price/3.svg" alt="" class="img-fluid w-80">
+                                            <h4>45<span>$</span></h4>
+                                            <h5>per month</h5>
+                                            <ul>
+                                               <li>5GB Storage</li>
+                                            <li>Unlimited Domains</li>
+                                            <li>Awesome Support</li>
+                                            <li>Clean Cpanel</li>
+                                            </ul>
+                                            <a href="#" class="btn-color d-inline-block">Get Started</a>
+                                        </div>
+                                    </div>
+                            </div>
+                </div>
+
+            </section>
+            <!-- ========== End Price ========== 
+
+
+            <!-- ========== Start Contact ========== -->
+            <section class="contact" >
+            
+                    <div class="container text-center">
+                            <h2 class="h2 mb-15">Keep In Touch</h2>
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+        
+                                <form>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="5" id="comment" placeholder="Message"></textarea>
+                                    </div>
+                                    <button class="btn btn-block" type="submit">Send Now!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            <!-- ========== End Contact ========== -->
+
+            <!-- ========== Start Footer ========== -->
+            <footer class="footer">
+                    <div class="container text-center text-white">
+                        <img src="img/fork.png" alt="">
+                        <h2>GitCheckup. All Rights Reserved.</h2>
+                    </div>
+                </footer>
+            <!-- ========== End Footer ========== -->
+
+        <!-- ========== JS ========== -->
+        <script src="js/plugins/jquery-3.3.1.min.js"></script>
+        <script src="js/plugins/popper.min.js"></script>
+        <script src="js/plugins/bootstrap.min.js"></script>
+        <!-- Particels JS -->
+        <script src="js/plugins/particles.min.js"></script>
+        <script src="js/plugins/app.js"></script>
+        <!-- Smooth Scrolling -->
+        <script src="js/plugins/jquery.smoothscroll.min.js"></script>
+        <!-- Magnific Popup -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
