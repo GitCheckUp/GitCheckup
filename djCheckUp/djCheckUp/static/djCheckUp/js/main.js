@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+    console.log("eeeeee");
     "use strict";
 
     // Animate loader off screen

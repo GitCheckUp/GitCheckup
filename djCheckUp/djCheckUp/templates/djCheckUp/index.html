@@ -10,7 +10,8 @@
             href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
             rel="stylesheet">
         <!-- Bootstrap 4.2.1 -->
-        <link rel="stylesheet" href="css/plugins/bootstrap.min.css">
+        {% load static %}
+        <link rel = "stylesheet" href="{% static 'djCheckUp/css/plugins/bootstrap.min.css' %}">
         <!-- Magnific Popup -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
         <!-- Font Awesome -->
@@ -18,7 +19,8 @@
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             rel="stylesheet">
         <!-- Main CSS -->
-        <link rel="stylesheet" href="css/main.css">
+        {% load static %}
+        <link rel = "stylesheet" href="{% static 'djCheckUp/css/main.css' %}">
     </head>
     <body>
         <!-- Page Loading -->
@@ -27,7 +29,11 @@
         <!-- ========== Start Navbar ========== -->
         <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#"><img src="img/logo.png" alt="">GitCheckup</a>
+                <a class="navbar-brand" href="#">
+                  {% load static %}
+                  <img src="{% static 'djCheckUp/img/logo.png' %}" alt="">
+                  GitCheckup
+                </a>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -88,7 +94,7 @@
         	<form action="#">
   			<input type="text" id="repo" name="repo" style="min-width:400px;" value="GitCheckup/GitCheckup">
   			<input type="submit" value="Analyze" class="btn-white d-inline-block">
-			</form> 
+			</form>
         </section>
         <!-- ========== End Get Started ========== -->
 
@@ -195,11 +201,11 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
 <!--
 
 
-        <!-- ========== Start Features ========== 
+        <!-- ========== Start Features ==========
         <section class="features" id="features">
             <div class="container">
                 <div class="row">
-                    <!-- Box-1 
+                    <!-- Box-1
                     <div class="col-lg-4 col-md-6">
                         <div class="box mb-40">
                             <img src="img/features/fe-1.png" alt="icon-1">
@@ -213,7 +219,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </p>
                         </div>
                     </div>
-                    <!-- Box-2 
+                    <!-- Box-2
                     <div class="col-lg-4 col-md-6">
                         <div class="box mb-40">
                             <img src="img/features/fe-2.png" alt="icon-1">
@@ -227,7 +233,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </p>
                         </div>
                     </div>
-                    <!-- Box-3 
+                    <!-- Box-3
                     <div class="col-lg-4 col-md-6">
                         <div class="box mb-40">
                             <img src="img/features/fe-3.png" alt="icon-1">
@@ -241,7 +247,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </p>
                         </div>
                     </div>
-                    <!-- Box-4 
+                    <!-- Box-4
                     <div class="col-lg-4 col-md-6">
                         <div class="box">
                             <img src="img/features/fe-4.png" alt="icon-1">
@@ -255,7 +261,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </p>
                         </div>
                     </div>
-                    <!-- Box-5 
+                    <!-- Box-5
                     <div class="col-lg-4 col-md-6">
                         <div class="box">
                             <img src="img/features/fe-5.png" alt="icon-1">
@@ -269,7 +275,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </p>
                         </div>
                     </div>
-                    <!-- Box-6 
+                    <!-- Box-6
                     <div class="col-lg-4 col-md-6">
                         <div class="box">
                             <img src="img/features/fe-6.png" alt="icon-1">
@@ -286,11 +292,11 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Features ========== 
+        <!-- ========== End Features ==========
 
 
 
-        <!-- ========== Start Work ========== 
+        <!-- ========== Start Work ==========
         <section class="about m-section-120" id="about">
             <div class="container">
                 <div class="row d-flex align-items-center">
@@ -313,9 +319,9 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Work ========== 
+        <!-- ========== End Work ==========
 
-        <!-- ========== Start Benefits ========== 
+        <!-- ========== Start Benefits ==========
         <section class="benefits mb-120" id="benefits">
             <div class="container text-center">
                 <h2 class="h2 mb-15">Awesome Benefits</h2>
@@ -323,7 +329,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                     <br>
                     solely allocated to your business.</p>
                 <div class="row">
-                    <!-- Box-1 
+                    <!-- Box-1
                     <div class="col-md-4">
                         <div class="box">
                             <img src="img/benefits/icon1.png" alt="">
@@ -335,7 +341,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                 morish char cuppa.!</p>
                         </div>
                     </div>
-                    <!-- Box-2 
+                    <!-- Box-2
                     <div class="col-md-4">
                         <div class="box">
                             <img src="img/benefits/icon2.png" alt="">
@@ -347,7 +353,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                 morish char cuppa.!</p>
                         </div>
                     </div>
-                    <!-- Box-3 
+                    <!-- Box-3
                     <div class="col-md-4">
                         <div class="box">
                             <img src="img/benefits/icon3.png" alt="">
@@ -362,9 +368,9 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Benefits ========== 
+        <!-- ========== End Benefits ==========
 
-        <!-- ========== Start Video ========== 
+        <!-- ========== Start Video ==========
         <section class="video">
             <div class="container text-center">
                 <div class="video-icon">
@@ -378,13 +384,13 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Video ========== 
+        <!-- ========== End Video ==========
 
-        <!-- ========== Start Portfolio ========== 
+        <!-- ========== Start Portfolio ==========
         <section class="portfolio">
             <div class="container-fluid">
                 <div class="row">
-                    <!-- Box-1 
+                    <!-- Box-1
                     <div class="col-lg-2 col-sm-6 p-0">
                         <div class="box m-0">
                             <div class="single-portfolio-item ">
@@ -418,7 +424,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </div>
                         </div>
                     </div>
-                    <!-- Box-3 
+                    <!-- Box-3
                     <div class="col-lg-2 col-sm-6 p-0">
                         <div class="box m-0">
                             <div class="single-portfolio-item ">
@@ -435,7 +441,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </div>
                         </div>
                     </div>
-                    <!-- Box-4 
+                    <!-- Box-4
                     <div class="col-lg-2 col-sm-6 p-0">
                         <div class="box p-0">
                             <div class="single-portfolio-item ">
@@ -489,9 +495,9 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Portfolio ========== 
+        <!-- ========== End Portfolio ==========
 
-        <!-- ========== Start Our Team ========== 
+        <!-- ========== Start Our Team ==========
         <section class="team m-section-120" id="team">
             <div class="container text-center">
                 <h2 class="h2 mb-15">Professional Team</h2>
@@ -499,7 +505,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                     <br>
                     solely allocated to your business.</p>
                 <div class="row">
-                    <!-- Box-1 
+                    <!-- Box-1
                     <div class="col-lg-4">
                         <div class="box bx-shw">
                             <div class="content">
@@ -519,7 +525,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </div>
                         </div>
                     </div>
-                    <!-- Box-2 
+                    <!-- Box-2
                     <div class="col-lg-4">
                             <div class="box bx-shw">
                                 <div class="content">
@@ -539,7 +545,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                 </div>
                             </div>
                         </div>
-                        <!-- Box-3 
+                        <!-- Box-3
                     <div class="col-lg-4">
                             <div class="box bx-shw">
                                 <div class="content">
@@ -562,9 +568,9 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Our Team ========== 
+        <!-- ========== End Our Team ==========
 
-        <!-- ========== Start Testimonials ========== 
+        <!-- ========== Start Testimonials ==========
         <section class="testimonials" id="testimonials">
             <div class="container">
                 <div class="row text-center">
@@ -578,7 +584,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             </ol>
 
                             <div class="carousel-inner">
-                                <!-- Item-1 
+                                <!-- Item-1
                                 <div class="carousel-item active text-center">
                                     <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
                                     <h3>Alamin Musa</h3>
@@ -591,7 +597,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                         <br>
                                         ratione, reiciendis repellat sapiente veritatis vero!</p>
                                 </div>
-                                <!-- Item-2 
+                                <!-- Item-2
                                 <div class="carousel-item text-center">
                                     <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
                                     <h3>Alamin Musa</h3>
@@ -604,7 +610,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                         <br>
                                         ratione, reiciendis repellat sapiente veritatis vero!</p>
                                 </div>
-                                <!-- Item-3 
+                                <!-- Item-3
                                 <div class="carousel-item text-center">
                                     <img src="https://via.placeholder.com/90x90" alt="" class="center-block team">
                                     <h3>Alamin Musa</h3>
@@ -644,10 +650,10 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
             </div>
         </section>
-        <!-- ========== End Testimonials ========== 
+        <!-- ========== End Testimonials ==========
 
 
-        <!-- ========== Start About ========== 
+        <!-- ========== Start About ==========
         <section class="about m-section-120" id="about">
                 <div class="container">
                     <div class="row d-flex align-items-center">
@@ -669,9 +675,9 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                     </div>
                 </div>
             </section>
-            <!-- ========== End About ========== 
+            <!-- ========== End About ==========
 
-            <!-- ========== Start Price ========== 
+            <!-- ========== Start Price ==========
             <section class="price mb-120" id="price">
                 <div class="container text-center">
                         <h2 class="h2 mb-15">Table Price</h2>
@@ -680,7 +686,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                             solely allocated to your business.</p>
 
                             <div class="row">
-                                <!-- Box-1 
+                                <!-- Box-1
                                 <div class="col-lg-4">
                                     <div class="box bx-shw">
                                         <h3 class="h3-bk mb-30">Basic</h3>
@@ -696,7 +702,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                         <a href="#" class="btn-color d-inline-block">Get Started</a>
                                     </div>
                                 </div>
-                                <!-- Box-2 
+                                <!-- Box-2
                                 <div class="col-lg-4">
                                         <div class="box bx-shw">
                                             <h3 class="h3-bk mb-30">Ultimate</h3>
@@ -712,7 +718,7 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                                             <a href="#" class="btn-color d-inline-block">Get Started</a>
                                         </div>
                                     </div>
-                                    <!-- Box-3 
+                                    <!-- Box-3
                                 <div class="col-lg-4">
                                         <div class="box bx-shw">
                                             <h3 class="h3-bk mb-30">Professional</h3>
@@ -732,17 +738,17 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
                 </div>
 
             </section>
-            <!-- ========== End Price ========== 
+            <!-- ========== End Price ==========
 
 
             <!-- ========== Start Contact ========== -->
             <section class="contact" >
-            
+
                     <div class="container text-center">
                             <h2 class="h2 mb-15">Keep In Touch</h2>
                         <div class="row">
                             <div class="col-md-6 offset-md-3">
-        
+
                                 <form>
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -766,23 +772,31 @@ User: Anıl Güvenç (@anilguvenc) made an error at: 2020-10-22 20:07:55 on comm
             <!-- ========== Start Footer ========== -->
             <footer class="footer">
                     <div class="container text-center text-white">
-                        <img src="img/fork.png" alt="">
+                        {% load static %}
+                        <img src="{% static 'djCheckUp/img/fork.png' %}" alt="">
                         <h2>GitCheckup. All Rights Reserved.</h2>
                     </div>
                 </footer>
             <!-- ========== End Footer ========== -->
 
         <!-- ========== JS ========== -->
-        <script src="js/plugins/jquery-3.3.1.min.js"></script>
-        <script src="js/plugins/popper.min.js"></script>
-        <script src="js/plugins/bootstrap.min.js"></script>
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/jquery-3.3.1.min.js' %}">
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/popper.min.js' %}">
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/bootstrap.min.js' %}">
         <!-- Particels JS -->
-        <script src="js/plugins/particles.min.js"></script>
-        <script src="js/plugins/app.js"></script>
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/particles.min.js' %}">
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/app.js' %}">
         <!-- Smooth Scrolling -->
-        <script src="js/plugins/jquery.smoothscroll.min.js"></script>
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/jquery.smoothscroll.min.js' %}">
         <!-- Magnific Popup -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-        <script src="js/main.js"></script>
+        {% load static %}
+        <script="{% static 'djCheckUp/js/plugins/main.js' %}">
     </body>
 </html>
