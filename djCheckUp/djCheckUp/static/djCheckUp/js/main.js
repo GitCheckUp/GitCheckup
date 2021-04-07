@@ -3,7 +3,7 @@ $(document).ready(function(){
     "use strict";
 
     // Animate loader off screen
-    $('.se-pre-con').fadeOut('slow');
+    $('.se-pre-con').fadeOut(2500);
 
     // Smooth Scrolling
     $('html').smoothScroll(800);
