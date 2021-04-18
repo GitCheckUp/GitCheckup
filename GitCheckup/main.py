@@ -6,6 +6,10 @@ from Controller.controller import Controller
 import sys
 sys.path.append("..")
 
+class F:
+    __init__(self):
+        self.x = 3
+
 event = threading.Event()
 event.func = None
 event.args = None

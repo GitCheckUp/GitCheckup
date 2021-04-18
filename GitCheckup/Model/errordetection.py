@@ -2,8 +2,8 @@ import os, sys, re
 import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from Model.ierror import IError
-from Model.config import *
+from GitCheckup.Model.ierror import IError
+from GitCheckup.Model.config import *
 
 # IMPORTANT: When adding a new error detection, insert the class to the return list of the method at the bottom.
 

@@ -1,5 +1,5 @@
-from Model import analyzer
-from Model.irepo import IRepo
+from GitCheckup.Model import analyzer
+from GitCheckup.Model.irepo import IRepo
 
 class Model:
     def __init__(self):

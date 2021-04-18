@@ -12,16 +12,16 @@
             -->
         <!-- Bootstrap 4.2.1 -->
         {% load static %}
-        <link rel = "stylesheet" href="{% static 'djCheckUp/css/plugins/bootstrap.min.css' %}">
+        <link rel = "stylesheet" href="{% static 'GitCheckup/css/plugins/bootstrap.min.css' %}">
         <!-- Magnific Popup -->
-        <link rel="stylesheet" href="{% static 'djCheckUp/css/plugins/magnific-popup.min.css' %}">
+        <link rel="stylesheet" href="{% static 'GitCheckup/css/plugins/magnific-popup.min.css' %}">
         <!-- Font Awesome -->
         <link
-            href="{% static 'djCheckUp/css/plugins/font-awesome.min.css' %}"
+            href="{% static 'GitCheckup/css/plugins/font-awesome.min.css' %}"
             rel="stylesheet">
         <!-- Main CSS -->
         {% load static %}
-        <link rel = "stylesheet" href="{% static 'djCheckUp/css/main.css' %}">
+        <link rel = "stylesheet" href="{% static 'GitCheckup/css/main.css' %}">
     </head>
     <body>
         <!-- Page Loading -->
@@ -32,7 +32,7 @@
             <div class="container">
                 <a class="navbar-brand" href="#">
                   {% load static %}
-                  <img src="{% static 'djCheckUp/img/logo.png' %}" alt="">
+                  <img src="{% static 'GitCheckup/img/logo.png' %}" alt="">
                   GitCheckup
                 </a>
                 <button
@@ -92,7 +92,7 @@
         <!-- ========== Start Get Started ========== -->
         <section class="get-started" id="get-started">
             <p class="p-17-w mb-30">Enter the repository you need to analyze for errors and poor practices.</p>
-        	<form action="#">
+        	<form action="#" method = "get">
   			<input type="text" id="repo" name="repo" style="min-width:400px;" value="GitCheckup/GitCheckup">
   			<input type="submit" value="Analyze" class="btn-white d-inline-block">
 			</form>
@@ -105,40 +105,58 @@
             <div class="container">
                 <div class="row d-flex align-items-center">
                         <h2 class="h2 mb-20">Results of the analysis</h2>
-<ul class="ascii">
-    <li><b>Found 1 issues of type RevertMergeCommit of category Reverting:</b>
-  <ul>
-      <li>User: Mehmet Kaan Özkan (@kaan-ozkan) made an error at: 2020-12-23 10:17:20 on commit sha: 64024237c0f92c78223e991383c38778dc48baae with message: Revert "Merge remote-tracking branch 'origin/sadness' into main"
-      <ul>
-        <li>This reverts commit 5ab96197c7c797a2db7977d1dc7197d9175f6674, reversing changes made to 8229f9230371c33172796f949861d842b53e2805.</li>
-      </ul>
-    </li>
-</li>
-</ul>
-</li>
-<br />
+                        <ul class="ascii">
+                          {% for category, category_v in data.items %}
+                            {% for name, data in category_v.items %}
+                              {% if data|length > 0 %}
+                              <li><b>Found {{data|length}} issues of type {{name}} of category {{category}}</b>
+                              <ul>
+                                {% for id, error in data.items %}
+                                  <li>User: {{error.user.name}} made an error{{error.extra_info}} at: {{error.commit.date}} on commit sha: {{error.commit.sha}} with message: {{error.commit.message}}</li>
+                                {% endfor %}
+                              </ul>
+                              {% endif %}
+                              <br>
+                            {% endfor %}
+                          {% endfor %}
+                        </ul>
+                        <!-->
+                        <br><br><br>
+                          <ul class="ascii">
+                              <li><b>Found 1 issues of type RevertMergeCommit of category Reverting:</b>
+                            <ul>
+                                <li>User: Mehmet Kaan Özkan (@kaan-ozkan) made an error at: 2020-12-23 10:17:20 on commit sha: 64024237c0f92c78223e991383c38778dc48baae with message: Revert "Merge remote-tracking branch 'origin/sadness' into main"
+                                <ul>
+                                  <li>This reverts commit 5ab96197c7c797a2db7977d1dc7197d9175f6674, reversing changes made to 8229f9230371c33172796f949861d842b53e2805.</li>
+                                </ul>
+                              </li>
+                          </li>
+                          </ul>
+                          </li>
+                          <br />
 
-<ul class="ascii">
-    <li><b>Found 6 issues of type UnnecessaryFiles of category Creating Commits:</b>
-  <ul>
-    <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/GitCheckup.iml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
-      <ul>
-        <li>I have added unnecessary files to this commit to test.</li>
-      </ul>
-    </li>
-    <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/inspectionProfiles/profiles_settings.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
-      <ul>
-        <li>I have added unnecessary files to this commit to test.</li>
-      </ul>
-    </li>
-    <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/workspace.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
-      <ul>
-        <li>I have added unnecessary files to this commit to test.</li>
-      </ul>
-    </li>
-  </ul>
-</li>
-</ul>
+                          <ul class="ascii">
+                              <li><b>Found 6 issues of type UnnecessaryFiles of category Creating Commits:</b>
+                            <ul>
+                              <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/GitCheckup.iml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+                                <ul>
+                                  <li>I have added unnecessary files to this commit to test.</li>
+                                </ul>
+                              </li>
+                              <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/inspectionProfiles/profiles_settings.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+                                <ul>
+                                  <li>I have added unnecessary files to this commit to test.</li>
+                                </ul>
+                              </li>
+                              <li>User: Anıl Güvenç (@anilguvenc) made an error(.idea/workspace.xml) at: 2020-12-20 19:56:58 on commit sha: 8229f9230371c33172796f949861d842b53e2805 with message: unnecessary file commit
+                                <ul>
+                                  <li>I have added unnecessary files to this commit to test.</li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          </ul>
+                          <!-->
                         </p>
                         <a href="#" class="btn-color d-inline-block">Read More</a>
                     </div>
@@ -725,7 +743,7 @@
             <footer class="footer">
                     <div class="container text-center text-white">
                         {% load static %}
-                        <img src="{% static 'djCheckUp/img/fork.png' %}" alt="">
+                        <img src="{% static 'GitCheckup/img/fork.png' %}" alt="">
                         <h2>GitCheckup. All Rights Reserved.</h2>
                     </div>
                 </footer>
@@ -736,23 +754,23 @@
         <!-- ========== JS ========== -->
 
 
-        <script src ="{% static 'djCheckUp/js/plugins/jquery-3.3.1.min.js' %}"> </script>
+        <script src ="{% static 'GitCheckup/js/plugins/jquery-3.3.1.min.js' %}"> </script>
 
-        <script src="{% static 'djCheckUp/js/plugins/popper.min.js' %}"> </script>
+        <script src="{% static 'GitCheckup/js/plugins/popper.min.js' %}"> </script>
 
-        <script src="{% static 'djCheckUp/js/plugins/bootstrap.min.js' %}"> </script>
+        <script src="{% static 'GitCheckup/js/plugins/bootstrap.min.js' %}"> </script>
         <!-- Particels JS -->
 
-        <script src= "{% static 'djCheckUp/js/plugins/particles.min.js' %}"> </script>
+        <script src= "{% static 'GitCheckup/js/plugins/particles.min.js' %}"> </script>
 
-        <script src= "{% static 'djCheckUp/js/plugins/app.js' %}"> </script>
+        <script src= "{% static 'GitCheckup/js/plugins/app.js' %}"> </script>
         <!-- Smooth Scrolling -->
 
-        <script src="{% static 'djCheckUp/js/plugins/jquery.smoothscroll.min.js' %}"> </script>
+        <script src="{% static 'GitCheckup/js/plugins/jquery.smoothscroll.min.js' %}"> </script>
         <!-- Magnific Popup -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"> </script>
 
-        <script src="{% static 'djCheckUp/js/main.js' %}"> </script>
+        <script src="{% static 'GitCheckup/js/main.js' %}"> </script>
 
     </body>
 </html>
