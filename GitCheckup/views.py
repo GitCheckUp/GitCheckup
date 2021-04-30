@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from .utils import get_plot
 import sys
+
 sys.path.append(".")
 
 from GitCheckup.Model.model import Model
@@ -124,6 +125,18 @@ def home(request):
         errorDetections = controller.analyze_repo(repoName)
 
         data = controller.errors_to_dict(errorDetections)
+
+    mydata = data['data']
+    names = []
+    values = []
+    for category,categoryv in mydata.items():
+        for errorType,errors in categoryv.items():
+            print(errorType,len(errors))
+            names.append(errorType)
+            values.append(len(errors))
+
+    chart = get_plot(names, values)
+    data['chart'] = chart
 
     return render(request, 'GitCheckup/index.html', data)
 

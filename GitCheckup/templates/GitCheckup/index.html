@@ -105,6 +105,9 @@
             <div class="container">
                 <div class="row d-flex align-items-center">
                         <h2 class="h2 mb-20">Results of the analysis</h2>
+                        {%if chart%}
+                         <img src="data:image/png;base64, {{chart|safe}}">
+                        {% endif %}
                         <ul class="ascii">
                           {% for category, category_v in data.items %}
                             {% for name, data in category_v.items %}
