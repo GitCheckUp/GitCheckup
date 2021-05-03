@@ -111,7 +111,6 @@ class Controller():
                 data[errorObject.category] = {}
             data[errorObject.category][errorObject.name] = errorInfos
 
-        print(data)
         return data
 
     def display_chart(self, my_data):
@@ -138,12 +137,14 @@ def home(request):
 
         #if DEBUG == False, generate a new error detection. Otherwise, use cached one.
 
-        if (settings.DEBUG == False and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
-        #if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
+        #if (settings.DEBUG == False and (repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo")):
+        if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
             if (repoName == "GitCheckup/GitCheckup"):
                 data = config.GitCheckup_Data
+                data['chart'] = controller.display_chart(data['data'])
             if (repoName == "GitCheckup/demo"):
                 data = config.Demo_Data
+                data['chart'] = controller.display_chart(data['data'])
         elif (repoName != "" and repoName != None):
             errorDetections = controller.analyze_repo(repoName)
 
@@ -152,13 +153,13 @@ def home(request):
                 return render(request, 'GitCheckup/index.html', data)
 
             data['data'] = controller.errors_to_dict(errorDetections)
-
-            data['chart'] = controller.display_chart(data['data'])
             data['state'] = True
+
+            #print(data)
+            data['chart'] = controller.display_chart(data['data'])
         else:
             data['repo_name'] = "GitCheckup/GitCheckup"
 
-    print(data)
     return render(request, 'GitCheckup/index.html', data)
 
 def showMessage(request):
