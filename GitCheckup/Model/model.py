@@ -1,4 +1,5 @@
 from GitCheckup.Model.irepo import IRepo
+from GitCheckup.Model.errordetection import *
 
 class Model:
     def __init__(self):
@@ -8,4 +9,4 @@ class Model:
         return IRepo(repo)
 
     def analyze_errors(self, repo):
-        return errordetection.get_error_detections(repo)
+        return get_error_detections(repo)
