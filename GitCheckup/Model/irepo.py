@@ -1,5 +1,5 @@
-from Model import icommit
-from Model.ibranch import IBranch
+from GitCheckup.Model import icommit
+from GitCheckup.Model.ibranch import IBranch
 
 class IRepo:
     def __init__(self, repo):

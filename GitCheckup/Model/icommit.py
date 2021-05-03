@@ -1,4 +1,4 @@
-from Model import ifile, iauthor
+from GitCheckup.Model import ifile, iauthor
 commits = {}
 
 def getCommit(commitData):

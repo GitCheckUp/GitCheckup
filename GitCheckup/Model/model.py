@@ -1,4 +1,3 @@
-from GitCheckup.Model import analyzer
 from GitCheckup.Model.irepo import IRepo
 
 class Model:
@@ -9,4 +8,4 @@ class Model:
         return IRepo(repo)
 
     def analyze_errors(self, repo):
-        return analyzer.analyze_errors(repo)
+        return errordetection.get_error_detections(repo)

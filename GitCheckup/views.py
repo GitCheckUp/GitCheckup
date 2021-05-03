@@ -7,7 +7,6 @@ import sys
 sys.path.append(".")
 
 from GitCheckup.Model.model import Model
-from GitCheckup.Controller.controller import Controller
 from GitCheckup.Model.config import config
 from github import Github
 
@@ -113,18 +112,29 @@ class Controller():
             errorData[errorObject.name] = errorInfos
             data[errorObject.category] = errorData
 
-        dict['data'] = data
-        return dict
+        return data
+
+    def display_chart(self, my_data):
+        names = []
+        values = []
+        for category,categoryv in my_data.items():
+            for errorType,errors in categoryv.items():
+                #print(errorType,len(errors))
+                names.append(errorType)
+                values.append(len(errors))
+
+        return get_plot(names, values)
 
 model = Model()
 controller = Controller(model)
 
 def home(request):
 
-    data = {}
+    data = {'state': False, 'error': False, 'repo_name': None}
 
     if request.method == "GET":
         repoName = request.GET.get("repo")
+        data['repo_name'] = repoName
 
         if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
             if (repoName == "GitCheckup/GitCheckup"):
@@ -135,27 +145,17 @@ def home(request):
             errorDetections = controller.analyze_repo(repoName)
 
             if (errorDetections == None):
-                data['state'] = False
                 data['error'] = True
                 return render(request, 'GitCheckup/index.html', data)
 
-            data = controller.errors_to_dict(errorDetections)
+            data['data'] = controller.errors_to_dict(errorDetections)
 
-            mydata = data['data']
-            names = []
-            values = []
-            for category,categoryv in mydata.items():
-                for errorType,errors in categoryv.items():
-                    #print(errorType,len(errors))
-                    names.append(errorType)
-                    values.append(len(errors))
-
-            chart = get_plot(names, values)
-            data['chart'] = chart
+            data['chart'] = controller.display_chart(data['data'])
             data['state'] = True
         else:
-            data['state'] = False
+            data['repo_name'] = "GitCheckup/GitCheckup"
 
+    #print(data)
     return render(request, 'GitCheckup/index.html', data)
 
 def showMessage(request):

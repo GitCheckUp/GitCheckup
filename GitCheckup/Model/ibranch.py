@@ -1,4 +1,4 @@
-from Model import icommit
+from GitCheckup.Model import icommit
 
 class IBranch:
     def __init__(self, branchData, icommitList = []):
