@@ -120,9 +120,9 @@
                               <ul>
                                 {% for id, error in data.items %}
                                   {% if error.is_warning %}
-                                    <li><span style="color:#808000">Warning: User: {{error.user.name}} is warned, {{error.extra_info}} at: {{error.commit.date}} on commit sha: {{error.commit.sha}} with message: {{error.commit.message}}</span></li>
+                                    <li style="color:#808000;">Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
                                   {% else %}
-                                    <li><span style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} at: {{error.commit.date}} on commit sha: {{error.commit.sha}} with message: {{error.commit.message}}</span></li>
+                                    <li style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
                                   {% endif %}
                                   {% endfor %}
                               </ul>
