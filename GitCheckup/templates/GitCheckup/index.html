@@ -76,7 +76,7 @@
          <section class="slider d-flex align-items-center" id="slider">
             <div id="particles-js"></div>
             <div class="container text-center">
-                <div class="row d-flex align-items-center mt-60">
+                <div class="row d-flex align-items-center mt-30">
                     <div class="col-lg-12">
                         <div class="text">
                             <h1 class="h1-w mb-20">GitCheckup</h1>
@@ -110,6 +110,7 @@
                     <h2 class="h2 mb-20">Results of the analysis</h2>
                       {%if chart%}
                          <img src="data:image/png;base64, {{chart|safe}}">
+                       </br>
                       {% endif %}
                         <ul class="ascii">
                           {% for category, category_v in data.items %}

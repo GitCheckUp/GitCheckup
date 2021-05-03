@@ -70,12 +70,10 @@ class Controller():
         return errorDetections
 
     def errors_to_dict(self, errorObjects):
-        dict = {}
         data = {}
         #{'data': {'Reverting': {'RevertMergeCommit': {'id_1': {'user': "Mehmet Kaan Özkan"}, 'id_2': {'user': "Anıl Güvenç"}}}}}
 
         for errorObject in errorObjects:
-            errorData = {}
             errorInfos = {}
 
             for error in errorObject.errorList:
@@ -109,9 +107,11 @@ class Controller():
 
                 errorInfos[error.error_id] = errorDetails
 
-            errorData[errorObject.name] = errorInfos
-            data[errorObject.category] = errorData
+            if (errorObject.category not in data):
+                data[errorObject.category] = {}
+            data[errorObject.category][errorObject.name] = errorInfos
 
+        print(data)
         return data
 
     def display_chart(self, my_data):
@@ -136,7 +136,10 @@ def home(request):
         repoName = request.GET.get("repo")
         data['repo_name'] = repoName
 
-        if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
+        #if DEBUG == False, generate a new error detection. Otherwise, use cached one.
+
+        if (settings.DEBUG == False and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
+        #if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
             if (repoName == "GitCheckup/GitCheckup"):
                 data = config.GitCheckup_Data
             if (repoName == "GitCheckup/demo"):
@@ -155,7 +158,7 @@ def home(request):
         else:
             data['repo_name'] = "GitCheckup/GitCheckup"
 
-    #print(data)
+    print(data)
     return render(request, 'GitCheckup/index.html', data)
 
 def showMessage(request):
