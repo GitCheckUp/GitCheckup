@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.conf import settings
 from .utils import get_plot
 import sys
 
@@ -7,6 +8,7 @@ sys.path.append(".")
 
 from GitCheckup.Model.model import Model
 from GitCheckup.Controller.controller import Controller
+from GitCheckup.Model.config import config
 from github import Github
 
 class Controller():
@@ -93,8 +95,8 @@ class Controller():
 
                 commit = {}
 
-                commit['author'] = error.commit.author
-                commit['committer'] = error.commit.committer
+                #commit['author'] = error.commit.author
+                #commit['committer'] = error.commit.committer
                 commit['additions'] = error.commit.additions
                 commit['deletions'] = error.commit.deletions
                 commit['changes'] = error.commit.changes
@@ -104,6 +106,7 @@ class Controller():
 
                 errorDetails['commit'] = commit
                 errorDetails['extra_info'] = error.extra_info
+                errorDetails['is_warning'] = error.is_warning
 
                 errorInfos[error.error_id] = errorDetails
 
@@ -122,21 +125,36 @@ def home(request):
 
     if request.method == "GET":
         repoName = request.GET.get("repo")
-        errorDetections = controller.analyze_repo(repoName)
 
-        data = controller.errors_to_dict(errorDetections)
+        if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
+            if (repoName == "GitCheckup/GitCheckup"):
+                data = config.GitCheckup_Data
+            if (repoName == "GitCheckup/demo"):
+                data = config.Demo_Data
+        elif (repoName != "" and repoName != None):
+            errorDetections = controller.analyze_repo(repoName)
 
-    mydata = data['data']
-    names = []
-    values = []
-    for category,categoryv in mydata.items():
-        for errorType,errors in categoryv.items():
-            print(errorType,len(errors))
-            names.append(errorType)
-            values.append(len(errors))
+            if (errorDetections == None):
+                data['state'] = False
+                data['error'] = True
+                return render(request, 'GitCheckup/index.html', data)
 
-    chart = get_plot(names, values)
-    data['chart'] = chart
+            data = controller.errors_to_dict(errorDetections)
+
+            mydata = data['data']
+            names = []
+            values = []
+            for category,categoryv in mydata.items():
+                for errorType,errors in categoryv.items():
+                    #print(errorType,len(errors))
+                    names.append(errorType)
+                    values.append(len(errors))
+
+            chart = get_plot(names, values)
+            data['chart'] = chart
+            data['state'] = True
+        else:
+            data['state'] = False
 
     return render(request, 'GitCheckup/index.html', data)
 

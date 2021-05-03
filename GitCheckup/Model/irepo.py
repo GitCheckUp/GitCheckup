@@ -2,7 +2,7 @@ from Model import icommit
 from Model.ibranch import IBranch
 
 class IRepo:
-    def __init__(self,repo):
+    def __init__(self, repo):
         self.branchList = []
         self.commitList = []
         self.commitDict = {}

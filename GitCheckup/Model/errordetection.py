@@ -13,6 +13,7 @@ class ErrorDetection:
         self.name = None
         self.category = None
         self.errorList = []
+        self.is_warning = False
 
     def detect(self, irepo):
         pass
@@ -24,6 +25,7 @@ class ED_RevertMergeCommit(ErrorDetection):
         self.name = "RevertMergeCommit"
         self.category = "Reverting"
         self.errorList = []
+        self.is_warning = False
 
         self.detect(irepo)
 
@@ -40,7 +42,7 @@ class ED_RevertMergeCommit(ErrorDetection):
 
                 # if reverted commit has more than 1 parents, it is a merge commit, poor practice detected
                 if (len(reverted_commit.parents) > 1):
-                    error = IError(error_count, self.errorId, commit.committer, commit)
+                    error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
                     self.errorList.append(error)
                     error_count += 1
 
@@ -51,6 +53,7 @@ class ED_RevertRevertCommit(ErrorDetection):
         self.name = "RevertRevertCommit"
         self.category = "Reverting"
         self.errorList = []
+        self.is_warning = False
 
         self.detect(irepo)
 
@@ -70,7 +73,7 @@ class ED_RevertRevertCommit(ErrorDetection):
 
                 # if parent is also a revert then error occurs
                 if (re.search("Revert \"", parent_message) and re.search("This reverts commit", parent_message)):
-                    error = IError(error_count, self.errorId, commit.committer, commit)
+                    error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
                     self.errorList.append(error)
                     error_count += 1
 
@@ -84,6 +87,7 @@ class ED_UnnecessaryFiles(ErrorDetection):
         self.name = "UnnecessaryFiles"
         self.category = "Creating Commits"
         self.errorList = []
+        self.is_warning = True
 
         self.detect(irepo)
 
@@ -92,7 +96,7 @@ class ED_UnnecessaryFiles(ErrorDetection):
         for c in irepo.commitList:
             for k in c.files:
                 if any(re.compile(regex).match(k.name) for regex in Config.unnecessary_files_regex):
-                    error_detected = IError(error_count, self.errorId, c.committer, c, '('+k.name+')')
+                    error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, '('+k.name+')')
                     self.errorList.append(error_detected)
                     error_count += 1
 
@@ -103,6 +107,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
         self.name = "OriginMasterMainBranchName"
         self.category = "Branching/Tagging"
         self.errorList = []
+        self.is_warning = False
 
         self.detect(irepo)
 
@@ -110,7 +115,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
         error_count = 0
         for e in irepo.branchList:
             if e.name == "origin/origin/master" or "origin/origin/main":
-                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit)
+                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
 
@@ -122,6 +127,7 @@ class ED_HeadBranchName(ErrorDetection):
         self.name = "HeadBranchName"
         self.category = "Branching/Tagging"
         self.errorList = []
+        self.is_warning = False
 
         self.detect(irepo)
 
@@ -129,7 +135,7 @@ class ED_HeadBranchName(ErrorDetection):
         error_count = 0
         for e in irepo.branchList:
             if re.findall("/Head$|/head$|/HEAD$", e.name):
-                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit)
+                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
 
@@ -143,6 +149,7 @@ class ED_MultipleFileChange(ErrorDetection):
         self.name = "MultipleFileCommits"
         self.category = "Creating Commits"
         self.errorList = []
+        self.is_warning = True
 
         self.detect(irepo)
 
@@ -150,7 +157,7 @@ class ED_MultipleFileChange(ErrorDetection):
         error_count = 0
         for c in irepo.commitList:
             if(c.additions + c.deletions >= 5):
-                error_detected = IError(error_count, self.errorId, c.committer, c)
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -164,6 +171,7 @@ class ED_UninformativeCommitMessage(ErrorDetection):
         self.name = "UninformativeComment"
         self.category = "Creating Commits"
         self.errorList = []
+        self.is_warning = False
 
         self.detect(irepo)
 
@@ -171,7 +179,7 @@ class ED_UninformativeCommitMessage(ErrorDetection):
         error_count = 0
         for c in irepo.commitList:
             if(c.message.count(' ') <3):
-                error_detected = IError(error_count, self.errorId, c.committer, c)
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -187,6 +195,7 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         self.name = "InfrequentCommitFrequency"
         self.category = "Creating Commits"
         self.errorList = []
+        self.is_warning = True
 
         self.detect(irepo)
 
@@ -228,7 +237,7 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
             lastCommit = c
 
             if (timeBetween > tripleTime or timeBetween > datetime.timedelta(7)):
-                error_detected = IError(error_count, self.errorId, c.committer, c)
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -240,6 +249,7 @@ class ED_MultiplePushInsteadOne(ErrorDetection):
         self.name = "MultiplePush"
         self.category = "Pushing Commits"
         self.errorList = []
+        self.is_warning = True
 
         self.detect(irepo)
 
@@ -255,7 +265,7 @@ class ED_MultiplePushInsteadOne(ErrorDetection):
                 minutes = total_seconds / 60
 
                 if minutes <= 5:
-                    error_detected = IError(error_count, self.errorId, commit.committer, commit)
+                    error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
                     self.errorList.append(error_detected)
                     error_count += 1
 
