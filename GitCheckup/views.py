@@ -137,8 +137,8 @@ def home(request):
 
         #if DEBUG == False, generate a new error detection. Otherwise, use cached one.
 
-        #if (settings.DEBUG == False and (repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo")):
-        if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
+        if (settings.DEBUG == False and (repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo")):
+        #if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
             if (repoName == "GitCheckup/GitCheckup"):
                 data = config.GitCheckup_Data
                 data['chart'] = controller.display_chart(data['data'])

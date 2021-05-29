@@ -3,6 +3,8 @@ commits = {}
 
 def getCommit(commitData):
     sha = commitData.sha
+    if (sha == None):
+        return None
     if (sha in commits):
         return commits[sha]
     else:
@@ -12,6 +14,7 @@ def getCommit(commitData):
 
 class ICommit:
     def __init__(self, commitData):
+
         self.author = iauthor.getAuthor(commitData.author)
         self.committer = iauthor.getAuthor(commitData.committer)
         self.additions = commitData.stats.additions
@@ -28,9 +31,9 @@ class ICommit:
 
         self.files = fileList
 
-        parentsObject = commitData.parents
+    def set_parents(self, commitData):
         parentList = []
-        for commitObject in list(parentsObject):
+        for commitObject in list(commitData.parents):
             parentList.append(getCommit(commitObject))
 
         self.parents = parentList
