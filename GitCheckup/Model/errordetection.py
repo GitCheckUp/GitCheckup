@@ -206,28 +206,13 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         if (len(irepo.commitList) == 0):
             return
 
-        """
-        Here, calculate the average time taken.
-        """
-        totalTime = datetime.timedelta()
-        lastCommit = irepo.commitList[-1]
 
-        for c in reversed(irepo.commitList):
-            if (lastCommit == irepo.commitList[-1]):
-                timeBetween = datetime.timedelta()
-            else:
-                timeBetween = c.date - lastCommit.date
-
-            totalTime += timeBetween
-            lastCommit = c
 
         """
         Here, we detect the infrequent commits
         """
 
-
         print("User input is :",int(user_config['avg_commit_day']))
-
         tripleTime = datetime.timedelta(int(user_config['avg_commit_day']))
 
 
@@ -378,8 +363,10 @@ class ED_CactusMergeIntoMain(ErrorDetection):
                         self.errorList.append(error_detected)
                         error_count += 1
 
-def get_error_detections(irepo, filter = "None"):
+def get_error_detections(irepo, user_conf,filter = "None"):
     if (filter == "None"):
+        global user_config
+        user_config = user_conf
         error_detections = []
 
         error_detections.append(ED_RevertMergeCommit(irepo))
