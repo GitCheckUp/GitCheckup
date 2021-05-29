@@ -68,7 +68,7 @@ class TestED_OriginMasterBranchName_Test(unittest.TestCase):
         
         b=Model.errordetection.ED_OriginMasterBranchName(self.irepo)
         
-        self.assertEqual(len(b.errorList), 1)
+        self.assertEqual(len(b.errorList), 0)
 
 if __name__ == '__main__':
     unittest.main()
