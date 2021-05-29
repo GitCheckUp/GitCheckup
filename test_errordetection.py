@@ -1,13 +1,13 @@
 from typing import List
-from Model.ibranch import IBranch
+from GitCheckup.Model.ibranch import IBranch
 import unittest
 from unittest.mock import patch
 from unittest.mock import Mock
-import Model.errordetection
-import Model.irepo
-import Model.ierror
-import Model.iauthor
-import Model.icommit
+import GitCheckup.Model.errordetection
+import GitCheckup.Model.irepo
+import GitCheckup.Model.ierror
+import GitCheckup.Model.iauthor
+import GitCheckup.Model.icommit
 
 class TestED_OriginMasterBranchName_Test(unittest.TestCase):
 
@@ -66,7 +66,7 @@ class TestED_OriginMasterBranchName_Test(unittest.TestCase):
         for e in self.irepo.branchList:
             print(e.name)
         
-        b=Model.errordetection.ED_OriginMasterBranchName(self.irepo)
+        b=GitCheckup.Model.errordetection.ED_OriginMasterBranchName(self.irepo)
         
         self.assertEqual(len(b.errorList), 1)
 
