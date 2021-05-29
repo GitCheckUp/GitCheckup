@@ -114,7 +114,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
     def detect(self, irepo):
         error_count = 0
         for e in irepo.branchList:
-            if e.name == "origin/origin/master" or "origin/origin/main":
+            if (e.name == "origin/origin/master" or "origin/origin/main"):
                 detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
