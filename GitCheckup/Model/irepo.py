@@ -20,7 +20,6 @@ class IRepo:
                 pass
 
         for branch in repo.get_branches():
-            print(branch.name)
             self.add_branch_commits(branch)
 
         for tag_object in repo.get_tags():

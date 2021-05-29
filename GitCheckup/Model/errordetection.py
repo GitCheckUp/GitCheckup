@@ -271,6 +271,124 @@ class ED_MultiplePushInsteadOne(ErrorDetection):
 
             currentCommit = commit
 
+class ED_CactusMissingTag(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 9
+        self.name = "CactusMissingTag"
+        self.category = "Cactus Workflow"
+        self.errorList = []
+        self.is_warning = True
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        currentCommit = irepo.commitList[0]
+
+        tag_commits_dict = {}
+        for tag in irepo.tagList:
+            tag_commits_dict[tag.commit.sha] = tag.commit
+
+        for branch in irepo.branchList:
+            if ("release" in branch.name):
+                commits = branch.commitList
+                for commit in commits:
+                    if (commit.sha not in tag_commits_dict):
+                        error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        self.errorList.append(error_detected)
+                        error_count += 1
+
+                break
+
+class ED_CactusMissingReleaseBranch(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 10
+        self.name = "CactusMissingReleaseBranch"
+        self.category = "Cactus Workflow"
+        self.errorList = []
+        self.is_warning = False
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        found_release = False
+        for branch in irepo.branchList:
+            if ("release" in branch.name):
+                found_release = True
+
+        commit = irepo.branchList[0].commitList[0]
+        if (not found_release):
+            error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+            self.errorList.append(error_detected)
+            error_count += 1
+
+class ED_CactusUnnecessaryBranch(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 11
+        self.name = "CactusUnnecessaryBranch"
+        self.category = "Cactus Workflow"
+        self.errorList = []
+        self.is_warning = False
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        if (len(irepo.branchList) > 2):
+            for branch in irepo.branchList:
+                if ("release" not in branch.name and "main" not in branch.name and "master" not in branch.name):
+                    commit = branch.headCommit
+                    error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                    self.errorList.append(error_detected)
+                    error_count += 1
+
+class ED_CactusMergeIntoMain(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 12
+        self.name = "CactusMergeIntoMain"
+        self.category = "Cactus Workflow"
+        self.errorList = []
+        self.is_warning = False
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        found_release = False
+        for branch in irepo.branchList:
+            if ("main" in branch.name or "master" in branch.name):
+
+                for commit in branch.commitList:
+                    if (commit.message.startswith("Merge")):
+                        error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        self.errorList.append(error_detected)
+                        error_count += 1
+
 def get_error_detections(irepo, filter = "None"):
     if (filter == "None"):
-        return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo), ED_UninformativeCommitMessage(irepo), ED_InfrequentCommitFrequency(irepo),ED_MultiplePushInsteadOne(irepo)]
+        error_detections = []
+
+        error_detections.append(ED_RevertMergeCommit(irepo))
+        error_detections.append(ED_RevertRevertCommit(irepo))
+        error_detections.append(ED_UnnecessaryFiles(irepo))
+        error_detections.append(ED_OriginMasterBranchName(irepo))
+        error_detections.append(ED_HeadBranchName(irepo))
+        error_detections.append(ED_MultipleFileChange(irepo))
+        error_detections.append(ED_UninformativeCommitMessage(irepo))
+        error_detections.append(ED_InfrequentCommitFrequency(irepo))
+        error_detections.append(ED_MultiplePushInsteadOne(irepo))
+        error_detections.append(ED_CactusMissingTag(irepo))
+        error_detections.append(ED_CactusMissingReleaseBranch(irepo))
+        error_detections.append(ED_CactusUnnecessaryBranch(irepo))
+        error_detections.append(ED_CactusMergeIntoMain(irepo))
+
+        return error_detections
