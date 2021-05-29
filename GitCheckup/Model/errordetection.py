@@ -7,6 +7,8 @@ from GitCheckup.Model.config import *
 
 # IMPORTANT: When adding a new error detection, insert the class to the return list of the method at the bottom.
 
+user_config = {}
+
 class ErrorDetection:
     def __init__(self, irepo):
         self.errorId = -1
@@ -223,8 +225,11 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         Here, we detect the infrequent commits
         """
 
-        averageTime = totalTime / (len(irepo.commitList) - 1)
-        tripleTime = averageTime * 3
+
+        print("User input is :",int(user_config['avg_commit_day']))
+
+        tripleTime = datetime.timedelta(int(user_config['avg_commit_day']))
+
 
         lastCommit = irepo.commitList[-1]
 
@@ -236,7 +241,7 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
 
             lastCommit = c
 
-            if (timeBetween > tripleTime or timeBetween > datetime.timedelta(7)):
+            if (timeBetween > tripleTime):
                 error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
@@ -271,6 +276,10 @@ class ED_MultiplePushInsteadOne(ErrorDetection):
 
             currentCommit = commit
 
-def get_error_detections(irepo, filter = "None"):
+def get_error_detections(irepo,user_conf,filter = "None"):
+
+    global user_config
+    user_config = user_conf
+
     if (filter == "None"):
         return [ED_RevertMergeCommit(irepo), ED_RevertRevertCommit(irepo), ED_UnnecessaryFiles(irepo), ED_OriginMasterBranchName(irepo), ED_HeadBranchName(irepo), ED_MultipleFileChange(irepo), ED_UninformativeCommitMessage(irepo), ED_InfrequentCommitFrequency(irepo),ED_MultiplePushInsteadOne(irepo)]

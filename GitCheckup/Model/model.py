@@ -8,5 +8,5 @@ class Model:
     def get_repo(self, repo):
         return IRepo(repo)
 
-    def analyze_errors(self, repo):
-        return get_error_detections(repo)
+    def analyze_errors(self, repo,user_config):
+        return get_error_detections(repo,user_config)

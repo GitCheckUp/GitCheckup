@@ -33,6 +33,6 @@ def getGraph():
 def get_plot(x,y):
     plt.switch_backend('AGG')
     plt.figure(figsize=(10, 6))
-    plt.plot(x,y)
+    plt.bar(x,y)
     graph = getGraph()
     return graph
