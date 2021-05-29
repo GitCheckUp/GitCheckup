@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>GitCheckup</title>
+        <!-- Google Font
+        <link
+            href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
+            rel="stylesheet">
+            -->
+        <!-- Bootstrap 4.2.1 -->
+        {% load static %}
+        <link rel = "stylesheet" href="{% static 'GitCheckup/css/plugins/bootstrap.min.css' %}">
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="{% static 'GitCheckup/css/plugins/magnific-popup.min.css' %}">
+        <!-- Font Awesome -->
+        <link
+            href="{% static 'GitCheckup/css/plugins/font-awesome.min.css' %}"
+            rel="stylesheet">
+        <!-- Main CSS -->
+        {% load static %}
+        <link rel = "stylesheet" href="{% static 'GitCheckup/css/main.css' %}">
+        <style>
+          .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 25%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+          background-color: #555;
+        }
+
+        .content {
+          padding: 0 18px;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+          background-color: #f1f1f1;
+
+        }
+        </style>
+    </head>
+    <body>
+        <!-- Page Loading -->
+        <div class="se-pre-con"></div>
+
+        <!-- ========== Start Navbar ========== -->
+        <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                  {% load static %}
+                  <img src="{% static 'GitCheckup/img/logo.png' %}" alt="">
+                  GitCheckup
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#slider">Home
+                                <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#get-started">The App</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#benefits">Benefits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#team">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- ========== End Navbar ========== -->
+
+        <!-- ========== Start Slider ========== -->
+         <section class="slider d-flex align-items-center" id="slider">
+            <div id="particles-js"></div>
+            <div class="container text-center">
+                <div class="row d-flex align-items-center mt-30">
+                    <div class="col-lg-12">
+                        <div class="text">
+                            <h1 class="h1-w mb-20">GitCheckup</h1>
+                            <p class="p-w mb-30">Git is a version control system that allows people to work on a project collaboratively and efficiently. Nowadays, Git is used by companies, groups and individual users to work on and store projects, to develop these projects efficiently and with the effort of many people, simultaneously.</p>
+                            <br>
+                            <p class="p-w mb-30">We know Git can be hard to understand and become proficient at. We will analyze your repository to detect errors and poor practices to help you and your team work more efficiently and accurately.</p>
+                            <a href="#get-started" class="btn-white d-inline-block">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========== End Slider ========== -->
+
+        <!-- ========== Start Get Started ========== -->
+        <section class="get-started" id="get-started">
+            <p class="p-17-w mb-30">Enter the repository you want to analyze for errors and poor practices.</p>
+        	<form action="#" method = "get">
+  			<input type="text" id="repo" name="repo" style="min-width:400px;" value={{repo_name | escape}}>
+  			<input type="submit" value="Analyze" class="btn-white d-inline-block">
+			<button type="button" class="collapsible">Configuration</button>
+                <div class="content">
+                    <label for="avg_commit_day"> Enter expected time between commits in days.</label>
+                    <input type="number" id="avg_commit_day" name="avg_commit_day" style="min-width:400px;" value= "3">
+                </div>
+            </form>
+
+        </section>
+        <!-- ========== End Get Started ========== -->
+
+
+        <!-- ========== Start About ========== -->
+        <section class="about m-section-120" id="about">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    {% if state %}
+                    <h2 class="h2 mb-20">Results of the analysis</h2>
+                      {%if chart%}
+                         <img src="data:image/png;base64, {{chart|safe}}">
+                       </br>
+                      {% endif %}
+                        <ul class="ascii">
+                          {% for category, category_v in data.items %}
+                            {% for name, data in category_v.items %}
+                              {% if data|length > 0 %}
+                              <li><b>Found {{data|length}} issues of type {{name}} of category {{category}}</b>
+                              <ul>
+                                {% for id, error in data.items %}
+                                  {% if error.is_warning %}
+                                    <li style="color:#808000;">Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                  {% else %}
+                                    <li style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                  {% endif %}
+                                  {% endfor %}
+                              </ul>
+                              {% endif %}
+                              <br></li>
+                            {% endfor %}
+                          {% endfor %}
+                        </ul>
+                        </p>
+                      {% else %}
+                        {% if error %}
+                          <h2 class="h2 mb-20">There was an error, please ensure you are entering a public, valid repository address.</h2>
+                        {% else %}
+                          <h2 class="h2 mb-20">Please analyze to see the test results.</h2>
+                        {% endif %}
+                      {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <section class="contact" >
+
+                    <div class="container text-center">
+                            <h2 class="h2 mb-15">Keep In Touch</h2>
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+
+                                <form>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="5" id="comment" placeholder="Message"></textarea>
+                                    </div>
+                                    <button class="btn btn-block" type="submit">Send Now!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            <!-- ========== End Contact ========== -->
+
+            <!-- ========== Start Footer ========== -->
+            <footer class="footer">
+                    <div class="container text-center text-white">
+                        {% load static %}
+                        <img src="{% static 'GitCheckup/img/fork.png' %}" alt="">
+                        <h2>GitCheckup. All Rights Reserved.</h2>
+                    </div>
+                </footer>
+            <!-- ========== End Footer ========== -->
+
+
+
+        <!-- ========== JS ========== -->
+
+
+        <script src ="{% static 'GitCheckup/js/plugins/jquery-3.3.1.min.js' %}"> </script>
+
+        <script src="{% static 'GitCheckup/js/plugins/popper.min.js' %}"> </script>
+
+        <script src="{% static 'GitCheckup/js/plugins/bootstrap.min.js' %}"> </script>
+        <!-- Particels JS -->
+
+        <script src= "{% static 'GitCheckup/js/plugins/particles.min.js' %}"> </script>
+
+        <script src= "{% static 'GitCheckup/js/plugins/app.js' %}"> </script>
+        <!-- Smooth Scrolling -->
+
+        <script src="{% static 'GitCheckup/js/plugins/jquery.smoothscroll.min.js' %}"> </script>
+        <!-- Magnific Popup -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"> </script>
+
+        <script src="{% static 'GitCheckup/js/main.js' %}"> </script>
+
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                }
+              });
+            }
+        </script>
+    </body>
+</html>
