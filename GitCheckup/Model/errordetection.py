@@ -7,6 +7,12 @@ from GitCheckup.Model.config import *
 
 # IMPORTANT: When adding a new error detection, insert the class to the return list of the method at the bottom.
 
+
+'''
+Current config types,
+avg_commit_day - average commit due date
+workflow - which workflow should have been followed.
+'''
 user_config = {}
 
 class ErrorDetection:
@@ -378,9 +384,10 @@ def get_error_detections(irepo, user_conf,filter = "None"):
         error_detections.append(ED_UninformativeCommitMessage(irepo))
         error_detections.append(ED_InfrequentCommitFrequency(irepo))
         error_detections.append(ED_MultiplePushInsteadOne(irepo))
-        error_detections.append(ED_CactusMissingTag(irepo))
-        error_detections.append(ED_CactusMissingReleaseBranch(irepo))
-        error_detections.append(ED_CactusUnnecessaryBranch(irepo))
-        error_detections.append(ED_CactusMergeIntoMain(irepo))
+        if user_config['workflow'] == 'cactus':
+            error_detections.append(ED_CactusMissingTag(irepo))
+            error_detections.append(ED_CactusMissingReleaseBranch(irepo))
+            error_detections.append(ED_CactusUnnecessaryBranch(irepo))
+            error_detections.append(ED_CactusMergeIntoMain(irepo))
 
         return error_detections

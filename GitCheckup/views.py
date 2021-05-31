@@ -125,7 +125,9 @@ class Controller():
         return get_plot(names, values)
     def config_to_dict(self,request):
         avg_commit_day = request.GET.get("avg_commit_day")
+        workflow = request.GET.get("workflow")
         user_config = {'avg_commit_day': avg_commit_day}
+        user_config['workflow'] = workflow
         return user_config
 
 
