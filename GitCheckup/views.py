@@ -76,6 +76,8 @@ class Controller():
         for errorObject in errorObjects:
             errorInfos = {}
 
+            errorInfos['message'] = errorObject.message
+            errorInfos['count'] = 0
             for error in errorObject.errorList:
                 errorDetails = {}
 
@@ -106,6 +108,7 @@ class Controller():
                 errorDetails['is_warning'] = error.is_warning
 
                 errorInfos[error.error_id] = errorDetails
+                errorInfos['count'] += 1
 
             if (errorObject.category not in data):
                 data[errorObject.category] = {}

@@ -19,6 +19,7 @@ class ErrorDetection:
     def __init__(self, irepo):
         self.errorId = -1
         self.name = None
+        self.message = None
         self.category = None
         self.errorList = []
         self.is_warning = False
@@ -31,6 +32,7 @@ class ED_RevertMergeCommit(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 0
         self.name = "RevertMergeCommit"
+        self.message = "This error refers to the poor practice where a merge commit is reverted. The outcome is often not well-understood by users and risks problems in the repository."
         self.category = "Reverting"
         self.errorList = []
         self.is_warning = False
@@ -59,6 +61,7 @@ class ED_RevertRevertCommit(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 1
         self.name = "RevertRevertCommit"
+        self.message = "This error refers to the poor practice where a previous git revert commit is once again reverted. This does not remove history and clogs the repository with waste commits. An alternative is \'git reset\'"
         self.category = "Reverting"
         self.errorList = []
         self.is_warning = False
@@ -93,6 +96,7 @@ class ED_UnnecessaryFiles(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 2
         self.name = "UnnecessaryFiles"
+        self.message = "This warning refers to unnecessary files being pushed alongside commits. This clogs the repository and potentially disrupts with other users\' IDE settings and etc. Try paying attention to the files being pushed."
         self.category = "Creating Commits"
         self.errorList = []
         self.is_warning = True
@@ -113,6 +117,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 3
         self.name = "OriginMasterMainBranchName"
+        self.message = "This error refers to a branch name being equal to \'origin/master\' or \'origin/main\'. These will cause major confusion and problems as they refer to the main or master branch in the remote repository. Try paying attention to branch names."
         self.category = "Branching/Tagging"
         self.errorList = []
         self.is_warning = False
@@ -133,6 +138,7 @@ class ED_HeadBranchName(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 4
         self.name = "HeadBranchName"
+        self.message = "This error refers to a branch name being equal to \'HEAD\'. This causes a major problem with git commands as head also refers to the head of the branch. Try paying attention to branch names."
         self.category = "Branching/Tagging"
         self.errorList = []
         self.is_warning = False
@@ -155,6 +161,7 @@ class ED_MultipleFileChange(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 5
         self.name = "MultipleFileCommits"
+        self.message = "This warning refers to pushing too many file changes (deletions & additions) in a single commit. Commits that change too much in the code can be hard to follow and the commit messages may not accurately describe everything. Try breaking it into smaller chunks."
         self.category = "Creating Commits"
         self.errorList = []
         self.is_warning = True
@@ -177,6 +184,7 @@ class ED_UninformativeCommitMessage(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 6
         self.name = "UninformativeComment"
+        self.message = "This error refers to commit messages that are not informative enough. Particularly, short messages (less than 3 words) may not be enough to accurately convey the changes. Try working more on the commit messages to inform everyone clearly."
         self.category = "Creating Commits"
         self.errorList = []
         self.is_warning = False
@@ -201,6 +209,7 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 7
         self.name = "InfrequentCommitFrequency"
+        self.message = "This warning refers to commits being too infrequent and inconsistent. Either the commits may be too large, or the team may be pushing several commits at once but waiting a week or more. Try spreading out the commits and work more systematically."
         self.category = "Creating Commits"
         self.errorList = []
         self.is_warning = True
@@ -243,6 +252,7 @@ class ED_MultiplePushInsteadOne(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 8
         self.name = "MultiplePush"
+        self.message = "This warning refers to pushing multiple commits back to back. Multiple commits can be pushed in a single operation to the remote branch, there is no need to commit and push each time."
         self.category = "Pushing Commits"
         self.errorList = []
         self.is_warning = True
@@ -272,6 +282,7 @@ class ED_CactusMissingTag(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 9
         self.name = "CactusMissingTag"
+        self.message = "This warning for Cactus Workflow refers to missing tags in the release branch. Untagged commits are possible, but only as bugfixes, otherwise the commit should be tagged."
         self.category = "Cactus Workflow"
         self.errorList = []
         self.is_warning = True
@@ -303,6 +314,7 @@ class ED_CactusMissingReleaseBranch(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 10
         self.name = "CactusMissingReleaseBranch"
+        self.message = "This error for Cactus Workflow refers to the release branch not existing. Cactus Workflow requires one main and one release branch in the repository."
         self.category = "Cactus Workflow"
         self.errorList = []
         self.is_warning = False
@@ -328,6 +340,7 @@ class ED_CactusUnnecessaryBranch(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 11
         self.name = "CactusUnnecessaryBranch"
+        self.message = "This error for Cactus Workflow refers to having other branches in the repository, apart from main/master and release. Remote branches are not allowed in Cactus Workflow, only local branches are allowed."
         self.category = "Cactus Workflow"
         self.errorList = []
         self.is_warning = False
@@ -350,6 +363,7 @@ class ED_CactusMergeIntoMain(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 12
         self.name = "CactusMergeIntoMain"
+        self.message = "This error for Cactus Workflow refers to merge commits that merge with main/master branch. Cactus Workflow specifies that commits should be cherry-picked, not merged."
         self.category = "Cactus Workflow"
         self.errorList = []
         self.is_warning = False
