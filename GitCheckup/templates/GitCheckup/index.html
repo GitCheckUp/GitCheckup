@@ -126,7 +126,12 @@
 			<button type="button" class="collapsible">Configuration</button>
                 <div class="content">
                     <label for="avg_commit_day"> Enter expected time between commits in days.</label>
-                    <input type="number" id="avg_commit_day" name="avg_commit_day" style="min-width:400px;" value= "3">
+                    <input type="number" id="avg_commit_day" name="avg_commit_day" style="min-width:400px;" value= "3"><br>
+                    <label for="workflow">Choose a workflow:</label>
+                    <select name="workflow" id="workflow">
+                      <option value="none">None</option>
+                      <option value="cactus">Cactus</option>
+                    </select>
                 </div>
             </form>
 
@@ -147,16 +152,19 @@
                         <ul class="ascii">
                           {% for category, category_v in data.items %}
                             {% for name, data in category_v.items %}
-                              {% if data|length > 0 %}
-                              <li><b>Found {{data|length}} issues of type {{name}} of category {{category}}</b>
+                              {% if data.count > 0 %}
+                              <li><b>Found {{data.count}} issues of type {{name}} of category {{category}}
+                              <br><span style = "color:#666666;">{{data.message}}</span></br><br></b>
                               <ul>
                                 {% for id, error in data.items %}
-                                  {% if error.is_warning %}
-                                    <li style="color:#808000;">Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
-                                  {% else %}
-                                    <li style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                  {% if id != 'message' and id != 'count' %}
+                                    {% if error.is_warning %}
+                                      <li style="color:#c09000;">Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                    {% else %}
+                                      <li style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                    {% endif %}
                                   {% endif %}
-                                  {% endfor %}
+                                {% endfor %}
                               </ul>
                               {% endif %}
                               <br></li>

@@ -45,7 +45,7 @@ class Controller():
     def get_repository(self, repo_address):
         return self.git_access.get_repo(repo_address)
 
-    def analyze_repo(self, repo_url):
+    def analyze_repo(self, repo_url,user_config):
         try:
             repo_address = self.get_repo_address(repo_url)
         except:
@@ -61,7 +61,7 @@ class Controller():
         #self.view.display_analyzing(repo_address)
         irepo = self.model.get_repo(repo)
 
-        errorDetections = self.model.analyze_errors(irepo)
+        errorDetections = self.model.analyze_errors(irepo,user_config)
 
         totalErrorCount = 0
         for errorDetection in errorDetections:
@@ -76,6 +76,8 @@ class Controller():
         for errorObject in errorObjects:
             errorInfos = {}
 
+            errorInfos['message'] = errorObject.message
+            errorInfos['count'] = 0
             for error in errorObject.errorList:
                 errorDetails = {}
 
@@ -106,6 +108,7 @@ class Controller():
                 errorDetails['is_warning'] = error.is_warning
 
                 errorInfos[error.error_id] = errorDetails
+                errorInfos['count'] += 1
 
             if (errorObject.category not in data):
                 data[errorObject.category] = {}
@@ -123,13 +126,22 @@ class Controller():
                 values.append(len(errors))
 
         return get_plot(names, values)
+    def config_to_dict(self,request):
+        avg_commit_day = request.GET.get("avg_commit_day")
+        workflow = request.GET.get("workflow")
+        user_config = {'avg_commit_day': avg_commit_day}
+        user_config['workflow'] = workflow
+        return user_config
+
 
 model = Model()
 controller = Controller(model)
 
-def home(request):
 
+def home(request):
     data = {'state': False, 'error': False, 'repo_name': None}
+    user_config = controller.config_to_dict(request)
+    print(user_config)
 
     if request.method == "GET":
         repoName = request.GET.get("repo")
@@ -146,7 +158,7 @@ def home(request):
                 data = config.Demo_Data
                 data['chart'] = controller.display_chart(data['data'])
         elif (repoName != "" and repoName != None):
-            errorDetections = controller.analyze_repo(repoName)
+            errorDetections = controller.analyze_repo(repoName,user_config)
 
             if (errorDetections == None):
                 data['error'] = True
