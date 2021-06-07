@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.conf import settings
 from .utils import get_plot
 import sys
+import time
 
 sys.path.append(".")
 
@@ -129,8 +130,10 @@ class Controller():
     def config_to_dict(self,request):
         avg_commit_day = request.GET.get("avg_commit_day")
         workflow = request.GET.get("workflow")
+        max_file = request.GET.get("max_file")
         user_config = {'avg_commit_day': avg_commit_day}
         user_config['workflow'] = workflow
+        user_config['max_file'] = max_file
         return user_config
 
 
