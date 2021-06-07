@@ -137,8 +137,11 @@
                 <div class="row d-flex align-items-center">
                     {% if state %}
                     <h2 class="h2 mb-20">Results of the analysis</h2>
-                      {%if chart%}
-                         <img src="data:image/png;base64, {{chart|safe}}">
+                      {%if visual %}
+                        <br>
+                        {% for chart, chart_v in visual.items %}
+                          <img src="data:image/png;base64, {{chart_v|safe}}">
+                        {% endfor %}
                        </br>
                       {% endif %}
                         <ul class="ascii">

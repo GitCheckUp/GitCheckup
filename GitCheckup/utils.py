@@ -30,9 +30,18 @@ def getGraph():
     buffer.close()
     return graph
 
-def get_plot(x,y):
+def get_bar_plot(x,y):
     plt.switch_backend('AGG')
     plt.figure(figsize=(10, 6))
     plt.bar(x,y)
+    graph = getGraph()
+    return graph
+
+def get_pie_plot(values, labels):
+    print(values)
+    print(labels)
+    plt.switch_backend('AGG')
+    plt.figure(figsize = (7, 4))
+    plt.pie(values, labels = labels, shadow = True, autopct='%1.0f%%')
     graph = getGraph()
     return graph

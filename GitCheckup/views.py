@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
-from .utils import get_plot
+from .utils import get_bar_plot, get_pie_plot
 import sys
 import time
 
@@ -132,7 +132,26 @@ class Controller():
                 names.append(errorType)
                 values.append(len(errors))
 
-        return get_plot(names, values)
+        return get_bar_plot(names, values)
+
+    def display_pie(self, my_data):
+        names = []
+        values = []
+        for category,categoryv in my_data.items():
+            for errorType,errors in categoryv.items():
+                #print(errorType,len(errors))
+                names.append(errorType)
+                values.append(len(errors))
+
+        return get_pie_plot(values, names)
+
+    def display_visual(self, my_data):
+        visual_dict = {}
+        visual_dict['chart'] = self.display_chart(my_data)
+        visual_dict['pie'] = self.display_pie(my_data)
+
+        return visual_dict
+
     def config_to_dict(self,request):
         avg_commit_day = request.GET.get("avg_commit_day")
         workflow = request.GET.get("workflow")
@@ -161,10 +180,10 @@ def home(request):
         #if (settings.DEBUG == True and repoName == "GitCheckup/GitCheckup" or repoName == "GitCheckup/demo"):
             if (repoName == "GitCheckup/GitCheckup"):
                 data = config.GitCheckup_Data
-                data['chart'] = controller.display_chart(data['data'])
+                data['visual'] = controller.display_visual(data['data'])
             if (repoName == "GitCheckup/demo"):
                 data = config.Demo_Data
-                data['chart'] = controller.display_chart(data['data'])
+                data['visual'] = controller.display_visual(data['data'])
         elif (repoName != "" and repoName != None):
             errorDetections = controller.analyze_repo(repoName,user_config)
 
@@ -176,7 +195,7 @@ def home(request):
             data['state'] = True
 
             #print(data)
-            data['chart'] = controller.display_chart(data['data'])
+            data['visual'] = controller.display_visual(data['data'])
         else:
             data['repo_name'] = "GitCheckup/GitCheckup"
 
