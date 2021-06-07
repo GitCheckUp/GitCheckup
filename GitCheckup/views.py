@@ -14,7 +14,7 @@ from github import Github
 class Controller():
     def __init__(self, model):
         # Our GitHub token for accessing the GitHub API
-        self.git_access = Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0")
+        self.git_access = [Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0"), Github("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"), Github("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")]
         self.model = model
 
     # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
@@ -44,7 +44,13 @@ class Controller():
         return result
 
     def get_repository(self, repo_address):
-        return self.git_access.get_repo(repo_address)
+        for token in self.git_access:
+            try:
+                return token.get_repo(repo_address)
+            except:
+                print("failed token:", token)
+                pass
+        return None
 
     def analyze_repo(self, repo_url,user_config):
         try:
@@ -144,7 +150,6 @@ controller = Controller(model)
 def home(request):
     data = {'state': False, 'error': False, 'repo_name': None}
     user_config = controller.config_to_dict(request)
-    print(user_config)
 
     if request.method == "GET":
         repoName = request.GET.get("repo")
