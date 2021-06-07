@@ -13,12 +13,7 @@
         <!-- Bootstrap 4.2.1 -->
         {% load static %}
         <link rel = "stylesheet" href="{% static 'GitCheckup/css/plugins/bootstrap.min.css' %}">
-        <!-- Magnific Popup -->
-        <link rel="stylesheet" href="{% static 'GitCheckup/css/plugins/magnific-popup.min.css' %}">
-        <!-- Font Awesome -->
-        <link
-            href="{% static 'GitCheckup/css/plugins/font-awesome.min.css' %}"
-            rel="stylesheet">
+
         <!-- Main CSS -->
         {% load static %}
         <link rel = "stylesheet" href="{% static 'GitCheckup/css/main.css' %}">
@@ -79,16 +74,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#get-started">The App</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#features">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#benefits">Benefits</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#team">Team</a>
-                        </li>
+                            </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
@@ -123,9 +109,11 @@
         	<form action="#" method = "get">
   			<input type="text" id="repo" name="repo" style="min-width:400px;" value={{repo_name | escape}}>
   			<input type="submit" value="Analyze" class="btn-white d-inline-block">
+                <br>
+                <div class="config" id="config">
 			<button type="button" class="collapsible">Configuration</button>
                 <div class="content">
-                    <label for="avg_commit_day"> Enter expected time between commits in days.</label>
+                    <label for="avg_commit_day"> Enter expected time between commits in days:</label>
                     <input type="number" id="avg_commit_day" name="avg_commit_day" style="min-width:400px;" value= "3"><br>
                     <label for="workflow">Choose a workflow:</label>
                     <select name="workflow" id="workflow">
@@ -133,7 +121,9 @@
                       <option value="cactus">Cactus</option>
                     </select>
                 </div>
+                </div>
             </form>
+
 
         </section>
         <!-- ========== End Get Started ========== -->
@@ -185,27 +175,12 @@
             </div>
         </section>
 
-            <section class="contact" >
-
+            <section class="contact" id="contact" >
                     <div class="container text-center">
-                            <h2 class="h2 mb-15">Keep In Touch</h2>
+                            <h2 class="h2 mb-15" style="color:#d9d9d9;">Feel free to join us on Github.</h2>
                         <div class="row">
                             <div class="col-md-6 offset-md-3">
-
-                                <form>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" placeholder="Name">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input type="email" class="form-control" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" rows="5" id="comment" placeholder="Message"></textarea>
-                                    </div>
-                                    <button class="btn btn-block" type="submit">Send Now!</button>
-                                </form>
+                                <a style="color: #fff;" href="https://github.com/GitCheckup/"><h1>GitCheckup on Github.</h1></a>
                             </div>
                         </div>
                     </div>

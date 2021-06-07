@@ -28,6 +28,18 @@ body {
     background: #d9d9d9;
 }
 
+#config{
+    height:200px;
+}
+#config .collapsible{
+    background: none;
+    text-align: center;
+}
+
+#config .content{
+    background: none;
+    color: #fff;
+}
 
 
 /* List styling - Ascii - Used for report output */
@@ -509,7 +521,7 @@ opacity: .99;
 [10. Start Contact]
 --------------------------------------------------*/
 .contact {
-    background: url('../img/bg/contact.png') center center no-repeat;
+    background: #24292e;
     background-size: cover;
     padding: 120px 0;
 }
