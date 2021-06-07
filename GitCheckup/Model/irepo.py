@@ -20,7 +20,8 @@ class IRepo:
                 pass
 
         for branch in repo.get_branches():
-            self.add_branch_commits(branch)
+            if (branch.name != "master" and branch.name != "main"):
+                self.add_branch_commits(branch)
 
         for tag_object in repo.get_tags():
             self.tagList.append(itag.ITag(tag_object, tag_object.commit))
@@ -42,11 +43,11 @@ class IRepo:
                 self.commitList.append(internal_commit)
                 self.commitDict[internal_commit.sha] = internal_commit
 
-                branch_commits.append(internal_commit)
-
                 if (current_commit.parents.__len__()):
                     for parent in current_commit.parents:
                         if not (frontier.__contains__(parent)):
                             frontier.append(parent)
+
+            branch_commits.append(internal_commit)
 
         ibranch.updateCommitList(branch_commits)
