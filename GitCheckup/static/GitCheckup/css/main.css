@@ -41,6 +41,10 @@ body {
     color: #fff;
 }
 
+.container img{
+    width: 50% !important;
+    height: auto;
+}
 
 /* List styling - Ascii - Used for report output */
 @charset "utf-8";
