@@ -160,7 +160,6 @@ class Controller():
 
     def display_visual(self, my_data):
         visual_dict = {}
-        print(*self.get_error_detection_counts())
         visual_dict['chart'] = get_bar_plot(*self.get_error_detection_counts(), "Count of each error/poor practice type", "Total errors/poor practices: " + str(len([subitem for sublist in [errorDetectionObject.errorList for errorDetectionObject in model.errorDetections] for subitem in sublist])))
         visual_dict['pie'] = get_pie_plot(*self.get_error_detection_counts(), "Pie chart for the percentage of each error/poor practice")
         visual_dict['pie_user-errors'] = get_pie_plot(*self.get_user_errors(), "Pie chart for errors/poor practices per user")

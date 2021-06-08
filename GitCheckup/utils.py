@@ -35,7 +35,6 @@ def get_bar_plot(values, labels, title, xlabel = None):
     plt.switch_backend('AGG')
     plt.figure(figsize=(10, 6))
     plt.bar(labels, values)
-    print(values)
     plt.yticks(range(0, ceil(max(values) + 1), ceil(ceil(max(values) + 1) / 10)))
     plt.title(title)
     if (xlabel):

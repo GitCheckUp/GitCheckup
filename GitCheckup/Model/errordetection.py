@@ -231,7 +231,6 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         Here, we detect the infrequent commits
         """
 
-        print("User input is :",int(user_config['avg_commit_day']))
         tripleTime = datetime.timedelta(int(user_config['avg_commit_day']))
 
 
