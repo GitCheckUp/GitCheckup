@@ -1,6 +1,7 @@
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
+from math import ceil
 
 #Change default styling
 plt.style.use("ggplot")
@@ -30,18 +31,24 @@ def getGraph():
     buffer.close()
     return graph
 
-def get_bar_plot(x,y):
+def get_bar_plot(values, labels, title, xlabel = None):
     plt.switch_backend('AGG')
     plt.figure(figsize=(10, 6))
-    plt.bar(x,y)
+    plt.bar(labels, values)
+    print(values)
+    plt.yticks(range(0, ceil(max(values) + 1), ceil(ceil(max(values) + 1) / 10)))
+    plt.title(title)
+    if (xlabel):
+        plt.xlabel(xlabel)
     graph = getGraph()
     return graph
 
-def get_pie_plot(values, labels):
-    print(values)
-    print(labels)
+def get_pie_plot(values, labels, title, xlabel = None):
     plt.switch_backend('AGG')
-    plt.figure(figsize = (7, 4))
+    plt.figure(figsize = (10, 6))
     plt.pie(values, labels = labels, shadow = True, autopct='%1.0f%%')
+    plt.title(title)
+    if (xlabel):
+        plt.xlabel(xlabel)
     graph = getGraph()
     return graph

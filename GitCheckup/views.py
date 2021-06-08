@@ -8,6 +8,7 @@ import time
 sys.path.append(".")
 
 from GitCheckup.Model.model import Model
+from GitCheckup.Model import iauthor
 from GitCheckup.Model.config import config
 from github import Github
 
@@ -66,9 +67,9 @@ class Controller():
             return
 
         #self.view.display_analyzing(repo_address)
-        irepo = self.model.get_repo(repo)
+        self.model.create_irepo(repo)
 
-        errorDetections = self.model.analyze_errors(irepo,user_config)
+        errorDetections = self.model.analyze_errors(model.irepo, user_config)
 
         totalErrorCount = 0
         for errorDetection in errorDetections:
@@ -123,32 +124,47 @@ class Controller():
 
         return data
 
-    def display_chart(self, my_data):
+    def get_error_detection_counts(self):
         names = []
         values = []
-        for category,categoryv in my_data.items():
-            for errorType,errors in categoryv.items():
-                #print(errorType,len(errors))
-                names.append(errorType)
-                values.append(len(errors))
+        for errorObject in self.model.errorDetections:
+            names.append(errorObject.name)
+            values.append(len(errorObject.errorList))
 
-        return get_bar_plot(names, values)
+        return (values, names)
 
-    def display_pie(self, my_data):
-        names = []
-        values = []
-        for category,categoryv in my_data.items():
-            for errorType,errors in categoryv.items():
-                #print(errorType,len(errors))
-                names.append(errorType)
-                values.append(len(errors))
+    def get_user_errors(self):
+        users = {}
+        for author in iauthor.authors.values():
+            if (author.name != ""):
+                users[author.name] = 0
 
-        return get_pie_plot(values, names)
+        for errorDetectionObject in model.errorDetections:
+            for error in errorDetectionObject.errorList:
+                if error.user and error.user.name in users:
+                    users[error.user.name] += 1
+
+        return (users.values(), users.keys())
+
+    def get_user_commits(self):
+        users = {}
+        for author in iauthor.authors.values():
+            if (author.name != ""):
+                users[author.name] = 0
+
+        for commit in model.irepo.commitList:
+            if commit.author and commit.author.name in users:
+                users[commit.author.name] += 1
+
+        return (users.values(), users.keys())
 
     def display_visual(self, my_data):
         visual_dict = {}
-        visual_dict['chart'] = self.display_chart(my_data)
-        visual_dict['pie'] = self.display_pie(my_data)
+        print(*self.get_error_detection_counts())
+        visual_dict['chart'] = get_bar_plot(*self.get_error_detection_counts(), "Count of each error/poor practice type", "Total errors/poor practices: " + str(len([subitem for sublist in [errorDetectionObject.errorList for errorDetectionObject in model.errorDetections] for subitem in sublist])))
+        visual_dict['pie'] = get_pie_plot(*self.get_error_detection_counts(), "Pie chart for the percentage of each error/poor practice")
+        visual_dict['pie_user-errors'] = get_pie_plot(*self.get_user_errors(), "Pie chart for errors/poor practices per user")
+        visual_dict['pie_user-commits'] = get_pie_plot(*self.get_user_commits(), "Pie chart for commits per user", "Total commits: " + str(len(model.irepo.commitList)))
 
         return visual_dict
 
@@ -186,6 +202,7 @@ def home(request):
                 data['visual'] = controller.display_visual(data['data'])
         elif (repoName != "" and repoName != None):
             errorDetections = controller.analyze_repo(repoName,user_config)
+            model.errorDetections = errorDetections
 
             if (errorDetections == None):
                 data['error'] = True
