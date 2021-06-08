@@ -7,7 +7,7 @@ Version: 1.0
 
 Table of contents
 
-    00. Framework   
+    00. Framework
     01. Navbar
     02. Slider
     03. Features
@@ -41,8 +41,10 @@ body {
     color: #fff;
 }
 
-.container img{
-    width: 50% !important;
+.results img{
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
     height: auto;
 }
 
@@ -262,12 +264,12 @@ a {
     background-size: cover;
     text-align: center;
     padding: 120px 0;
-	
+
 }
 .get-started .repo {
-	
+
 }
-	
+
 /*--------------------------------------------------
 [5. Start Video]
 --------------------------------------------------*/
@@ -616,7 +618,7 @@ opacity: .99;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
     .navbar {
         background: #24292e !important;
         padding:30px;
@@ -649,7 +651,7 @@ opacity: .99;
     }
     .features {
         text-align: center;
-        padding: 120px 0 80px 0; 
+        padding: 120px 0 80px 0;
     }
     .features .box {
         margin-bottom: 40px;
@@ -685,7 +687,7 @@ opacity: .99;
  }
 
 /* Small devices (landscape phones, less than 768px) */
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
     .navbar {
         background: #24292e !important;
         padding:30px;
@@ -718,7 +720,7 @@ opacity: .99;
     }
     .features {
         text-align: center;
-        padding: 120px 0 80px 0; 
+        padding: 120px 0 80px 0;
     }
     .features .box {
         margin-bottom: 40px;
@@ -754,7 +756,7 @@ opacity: .99;
  }
 
 /* Medium devices (tablets, less than 992px) */
-@media (max-width: 991.98px) { 
+@media (max-width: 991.98px) {
     .navbar {
         background: #24292e !important;
         padding:30px;
@@ -785,7 +787,7 @@ opacity: .99;
     .about .image {
         margin-bottom: 50px;
     }
-    
+
     .about .work-img {
         margin: 0;
         margin-top: 50px;
@@ -799,7 +801,7 @@ opacity: .99;
     .team .content img {
         width: 100%;
     }
-    
+
     .testimonials .control {
         display: none;
     }
@@ -813,4 +815,3 @@ opacity: .99;
 
 /* Large devices (desktops, less than 1200px) */
 @media (max-width: 1199.98px) { }
-
