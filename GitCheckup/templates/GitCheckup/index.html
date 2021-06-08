@@ -138,15 +138,26 @@
                 <div class="row d-flex align-items-center">
                     {% if state %}
                     <h2 class="h2 mb-20">Results of the analysis</h2>
-                      {%if visual %}
-                        <br>
 
+                      {%if visual %}
+
+                        <br>
+                    <center>
+                    <div class="row text-center">
+                    <div class="col-md-12">
                         {% for chart, chart_v in visual.items %}
-                          <img class="graph" src="data:image/png;base64, {{chart_v|safe}}">
-                          </br>
+                        <img class="mySlides" src="data:image/png;base64, {{chart_v|safe}}">
                         {% endfor %}
+                        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+                        <!-- source: https://www.w3schools.com/w3css/w3css_slideshow.asp -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
                        </br>
                       {% endif %}
+                </center>
                         <ul class="ascii">
                           {% for category, category_v in data.items %}
                             {% for name, data in category_v.items %}

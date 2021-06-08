@@ -42,10 +42,14 @@ body {
 }
 
 .results img{
-    width: 80% !important;
+    width: 100% !important;
     margin-left: auto;
     margin-right: auto;
     height: auto;
+}
+
+.carousel-item active {
+background:none;
 }
 
 /* List styling - Ascii - Used for report output */
