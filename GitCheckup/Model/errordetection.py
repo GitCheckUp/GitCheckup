@@ -177,8 +177,8 @@ class ED_MultipleFileChange(ErrorDetection):
         else:
             allowedchange = int(user_config['max_file'])
         for c in irepo.commitList:
-            if(c.changes >= allowedchange):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(c.changes) + " changes)")
+            if(len(c.files) >= allowedchange):
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(len(c.files)) + " file changes)")
                 self.errorList.append(error_detected)
                 error_count += 1
 
