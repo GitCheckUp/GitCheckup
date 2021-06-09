@@ -17,7 +17,11 @@ class IAuthor:
             self.id = authorData.id
             self.url = authorData.url
             self.username = self.getUsername(self.url)
-            self.name = authorData.name
+
+            if(authorData.name == None): #Fix for the users with no name defined.
+                self.name = self.username
+            else:
+                self.name = authorData.name
 
             self.email = authorData.email
         except:
