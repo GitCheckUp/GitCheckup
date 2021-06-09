@@ -174,6 +174,26 @@ class Controller():
         user_config = {'avg_commit_day': avg_commit_day}
         user_config['workflow'] = workflow
         user_config['max_file'] = max_file
+
+
+        revertRevert = request.GET.get("revertRevert")
+        revertMerge = request.GET.get("revertMerge")
+        unnecessaryFile = request.GET.get("unnecessaryFile")
+        originMaster = request.GET.get("originMaster")
+        headBranch = request.GET.get("headBranch")
+        multipleFile = request.GET.get("multipleFile")
+        uninformativeMessage = request.GET.get("uninformativeMessage")
+        infrequentCommit = request.GET.get("infrequentCommit")
+
+        user_config['revertRevert'] = revertRevert
+        user_config['revertMerge'] = revertMerge
+        user_config['unnecessaryFile'] = unnecessaryFile
+        user_config['originMaster'] = originMaster
+        user_config['headBranch'] = headBranch
+        user_config['multipleFile'] = multipleFile
+        user_config['uninformativeMessage'] = uninformativeMessage
+        user_config['infrequentCommit'] = infrequentCommit
+
         return user_config
 
 

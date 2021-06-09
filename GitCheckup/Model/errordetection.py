@@ -392,15 +392,25 @@ def get_error_detections(irepo, user_conf,filter = "None"):
         user_config = user_conf
         error_detections = []
 
-        error_detections.append(ED_RevertMergeCommit(irepo))
-        error_detections.append(ED_RevertRevertCommit(irepo))
-        error_detections.append(ED_UnnecessaryFiles(irepo))
-        error_detections.append(ED_OriginMasterBranchName(irepo))
-        error_detections.append(ED_HeadBranchName(irepo))
-        error_detections.append(ED_MultipleFileChange(irepo))
-        error_detections.append(ED_UninformativeCommitMessage(irepo))
-        error_detections.append(ED_InfrequentCommitFrequency(irepo))
+        if user_config['revertMerge']:
+            error_detections.append(ED_RevertMergeCommit(irepo))
+        if user_config['revertRevert']:
+            error_detections.append(ED_RevertRevertCommit(irepo))
+        if user_config['unnecessaryFile']:
+            error_detections.append(ED_UnnecessaryFiles(irepo))
+        if user_config['originMaster']:
+            error_detections.append(ED_OriginMasterBranchName(irepo))
+        if user_config['headBranch']:
+            error_detections.append(ED_HeadBranchName(irepo))
+        if user_config['multipleFile']:
+            error_detections.append(ED_MultipleFileChange(irepo))
+        if user_config['uninformativeMessage']:
+            error_detections.append(ED_UninformativeCommitMessage(irepo))
+        if user_config['infrequentCommit']:
+            error_detections.append(ED_InfrequentCommitFrequency(irepo))
         error_detections.append(ED_MultiplePushInsteadOne(irepo))
+
+
         if user_config['workflow'] == 'cactus':
             error_detections.append(ED_CactusMissingTag(irepo))
             error_detections.append(ED_CactusMissingReleaseBranch(irepo))
