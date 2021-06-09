@@ -70,14 +70,14 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#slider">Home
+                            <a class="nav-link" href="#slider"><i class="fas fa-home"></i> Home
                                 <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#get-started">The App</a>
+                            <a class="nav-link" href="#get-started"><i class="fas fa-at"></i> The App</a>
                             </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
+                            <a class="nav-link" href="#contact"><i class="fas fa-phone-alt"></i> Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -109,10 +109,10 @@
             <p class="p-17-w mb-30">Enter the repository you want to analyze for errors and poor practices.</p>
         	<form action="#" method = "get">
   			<input type="text" id="repo" name="repo" style="min-width:400px;" value={{repo_name | escape}}>
-  			<input type="submit" value="Analyze" class="btn-white d-inline-block">
+  			<input type="submit" value="Analyze" alt="Analyze" class="btn-white d-inline-block">
                 <br>
                 <div class="config" id="config">
-			<button type="button" class="collapsible">Configuration</button>
+			<button type="button" class="collapsible" alt="Configuration"><i class="fas fa-cog"></i> Configuration</button>
                 <div class="content">
                     <label for="avg_commit_day"> Enter expected time between commits in days:</label>
                     <input type="number" id="avg_commit_day" name="avg_commit_day" style="min-width:400px;" value= "3"><br>
@@ -143,11 +143,11 @@
                     <div id="stats">
                         <br>
                         <p><i class="fas fa-quote-left"></i><br>
-                            In <b><i class="fas fa-database"></i>{{stats.repoName}}</b>; <b><i class="fas fa-user-friends"></i>{{stats.num_users}} users</b> made
-                            <b><i class="fas fa-circle-notch"></i>{{stats.num_commits}} commits</b> on total
-                            <b><i class="fas fa-code-branch"></i>{{stats.num_branches}} branches</b> and
-                            <b><i class="fas fa-tag"></i>{{stats.num_tags}} tags</b> are shared.
-                            <br><i class="fas fa-quote-right"></i></p>
+                            In <b><i style="font-size:19px; padding-right:2px;" class="fas fa-database"></i>{{stats.repoName}}</b>; <b><i style="font-size:19px; padding-right:2px;" class="fas fa-user-friends"></i>{{stats.num_users}} users</b> made
+                            <b><i style="font-size:19px; padding-right:2px;" class="fas fa-circle-notch"></i>{{stats.num_commits}} commits</b> on total
+                            <b><i style="font-size:19px; padding-right:2px;" class="fas fa-code-branch"></i>{{stats.num_branches}} branches</b> and
+                            <b><i style="font-size:19px; padding-right:2px;" class="fas fa-tag"></i>{{stats.num_tags}} tags</b> are shared.
+                            <br><i style="font-size:19px; padding-right:2px;" class="fas fa-quote-right"></i></p>
                         <br>
                     </div>
                     {% endif %}
@@ -160,8 +160,8 @@
                         {% for chart, chart_v in visual.items %}
                         <img class="mySlides" src="data:image/png;base64, {{chart_v|safe}}">
                         {% endfor %}
-                        <a style="cursor:pointer;" onclick="plusDivs(-1)"><i class="fas fa-chevron-left"></i>Prev |</a>
-                        <a style="cursor:pointer;" onclick="plusDivs(+1)"> Next<i class="fas fa-chevron-right"></i></a>
+                        <a style="cursor:pointer;" onclick="plusDivs(-1)" alt="Left"><i class="fas fa-chevron-left"></i>Prev |</a>
+                        <a style="cursor:pointer;" onclick="plusDivs(+1)" alt="Right"> Next<i class="fas fa-chevron-right"></i></a>
                         <!-- source: https://www.w3schools.com/w3css/w3css_slideshow.asp -->
                             </div>
                         </div>
@@ -170,6 +170,8 @@
                        </br>
                       {% endif %}
                 </center>
+                <h1><i class="fas fa-info"></i> Details</h1>
+                <br>
                         <ul class="ascii">
                           {% for category, category_v in data.items %}
                             {% for name, data in category_v.items %}
@@ -180,9 +182,9 @@
                                 {% for id, error in data.items %}
                                   {% if id != 'message' and id != 'count' %}
                                     {% if error.is_warning %}
-                                      <li style="color:#c09000;">Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                      <li style="color:#c09000;"><i class="fas fa-exclamation-circle"></i> Warning: User: {{error.user.name}} is warned, {{error.extra_info}}  @{{error.commit.date}}<ul><li><i class="far fa-comment-dots fa-flip-both"></i> Message:{{error.commit.message}}<ul><li><i class="fas fa-link"></i> SHA: {{error.commit.sha}} </li></ul></li></li></ul>
                                     {% else %}
-                                      <li style="color:#f43400;">Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li>Message:{{error.commit.message}}<ul><li>SHA: {{error.commit.sha}} </li></ul></li></li></ul>
+                                      <li style="color:#f43400;"><i class="fas fa-exclamation-triangle"></i> Error: User: {{error.user.name}} made an error{{error.extra_info}} @{{error.commit.date}}<ul><li><i class="far fa-comment-dots fa-flip-both"></i> Message:{{error.commit.message}}<ul><li><i class="fas fa-link"></i> SHA: {{error.commit.sha}} </li></ul></li></li></ul>
                                     {% endif %}
                                   {% endif %}
                                 {% endfor %}
@@ -212,7 +214,7 @@
                             <h2 class="h2 mb-15" style="color:#d9d9d9;">Feel free to join us on Github.</h2>
                         <div class="row">
                             <div class="col-md-6 offset-md-3">
-                                <a style="color: #fff;" href="https://github.com/GitCheckup/"><h1>GitCheckup on Github.</h1></a>
+                                <a style="color: #fff;" href="https://github.com/GitCheckup/"><h1>GitCheckup on <i class="fab fa-github"></i> Github.</h1></a>
                             </div>
                         </div>
                     </div>
@@ -224,7 +226,7 @@
                     <div class="container text-center text-white">
                         {% load static %}
                         <img src="{% static 'GitCheckup/img/fork.png' %}" alt="">
-                        <h2>GitCheckup. All Rights Reserved.</h2>
+                        <h2>GitCheckup <i class="far fa-copyright"></i> All Rights Reserved.</h2>
                     </div>
                 </footer>
             <!-- ========== End Footer ========== -->
