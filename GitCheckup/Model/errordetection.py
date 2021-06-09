@@ -80,13 +80,15 @@ class ED_RevertRevertCommit(ErrorDetection):
                 reverted_commit_sha = re.search("(?<=This reverts commit )[\w]*", message).group(0)
                 reverted_commit = irepo.commitDict[reverted_commit_sha]
 
-                parent_message = reverted_commit.message
+                for parent_commit in reverted_commit.parents:
+                    
+                    parent_message = parent_commit.message
 
-                # if parent is also a revert then error occurs
-                if (re.search("Revert \"", parent_message) and re.search("This reverts commit", parent_message)):
-                    error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
-                    self.errorList.append(error)
-                    error_count += 1
+                    # if parent is also a revert then error occurs
+                    if (re.search("Revert \"", parent_message) and re.search("This reverts commit", parent_message)):
+                        error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        self.errorList.append(error)
+                        error_count += 1
 
 class ED_UnnecessaryFiles(ErrorDetection):
     """
@@ -148,7 +150,7 @@ class ED_HeadBranchName(ErrorDetection):
     def detect(self, irepo):
         error_count = 0
         for e in irepo.branchList:
-            if re.findall("/Head$|/head$|/HEAD$", e.name):
+            if re.findall("/Head*|/head*|/HEAD*", e.name):
                 detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
@@ -231,15 +233,14 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
         Here, we detect the infrequent commits
         """
 
-        print("User input is :",int(user_config['avg_commit_day']))
         tripleTime = datetime.timedelta(int(user_config['avg_commit_day']))
 
 
         lastCommit = irepo.commitList[-1]
 
         for c in reversed(irepo.commitList):
-            if (lastCommit == irepo.commitList[-1]):
-                timeBetween = datetime.timedelta()
+            if (lastCommit == irepo.commitList[0]):
+                timeBetween = datetime.timedelta(0)
             else:
                 timeBetween = c.date - lastCommit.date
 
@@ -249,37 +250,6 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
                 error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
-
-
-class ED_MultiplePushInsteadOne(ErrorDetection):
-    def __init__(self, irepo):
-        super().__init__(irepo)
-        self.errorId = 8
-        self.name = "MultiplePush"
-        self.message = "This warning refers to pushing multiple commits back to back. Multiple commits can be pushed in a single operation to the remote branch, there is no need to commit and push each time."
-        self.category = "Pushing Commits"
-        self.errorList = []
-        self.is_warning = True
-
-        self.detect(irepo)
-
-    def detect(self, irepo):
-        error_count = 0
-
-        currentCommit = irepo.commitList[0]
-        for commit in irepo.commitList[1:]:
-            if currentCommit.author.id == commit.author.id:
-
-                time_delta = (currentCommit.date - commit.date)
-                total_seconds = time_delta.total_seconds()
-                minutes = total_seconds / 60
-
-                if minutes <= 5:
-                    error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
-                    self.errorList.append(error_detected)
-                    error_count += 1
-
-            currentCommit = commit
 
 class ED_CactusMissingTag(ErrorDetection):
     def __init__(self, irepo):
