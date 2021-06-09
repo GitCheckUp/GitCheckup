@@ -36,6 +36,7 @@ class mockedcommit:
          self.date = 0
          self.parents = []
          self.sha = 0
+         self.changes = 0
      def addFile(self, name):
          file = mockedfile(name)
          self.files.append(file)
@@ -169,10 +170,12 @@ class TestED_MultipleFileChange(unittest.TestCase):
 
     irepo = mockedbranches()
     irepo.addCommit()
+
     irepo.commitList[0].addFile("file_0")
     irepo.commitList[0].addFile("file_1")
     irepo.commitList[0].addFile("file_2")
     irepo.commitList[0].addFile("file_3")
+
     def test_ED_MultipleFileChange(self):
 
         GitCheckup.Model.errordetection.user_config['max_file'] = None
@@ -184,6 +187,7 @@ class TestED_MultipleFileChange(unittest.TestCase):
     def test_ED_MultipleFileChange_Reverse(self):
         self.irepo.commitList[0].addFile("file_4")
         self.irepo.commitList[0].addFile("file_5")
+
 
         GitCheckup.Model.errordetection.user_config['max_file'] = None
 
@@ -234,6 +238,56 @@ class TestED_InfrequentCommitFrequency(unittest.TestCase):
         GitCheckup.Model.errordetection.user_config['avg_commit_day'] = "5"
         
         b=GitCheckup.Model.errordetection.ED_InfrequentCommitFrequency(self.irepo)
+        
+        self.assertEqual(len(b.errorList), 0)
+
+class TestED_KeepingOldBranches(unittest.TestCase):
+
+    irepo = mockedbranches()
+    irepo.addBranch("Pattern change")
+    irepo.branchList[0].commitList.append(mockedcommit())
+    irepo.branchList[0].commitList[0].date = datetime.datetime(year=1,month = 1, day= 1)
+
+
+    def test_ED_KeepingOldBranches(self):
+
+        GitCheckup.Model.errordetection.user_config['branch_inactive_day'] = None
+
+        b=GitCheckup.Model.errordetection.ED_KeepingOldBranches(self.irepo)
+        
+        self.assertEqual(len(b.errorList), 1)
+    
+    def test_ED_KeepingOldBranches_Reverse(self):
+        self.irepo.branchList[0].commitList[0].date = datetime.datetime.now()
+        GitCheckup.Model.errordetection.user_config['branch_inactive_day'] = None
+        
+        b=GitCheckup.Model.errordetection.ED_KeepingOldBranches(self.irepo)
+        
+        self.assertEqual(len(b.errorList), 0)
+
+class TestED_OphanBranches(unittest.TestCase):
+
+    irepo = mockedbranches()
+    irepo.addBranch("main")
+    irepo.addBranch("Pattern change")
+    irepo.branchList[1].commitList.append(mockedcommit())
+
+
+    def test_ED_OphanBranches(self):
+
+        b=GitCheckup.Model.errordetection.ED_OphanBranches(self.irepo)
+        
+        self.assertEqual(len(b.errorList), 1)
+    
+    def test_ED_OphanBranches_Reverse(self):
+
+        self.irepo.branchList.clear()
+        self.irepo.addBranch("main")
+        self.irepo.addBranch("Pattern change")
+        self.irepo.branchList[1].commitList.append(mockedcommit())
+        self.irepo.branchList[1].commitList[0].addParent()
+        
+        b=GitCheckup.Model.errordetection.ED_OphanBranches(self.irepo)
         
         self.assertEqual(len(b.errorList), 0)
 
