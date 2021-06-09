@@ -52,6 +52,31 @@ body {
 background:none;
 }
 
+#stats{
+    background:none;
+    font-style: italic;
+    color: #3f4451;
+    margin-left:50px;
+    margin-right:80px;
+    padding:20px;
+}
+#stats b{
+    background:none;
+    font-style: normal;
+    color: #000;
+}
+
+.stat_counter {
+  display: table-cell;
+  margin:1.5%;
+  font-size:50px;
+  background-color: none;
+  width:200px;
+  border-radius: 50%;
+  height:200px;
+  vertical-align: middle;
+}
+
 /* List styling - Ascii - Used for report output */
 @charset "utf-8";
 /* CSS Document */

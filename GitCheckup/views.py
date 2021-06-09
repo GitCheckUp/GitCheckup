@@ -17,6 +17,7 @@ class Controller():
         # Our GitHub token for accessing the GitHub API
         self.git_access = [Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0"), Github("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"), Github("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")]
         self.model = model
+        self.repoName = None
 
     # Method for parsing the repository address from the user and returns an appropriate string to get the repo from GitHub API
     def get_repo_address(self,repo_url=None):
@@ -41,7 +42,7 @@ class Controller():
             raise (ValueError)
 
         result = result_blocks[0] + '/' + result_blocks[1]
-
+        self.repoName = result
         return result
 
     def get_repository(self, repo_address):
@@ -146,6 +147,14 @@ class Controller():
 
         return (users.values(), users.keys())
 
+    def get_user_count(self):
+        user_count = 0
+        for author in iauthor.authors.values():
+            if(author.name != ""):
+                user_count += 1
+
+        return user_count
+
     def get_user_commits(self):
         users = {}
         for author in iauthor.authors.values():
@@ -175,6 +184,16 @@ class Controller():
         user_config['workflow'] = workflow
         user_config['max_file'] = max_file
         return user_config
+
+    def show_stats(self):
+        stats_dict = {}
+        stats_dict['num_commits'] = int(len(model.irepo.commitList))
+        stats_dict['num_branches'] = int(len(model.irepo.branchList))
+        stats_dict['num_tags'] = int(len(model.irepo.tagList))
+        stats_dict['num_users']= int(self.get_user_count())
+        stats_dict['repoName']= str(self.repoName)
+        return stats_dict
+
 
 
 model = Model()
@@ -212,6 +231,7 @@ def home(request):
 
             #print(data)
             data['visual'] = controller.display_visual(data['data'])
+            data['stats'] = controller.show_stats()
         else:
             data['repo_name'] = "GitCheckup/GitCheckup"
 

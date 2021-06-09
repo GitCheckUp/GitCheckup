@@ -13,7 +13,8 @@
         <!-- Bootstrap 4.2.1 -->
         {% load static %}
         <link rel = "stylesheet" href="{% static 'GitCheckup/css/plugins/bootstrap.min.css' %}">
-
+        <!-- Fontawesome for icons -->
+        <script src="https://kit.fontawesome.com/09187105fd.js" crossorigin="anonymous"></script>
         <!-- Main CSS -->
         {% load static %}
         <link rel = "stylesheet" href="{% static 'GitCheckup/css/main.css' %}">
@@ -138,7 +139,18 @@
                 <div class="row d-flex align-items-center">
                     {% if state %}
                     <h2 class="h2 mb-20">Results of the analysis</h2>
-
+                    {%if stats %}
+                    <div id="stats">
+                        <br>
+                        <p><i class="fas fa-quote-left"></i><br>
+                            In <b><i class="fas fa-database"></i>{{stats.repoName}}</b>; <b><i class="fas fa-user-friends"></i>{{stats.num_users}} users</b> made
+                            <b><i class="fas fa-circle-notch"></i>{{stats.num_commits}} commits</b> on total
+                            <b><i class="fas fa-code-branch"></i>{{stats.num_branches}} branches</b> and
+                            <b><i class="fas fa-tag"></i>{{stats.num_tags}} tags</b> are shared.
+                            <br><i class="fas fa-quote-right"></i></p>
+                        <br>
+                    </div>
+                    {% endif %}
                       {%if visual %}
 
                         <br>
@@ -148,8 +160,8 @@
                         {% for chart, chart_v in visual.items %}
                         <img class="mySlides" src="data:image/png;base64, {{chart_v|safe}}">
                         {% endfor %}
-                        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                        <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+                        <a style="cursor:pointer;" onclick="plusDivs(-1)"><i class="fas fa-chevron-left"></i>Prev |</a>
+                        <a style="cursor:pointer;" onclick="plusDivs(+1)"> Next<i class="fas fa-chevron-right"></i></a>
                         <!-- source: https://www.w3schools.com/w3css/w3css_slideshow.asp -->
                             </div>
                         </div>
