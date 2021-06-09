@@ -81,7 +81,7 @@ class ED_RevertRevertCommit(ErrorDetection):
                 reverted_commit = irepo.commitDict[reverted_commit_sha]
 
                 for parent_commit in reverted_commit.parents:
-                    
+
                     parent_message = parent_commit.message
 
                     # if parent is also a revert then error occurs
@@ -177,8 +177,8 @@ class ED_MultipleFileChange(ErrorDetection):
         else:
             allowedchange = int(user_config['max_file'])
         for c in irepo.commitList:
-            if(c.additions + c.deletions >= allowedchange):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
+            if(c.changes >= allowedchange):
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(c.changes) + " changes)")
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -247,9 +247,43 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
             lastCommit = c
 
             if (timeBetween > tripleTime):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
+                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(timeBetween) + " days)")
                 self.errorList.append(error_detected)
                 error_count += 1
+
+class ED_KeepingOldBranches(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 8
+        self.name = "KeepingOldBranches"
+        self.message = "This warning refers to old branches not being removed. This causes a growing pile of unnecessary data on the repository and can be safely removed."
+        self.category = "Branching/Tagging"
+        self.errorList = []
+        self.is_warning = True
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+        if user_config['branch_inactive_day'] == None:
+            inactive_max_days = 15
+        else:
+            inactive_max_days = int(user_config['branch_inactive_day'])
+
+        for branch in irepo.branchList:
+            if ("main" not in branch.name and "master" not in branch.name):
+                latest_commit_date = datetime.datetime(year = 1, month = 1, day = 1)
+                current_commit = branch.commitList[0]
+
+                for commit in branch.commitList:
+                    if (commit.date > latest_commit_date):
+                        latest_commit_date = commit.date
+                        current_commit = commit
+
+                if ((datetime.datetime.now() - latest_commit_date) > datetime.timedelta(days = inactive_max_days)):
+                    detected_error = IError(error_count, self.errorId, current_commit.committer, current_commit, self.is_warning, branch.name)
+                    self.errorList.append(detected_error)
+                    error_count += 1
 
 class ED_CactusMissingTag(ErrorDetection):
     def __init__(self, irepo):
@@ -379,6 +413,8 @@ def get_error_detections(irepo, user_conf,filter = "None"):
             error_detections.append(ED_UninformativeCommitMessage(irepo))
         if user_config['infrequentCommit']:
             error_detections.append(ED_InfrequentCommitFrequency(irepo))
+        if user_config['keepingOldBranches']:
+            error_detections.append(ED_KeepingOldBranches(irepo))
 
 
         if user_config['workflow'] == 'cactus':

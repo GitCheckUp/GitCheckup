@@ -177,31 +177,23 @@ class Controller():
         return visual_dict
 
     def config_to_dict(self,request):
-        avg_commit_day = request.GET.get("avg_commit_day")
-        workflow = request.GET.get("workflow")
-        max_file = request.GET.get("max_file")
-        user_config = {'avg_commit_day': avg_commit_day}
-        user_config['workflow'] = workflow
-        user_config['max_file'] = max_file
 
+        user_config = {}
 
-        revertRevert = request.GET.get("revertRevert")
-        revertMerge = request.GET.get("revertMerge")
-        unnecessaryFile = request.GET.get("unnecessaryFile")
-        originMaster = request.GET.get("originMaster")
-        headBranch = request.GET.get("headBranch")
-        multipleFile = request.GET.get("multipleFile")
-        uninformativeMessage = request.GET.get("uninformativeMessage")
-        infrequentCommit = request.GET.get("infrequentCommit")
+        user_config['avg_commit_day'] = request.GET.get("avg_commit_day")
+        user_config['branch_inactive_day'] = request.GET.get("branch_inactive_day")
+        user_config['workflow'] = request.GET.get("workflow")
+        user_config['max_file'] = request.GET.get("max_file")
 
-        user_config['revertRevert'] = revertRevert
-        user_config['revertMerge'] = revertMerge
-        user_config['unnecessaryFile'] = unnecessaryFile
-        user_config['originMaster'] = originMaster
-        user_config['headBranch'] = headBranch
-        user_config['multipleFile'] = multipleFile
-        user_config['uninformativeMessage'] = uninformativeMessage
-        user_config['infrequentCommit'] = infrequentCommit
+        user_config['revertRevert'] = request.GET.get("revertRevert")
+        user_config['revertMerge'] = request.GET.get("revertMerge")
+        user_config['unnecessaryFile'] = request.GET.get("unnecessaryFile")
+        user_config['originMaster'] = request.GET.get("originMaster")
+        user_config['headBranch'] = request.GET.get("headBranch")
+        user_config['multipleFile'] = request.GET.get("multipleFile")
+        user_config['uninformativeMessage'] = request.GET.get("uninformativeMessage")
+        user_config['infrequentCommit'] = request.GET.get("infrequentCommit")
+        user_config['keepingOldBranches'] = request.GET.get("keepingOldBranches")
 
         return user_config
 
