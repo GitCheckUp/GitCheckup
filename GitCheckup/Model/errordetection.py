@@ -379,7 +379,6 @@ def get_error_detections(irepo, user_conf,filter = "None"):
             error_detections.append(ED_UninformativeCommitMessage(irepo))
         if user_config['infrequentCommit']:
             error_detections.append(ED_InfrequentCommitFrequency(irepo))
-        error_detections.append(ED_MultiplePushInsteadOne(irepo))
 
 
         if user_config['workflow'] == 'cactus':
