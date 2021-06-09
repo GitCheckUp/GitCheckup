@@ -169,8 +169,14 @@ class TestED_MultipleFileChange(unittest.TestCase):
 
     irepo = mockedbranches()
     irepo.addCommit()
-    irepo.commitList[0].additions = 3
-    irepo.commitList[0].deletions = 3
+    irepo.commitList[0].addFile(".DS_Store")
+    irepo.commitList[0].addFile("file_1")
+    irepo.commitList[0].addFile("file_2")
+    irepo.commitList[0].addFile("file_3")
+    irepo.commitList[0].addFile("file_4")
+    irepo.commitList[0].addFile("file_5")
+
+
 
 
     def test_ED_MultipleFileChange(self):
