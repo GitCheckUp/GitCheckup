@@ -169,34 +169,27 @@ class TestED_MultipleFileChange(unittest.TestCase):
 
     irepo = mockedbranches()
     irepo.addCommit()
-    irepo.commitList[0].addFile(".DS_Store")
+    irepo.commitList[0].addFile("file_0")
     irepo.commitList[0].addFile("file_1")
     irepo.commitList[0].addFile("file_2")
     irepo.commitList[0].addFile("file_3")
-    irepo.commitList[0].addFile("file_4")
-    irepo.commitList[0].addFile("file_5")
-
-
-
-
     def test_ED_MultipleFileChange(self):
 
         GitCheckup.Model.errordetection.user_config['max_file'] = None
 
         b=GitCheckup.Model.errordetection.ED_MultipleFileChange(self.irepo)
-        
-        self.assertEqual(len(b.errorList), 1)
+
+        self.assertEqual(len(b.errorList), 0)
 
     def test_ED_MultipleFileChange_Reverse(self):
-
-        self.irepo.commitList[0].additions = 2
-        self.irepo.commitList[0].deletions = 2
+        self.irepo.commitList[0].addFile("file_4")
+        self.irepo.commitList[0].addFile("file_5")
 
         GitCheckup.Model.errordetection.user_config['max_file'] = None
-        
+
         b=GitCheckup.Model.errordetection.ED_MultipleFileChange(self.irepo)
-        
-        self.assertEqual(len(b.errorList), 0)
+
+        self.assertEqual(len(b.errorList), 1)
 
 class TestED_UninformativeCommitMessage(unittest.TestCase):
 
