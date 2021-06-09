@@ -194,6 +194,7 @@ class Controller():
         user_config['uninformativeMessage'] = request.GET.get("uninformativeMessage")
         user_config['infrequentCommit'] = request.GET.get("infrequentCommit")
         user_config['keepingOldBranches'] = request.GET.get("keepingOldBranches")
+        user_config['orphanBranches'] = request.GET.get("orphanBranches")
 
         return user_config
 

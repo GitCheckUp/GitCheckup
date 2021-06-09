@@ -256,7 +256,7 @@ class ED_KeepingOldBranches(ErrorDetection):
         super().__init__(irepo)
         self.errorId = 8
         self.name = "KeepingOldBranches"
-        self.message = "This warning refers to old branches not being removed. This causes a growing pile of unnecessary data on the repository and can be safely removed."
+        self.message = "This warning refers to old branches not being removed. This causes a growing pile of unnecessary data on the repository and should be removed."
         self.category = "Branching/Tagging"
         self.errorList = []
         self.is_warning = True
@@ -281,14 +281,53 @@ class ED_KeepingOldBranches(ErrorDetection):
                         current_commit = commit
 
                 if ((datetime.datetime.now() - latest_commit_date) > datetime.timedelta(days = inactive_max_days)):
-                    detected_error = IError(error_count, self.errorId, current_commit.committer, current_commit, self.is_warning, branch.name)
+                    detected_error = IError(error_count, self.errorId, current_commit.committer, current_commit, self.is_warning, "(" + branch.name + ")")
                     self.errorList.append(detected_error)
                     error_count += 1
+
+class ED_OphanBranches(ErrorDetection):
+    def __init__(self, irepo):
+        super().__init__(irepo)
+        self.errorId = 9
+        self.name = "OphanBranches"
+        self.message = "This error refers to orphan branches in the repository. It is a better idea to create a different repository than having orphan branches."
+        self.category = "Branching/Tagging"
+        self.errorList = []
+        self.is_warning = False
+
+        self.detect(irepo)
+
+    def detect(self, irepo):
+        error_count = 0
+
+        main_branch = None
+
+        for branch in irepo.branchList:
+            if ("main" in branch.name or "master" in branch.name):
+                main_branch = branch
+                break
+
+        for branch in irepo.branchList:
+            if ("main" not in branch.name and "master" not in branch.name):
+
+                for commit in branch.commitList:
+                    if (len(commit.parents) == 0):
+
+                        first_commit = False
+                        for main_commit in main_branch.commitList:
+                            if (main_commit.sha == commit.sha):
+                                first_commit = True
+                                break
+
+                        if (not first_commit):
+                            detected_error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning, "(" + branch.name + ")")
+                            self.errorList.append(detected_error)
+                            error_count += 1
 
 class ED_CactusMissingTag(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
-        self.errorId = 9
+        self.errorId = 10
         self.name = "CactusMissingTag"
         self.message = "This warning for Cactus Workflow refers to missing tags in the release branch. Untagged commits are possible, but only as bugfixes, otherwise the commit should be tagged."
         self.category = "Cactus Workflow"
@@ -320,7 +359,7 @@ class ED_CactusMissingTag(ErrorDetection):
 class ED_CactusMissingReleaseBranch(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
-        self.errorId = 10
+        self.errorId = 11
         self.name = "CactusMissingReleaseBranch"
         self.message = "This error for Cactus Workflow refers to the release branch not existing. Cactus Workflow requires one main and one release branch in the repository."
         self.category = "Cactus Workflow"
@@ -346,7 +385,7 @@ class ED_CactusMissingReleaseBranch(ErrorDetection):
 class ED_CactusUnnecessaryBranch(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
-        self.errorId = 11
+        self.errorId = 12
         self.name = "CactusUnnecessaryBranch"
         self.message = "This error for Cactus Workflow refers to having other branches in the repository, apart from main/master and release. Remote branches are not allowed in Cactus Workflow, only local branches are allowed."
         self.category = "Cactus Workflow"
@@ -369,7 +408,7 @@ class ED_CactusUnnecessaryBranch(ErrorDetection):
 class ED_CactusMergeIntoMain(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
-        self.errorId = 12
+        self.errorId = 13
         self.name = "CactusMergeIntoMain"
         self.message = "This error for Cactus Workflow refers to merge commits that merge with main/master branch. Cactus Workflow specifies that commits should be cherry-picked, not merged."
         self.category = "Cactus Workflow"
@@ -415,6 +454,8 @@ def get_error_detections(irepo, user_conf,filter = "None"):
             error_detections.append(ED_InfrequentCommitFrequency(irepo))
         if user_config['keepingOldBranches']:
             error_detections.append(ED_KeepingOldBranches(irepo))
+        if user_config['orphanBranches']:
+            error_detections.append(ED_OphanBranches(irepo))
 
 
         if user_config['workflow'] == 'cactus':
