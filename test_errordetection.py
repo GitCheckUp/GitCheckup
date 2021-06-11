@@ -30,7 +30,7 @@ class mockedfile:
 class mockedcommit:
      def __init__(self):
          self.name= ' '
-         self.committer= ' '
+         self.author= ' '
          self.message = ""
          self.files = []
          self.date = 0
@@ -43,7 +43,7 @@ class mockedcommit:
      def addParent(self):
          commit = mockedcommit()
          self.parents.append(commit)
-                
+
 class mockedbranches:
      def __init__(self):
          self.branchList = []
@@ -57,7 +57,7 @@ class mockedbranches:
          commit = mockedcommit()
          self.commitList.append(commit)
 
-         
+
 
 class TestED_RevertMergeCommit(unittest.TestCase):
 
@@ -70,15 +70,15 @@ class TestED_RevertMergeCommit(unittest.TestCase):
 
 
     def test_ED_RevertMergeCommit(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_RevertMergeCommit(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_RevertMergeCommit_Reverse(self):
         self.irepo.commitList.clear()
         b=GitCheckup.Model.errordetection.ED_RevertMergeCommit(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_RevertRevertCommit(unittest.TestCase):
@@ -92,9 +92,9 @@ class TestED_RevertRevertCommit(unittest.TestCase):
 
 
     def test_ED_RevertRevertCommit(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_RevertRevertCommit(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_RevertRevertCommit_Reverse(self):
@@ -102,7 +102,7 @@ class TestED_RevertRevertCommit(unittest.TestCase):
         self.irepo.commitList[0].parents[0].message = "Pattern change"
 
         b=GitCheckup.Model.errordetection.ED_RevertRevertCommit(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_UnnecessaryFiles(unittest.TestCase):
@@ -112,9 +112,9 @@ class TestED_UnnecessaryFiles(unittest.TestCase):
     irepo.commitList[0].addFile(".DS_Store")
 
     def test_ED_UnnecessaryFiles(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_UnnecessaryFiles(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_UnnecessaryFiles_Reverse(self):
@@ -122,7 +122,7 @@ class TestED_UnnecessaryFiles(unittest.TestCase):
         self.irepo.commitList.clear()
 
         b=GitCheckup.Model.errordetection.ED_UnnecessaryFiles(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 
@@ -135,7 +135,7 @@ class TestED_OriginMasterBranchName(unittest.TestCase):
     def test_ED_OriginMasterBranchName(self):
 
         b=GitCheckup.Model.errordetection.ED_OriginMasterBranchName(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_OriginMasterBranchName_Reverse(self):
@@ -143,7 +143,7 @@ class TestED_OriginMasterBranchName(unittest.TestCase):
         self.irepo.branchList.clear()
 
         b=GitCheckup.Model.errordetection.ED_OriginMasterBranchName(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_HeadBranchName(unittest.TestCase):
@@ -155,15 +155,15 @@ class TestED_HeadBranchName(unittest.TestCase):
     def test_ED_HeadBranchName(self):
 
         b=GitCheckup.Model.errordetection.ED_HeadBranchName(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_HeadBranchName_Reverse(self):
 
         self.irepo.branchList.clear()
 
         b=GitCheckup.Model.errordetection.ED_HeadBranchName(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_MultipleFileChange(unittest.TestCase):
@@ -205,17 +205,17 @@ class TestED_UninformativeCommitMessage(unittest.TestCase):
 
 
     def test_ED_UninformativeCommitMessage(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_UninformativeCommitMessage(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_UninformativeCommitMessage_Reverse(self):
 
         self.irepo.commitList[0].message = "Changed the pattern of a workflow in code"
-        
+
         b=GitCheckup.Model.errordetection.ED_UninformativeCommitMessage(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_InfrequentCommitFrequency(unittest.TestCase):
@@ -232,15 +232,15 @@ class TestED_InfrequentCommitFrequency(unittest.TestCase):
         GitCheckup.Model.errordetection.user_config['avg_commit_day'] = "3"
 
         b=GitCheckup.Model.errordetection.ED_InfrequentCommitFrequency(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_InfrequentCommitFrequency_Reverse(self):
 
         GitCheckup.Model.errordetection.user_config['avg_commit_day'] = "5"
-        
+
         b=GitCheckup.Model.errordetection.ED_InfrequentCommitFrequency(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_KeepingOldBranches(unittest.TestCase):
@@ -305,17 +305,17 @@ class TestED_CactusMissingTag(unittest.TestCase):
     irepo.branchList[0].commitList[0].sha = "234567"
 
     def test_ED_CactusMissingTag(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_CactusMissingTag(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_CactusMissingTag_Reverse(self):
-        
+
         self.irepo.branchList[0].commitList[0].sha = "123456"
 
         b=GitCheckup.Model.errordetection.ED_CactusMissingTag(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_CactusMissingReleaseBranch(unittest.TestCase):
@@ -325,18 +325,18 @@ class TestED_CactusMissingReleaseBranch(unittest.TestCase):
     irepo.branchList[0].commitList.append(mockedcommit())
 
     def test_ED_CactusMissingReleaseBranch(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_CactusMissingReleaseBranch(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
 
     def test_ED_CactusMissingReleaseBranch_Reverse(self):
-        
+
         self.irepo.addBranch("release")
         self.irepo.branchList[1].commitList.append(mockedcommit())
 
         b=GitCheckup.Model.errordetection.ED_CactusMissingReleaseBranch(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_CactusUnnecessaryBranch(unittest.TestCase):
@@ -348,27 +348,27 @@ class TestED_CactusUnnecessaryBranch(unittest.TestCase):
     irepo.branchList[0].commitList.append(mockedcommit())
 
     def test_ED_CactusUnnecessaryBranch(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_CactusUnnecessaryBranch(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_CactusUnnecessaryBranch_Reverse(self):
-        
+
         self.irepo.branchList.clear()
         self.irepo.addBranch("release")
         self.irepo.addBranch("release")
         self.irepo.addBranch("main")
 
         b=GitCheckup.Model.errordetection.ED_CactusUnnecessaryBranch(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 
 
 class TestED_CactusMergeIntoMain(unittest.TestCase):
 
-    
+
 
     irepo = mockedbranches()
     irepo.addBranch("main")
@@ -376,17 +376,17 @@ class TestED_CactusMergeIntoMain(unittest.TestCase):
     irepo.branchList[0].commitList[0].message = "Merged to Pattern_v2 branch"
 
     def test_ED_CactusMergeIntoMain(self):
-        
+
         b=GitCheckup.Model.errordetection.ED_CactusMergeIntoMain(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_CactusMergeIntoMain_Reverse(self):
-        
+
         self.irepo.branchList[0].commitList[0].message = "Changed the pattern of a workflow in code"
 
         b=GitCheckup.Model.errordetection.ED_CactusMergeIntoMain(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
 

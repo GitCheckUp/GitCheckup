@@ -4,6 +4,8 @@ from django.conf import settings
 from .utils import get_bar_plot, get_pie_plot
 import sys
 import time
+import datetime
+import requests
 
 sys.path.append(".")
 
@@ -104,7 +106,7 @@ class Controller():
                 commit = {}
 
                 #commit['author'] = error.commit.author
-                #commit['committer'] = error.commit.committer
+                #commit['author'] = error.commit.author
                 commit['additions'] = error.commit.additions
                 commit['deletions'] = error.commit.deletions
                 commit['changes'] = error.commit.changes
@@ -203,7 +205,7 @@ class Controller():
         stats_dict['num_commits'] = int(len(model.irepo.commitList))
         stats_dict['num_branches'] = int(len(model.irepo.branchList))
         stats_dict['num_tags'] = int(len(model.irepo.tagList))
-        stats_dict['num_users']= int(self.get_user_count())
+        stats_dict['num_users']= int(len(model.irepo.authorList))
         stats_dict['repoName']= str(self.repoName)
         return stats_dict
 
@@ -232,6 +234,12 @@ def home(request):
                 data = config.Demo_Data
                 data['visual'] = controller.display_visual(data['data'])
         elif (repoName != "" and repoName != None):
+            start = datetime.datetime.now()
+            r = requests.get("https://api.github.com/repos/GitCheckup/GitCheckup/commits", auth=('kaan-ozkan', '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'))
+            print(r.status_code)
+            print(len(r.json()))
+            end = datetime.datetime.now()
+            print(end - start)
             errorDetections = controller.analyze_repo(repoName,user_config)
             model.errorDetections = errorDetections
 

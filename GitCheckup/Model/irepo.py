@@ -8,6 +8,7 @@ class IRepo:
         self.commitList = []
         self.commitDict = {}
         self.tagList = []
+        self.authorList = []
 
         try:
             master_branch = repo.get_branch("master")
@@ -37,6 +38,8 @@ class IRepo:
         while frontier.__len__():
             current_commit = frontier.pop(0)
             internal_commit = icommit.getCommit(current_commit)
+            if (internal_commit.author not in self.authorList):
+                self.authorList.append(internal_commit.author)
             internal_commit.set_parents(current_commit)
 
             if (internal_commit.sha not in self.commitDict):

@@ -52,7 +52,7 @@ class ED_RevertMergeCommit(ErrorDetection):
 
                 # if reverted commit has more than 1 parents, it is a merge commit, poor practice detected
                 if (len(reverted_commit.parents) > 1):
-                    error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                    error = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
                     self.errorList.append(error)
                     error_count += 1
 
@@ -86,7 +86,7 @@ class ED_RevertRevertCommit(ErrorDetection):
 
                     # if parent is also a revert then error occurs
                     if (re.search("Revert \"", parent_message) and re.search("This reverts commit", parent_message)):
-                        error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        error = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
                         self.errorList.append(error)
                         error_count += 1
 
@@ -110,7 +110,7 @@ class ED_UnnecessaryFiles(ErrorDetection):
         for c in irepo.commitList:
             for k in c.files:
                 if any(re.compile(regex).match(k.name) for regex in Config.unnecessary_files_regex):
-                    error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, '('+k.name+')')
+                    error_detected = IError(error_count, self.errorId, c.author, c, self.is_warning, '('+k.name+')')
                     self.errorList.append(error_detected)
                     error_count += 1
 
@@ -130,7 +130,7 @@ class ED_OriginMasterBranchName(ErrorDetection):
         error_count = 0
         for e in irepo.branchList:
             if e.name == ("origin/origin/master" or "origin/origin/main"):
-                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
+                detected_error = IError(error_count, self.errorId, e.headCommit.author, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
 
@@ -151,7 +151,7 @@ class ED_HeadBranchName(ErrorDetection):
         error_count = 0
         for e in irepo.branchList:
             if re.findall("/Head*|/head*|/HEAD*", e.name):
-                detected_error = IError(error_count, self.errorId, e.headCommit.committer, e.headCommit, self.is_warning)
+                detected_error = IError(error_count, self.errorId, e.headCommit.author, e.headCommit, self.is_warning)
                 self.errorList.append(detected_error)
                 error_count += 1
 
@@ -178,7 +178,7 @@ class ED_MultipleFileChange(ErrorDetection):
             allowedchange = int(user_config['max_file'])
         for c in irepo.commitList:
             if(len(c.files) >= allowedchange):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(len(c.files)) + " file changes)")
+                error_detected = IError(error_count, self.errorId, c.author, c, self.is_warning, "(" + str(len(c.files)) + " file changes)")
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -201,7 +201,7 @@ class ED_UninformativeCommitMessage(ErrorDetection):
         error_count = 0
         for c in irepo.commitList:
             if(c.message.count(' ') <3):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning)
+                error_detected = IError(error_count, self.errorId, c.author, c, self.is_warning)
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -247,7 +247,7 @@ class ED_InfrequentCommitFrequency(ErrorDetection):
             lastCommit = c
 
             if (timeBetween > tripleTime):
-                error_detected = IError(error_count, self.errorId, c.committer, c, self.is_warning, "(" + str(timeBetween) + " days)")
+                error_detected = IError(error_count, self.errorId, c.author, c, self.is_warning, "(" + str(timeBetween) + " days)")
                 self.errorList.append(error_detected)
                 error_count += 1
 
@@ -281,7 +281,7 @@ class ED_KeepingOldBranches(ErrorDetection):
                         current_commit = commit
 
                 if ((datetime.datetime.now() - latest_commit_date) > datetime.timedelta(days = inactive_max_days)):
-                    detected_error = IError(error_count, self.errorId, current_commit.committer, current_commit, self.is_warning, "(" + branch.name + ")")
+                    detected_error = IError(error_count, self.errorId, current_commit.author, current_commit, self.is_warning, "(" + branch.name + ")")
                     self.errorList.append(detected_error)
                     error_count += 1
 
@@ -320,7 +320,7 @@ class ED_OrphanBranches(ErrorDetection):
                                 break
 
                         if (not first_commit):
-                            detected_error = IError(error_count, self.errorId, commit.committer, commit, self.is_warning, "(" + branch.name + ")")
+                            detected_error = IError(error_count, self.errorId, commit.author, commit, self.is_warning, "(" + branch.name + ")")
                             self.errorList.append(detected_error)
                             error_count += 1
 
@@ -350,7 +350,7 @@ class ED_CactusMissingTag(ErrorDetection):
                 commits = branch.commitList
                 for commit in commits:
                     if (commit.sha not in tag_commits_dict):
-                        error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        error_detected = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
                         self.errorList.append(error_detected)
                         error_count += 1
 
@@ -378,7 +378,7 @@ class ED_CactusMissingReleaseBranch(ErrorDetection):
 
         commit = irepo.branchList[0].commitList[0]
         if (not found_release):
-            error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+            error_detected = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
             self.errorList.append(error_detected)
             error_count += 1
 
@@ -401,7 +401,7 @@ class ED_CactusUnnecessaryBranch(ErrorDetection):
             for branch in irepo.branchList:
                 if ("release" not in branch.name and "main" not in branch.name and "master" not in branch.name):
                     commit = branch.headCommit
-                    error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                    error_detected = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
                     self.errorList.append(error_detected)
                     error_count += 1
 
@@ -426,7 +426,7 @@ class ED_CactusMergeIntoMain(ErrorDetection):
 
                 for commit in branch.commitList:
                     if (commit.message.startswith("Merge")):
-                        error_detected = IError(error_count, self.errorId, commit.committer, commit, self.is_warning)
+                        error_detected = IError(error_count, self.errorId, commit.author, commit, self.is_warning)
                         self.errorList.append(error_detected)
                         error_count += 1
 
