@@ -289,7 +289,7 @@ class ED_OphanBranches(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
         self.errorId = 9
-        self.name = "OphanBranches"
+        self.name = "OrphanBranches"
         self.message = "This error refers to orphan branches in the repository. It is a better idea to create a different repository than having orphan branches."
         self.category = "Branching/Tagging"
         self.errorList = []

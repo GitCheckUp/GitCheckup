@@ -43,6 +43,13 @@ def get_bar_plot(values, labels, title, xlabel = None):
     return graph
 
 def get_pie_plot(values, labels, title, xlabel = None):
+    values = list(values)
+    labels = list(labels)
+    for i in range(len(values) -1, -1, -1):
+        if (values[i] == 0):
+            values.pop(i)
+            labels.pop(i)
+
     plt.switch_backend('AGG')
     plt.figure(figsize = (10, 6))
     plt.pie(values, labels = labels, shadow = True, autopct='%1.0f%%')
