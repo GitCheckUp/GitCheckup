@@ -256,18 +256,18 @@ class TestED_KeepingOldBranches(unittest.TestCase):
         GitCheckup.Model.errordetection.user_config['branch_inactive_day'] = None
 
         b=GitCheckup.Model.errordetection.ED_KeepingOldBranches(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 1)
-    
+
     def test_ED_KeepingOldBranches_Reverse(self):
         self.irepo.branchList[0].commitList[0].date = datetime.datetime.now()
         GitCheckup.Model.errordetection.user_config['branch_inactive_day'] = None
-        
+
         b=GitCheckup.Model.errordetection.ED_KeepingOldBranches(self.irepo)
-        
+
         self.assertEqual(len(b.errorList), 0)
 
-class TestED_OphanBranches(unittest.TestCase):
+class TestED_OrphanBranches(unittest.TestCase):
 
     irepo = mockedbranches()
     irepo.addBranch("main")
@@ -275,22 +275,22 @@ class TestED_OphanBranches(unittest.TestCase):
     irepo.branchList[1].commitList.append(mockedcommit())
 
 
-    def test_ED_OphanBranches(self):
+    def test_ED_OrphanBranches(self):
 
-        b=GitCheckup.Model.errordetection.ED_OphanBranches(self.irepo)
-        
+        b=GitCheckup.Model.errordetection.ED_OrphanBranches(self.irepo)
+
         self.assertEqual(len(b.errorList), 1)
-    
-    def test_ED_OphanBranches_Reverse(self):
+
+    def test_ED_OrphanBranches_Reverse(self):
 
         self.irepo.branchList.clear()
         self.irepo.addBranch("main")
         self.irepo.addBranch("Pattern change")
         self.irepo.branchList[1].commitList.append(mockedcommit())
         self.irepo.branchList[1].commitList[0].addParent()
-        
-        b=GitCheckup.Model.errordetection.ED_OphanBranches(self.irepo)
-        
+
+        b=GitCheckup.Model.errordetection.ED_OrphanBranches(self.irepo)
+
         self.assertEqual(len(b.errorList), 0)
 
 class TestED_CactusMissingTag(unittest.TestCase):
