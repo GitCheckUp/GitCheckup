@@ -285,7 +285,7 @@ class ED_KeepingOldBranches(ErrorDetection):
                     self.errorList.append(detected_error)
                     error_count += 1
 
-class ED_OphanBranches(ErrorDetection):
+class ED_OrphanBranches(ErrorDetection):
     def __init__(self, irepo):
         super().__init__(irepo)
         self.errorId = 9
@@ -455,7 +455,7 @@ def get_error_detections(irepo, user_conf,filter = "None"):
         if user_config['keepingOldBranches']:
             error_detections.append(ED_KeepingOldBranches(irepo))
         if user_config['orphanBranches']:
-            error_detections.append(ED_OphanBranches(irepo))
+            error_detections.append(ED_OrphanBranches(irepo))
 
 
         if user_config['workflow'] == 'cactus':
