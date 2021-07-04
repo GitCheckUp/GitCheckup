@@ -5,7 +5,6 @@ from .utils import get_bar_plot, get_pie_plot
 import sys
 import time
 import datetime
-import requests
 
 sys.path.append(".")
 
@@ -234,12 +233,6 @@ def home(request):
                 data = config.Demo_Data
                 data['visual'] = controller.display_visual(data['data'])
         elif (repoName != "" and repoName != None):
-            start = datetime.datetime.now()
-            r = requests.get("https://api.github.com/repos/GitCheckup/GitCheckup/commits", auth=('kaan-ozkan', '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'))
-            print(r.status_code)
-            print(len(r.json()))
-            end = datetime.datetime.now()
-            print(end - start)
             errorDetections = controller.analyze_repo(repoName,user_config)
             model.errorDetections = errorDetections
 
