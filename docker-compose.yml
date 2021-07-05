@@ -1,0 +1,12 @@
+version: "3.0"
+services: 
+  gitcheckup:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8008
+    ports:
+    - "8008:8008"
+    container_name: GitCheckup
+    restart: unless-stopped
+    tty: true
+
+    #Port can be changed from this file.

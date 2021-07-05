@@ -27,12 +27,8 @@ SECRET_KEY = 'ko6lx%*+*qmsd(l@c5cb(ms0ui2-yjfn9#q0n%&(ues#!jzaml'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-'https://gitcheckup-test.herokuapp.com',
-'https://gitcheckup.herokuapp.com',
-'localhost',
-'127.0.0.1'
-]
+
+ALLOWED_HOSTS = ['*'] #For docker container. Development only.
 
 # Application definition
 
