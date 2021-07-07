@@ -5,11 +5,12 @@ LABEL description="GitCheckup is an open-source project."
 
 ENV PYTHONBUFFERED=1
 
-#Install dependencies.
+# Install dependencies.
+# whitenoise and gunicorn is needed for Heroku environment.
 RUN apt update
-RUN pip install django matplotlib pygithub
+RUN pip install django matplotlib pygithub whitenoise gunicorn
 
-#Copy the source code.
+# Copy the source code.
 RUN mkdir /gitcheckup && cd /gitcheckup
 WORKDIR /gitcheckup
 ADD GitCheckup /gitcheckup/GitCheckup
