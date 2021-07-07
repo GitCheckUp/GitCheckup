@@ -1,1 +1,1 @@
-web: gunicorn GitCheckup.wsgi:application --log-file - --log-level debug
+web: gunicorn GitCheckup.wsgi:application --preload 
