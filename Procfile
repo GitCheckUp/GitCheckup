@@ -1,1 +1,1 @@
-web: gunicorn GitCheckup.wsgi:application --preload --timeout 0 --graceful-timeout 5000 
+web: gunicorn GitCheckup.wsgi:application --preload --timeout 5000
