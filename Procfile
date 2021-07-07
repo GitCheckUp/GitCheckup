@@ -1,3 +1,3 @@
-web: gunicorn GitCheckup.wsgi:application --log-file - --log-level debug
+web: gunicorn GitCheckup.wsgi --log-file - --log-level debug
 python manage.py collectstatic --noinput
 manage.py migrate
