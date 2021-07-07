@@ -28,7 +28,7 @@ SECRET_KEY = 'ko6lx%*+*qmsd(l@c5cb(ms0ui2-yjfn9#q0n%&(ues#!jzaml'
 DEBUG = True
 
 
-ALLOWED_HOSTS = [".herokuapp.com"] #For docker container. Development only.
+ALLOWED_HOSTS = [".herokuapp.com",".github.io","*"] #For docker container. Development only.
 
 # Application definition
 
