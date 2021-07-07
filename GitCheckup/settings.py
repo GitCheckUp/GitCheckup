@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ko6lx%*+*qmsd(l@c5cb(ms0ui2-yjfn9#q0n%&(ues#!jzaml'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = [".herokuapp.com"] #For docker container. Development only.
