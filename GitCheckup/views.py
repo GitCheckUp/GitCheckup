@@ -64,6 +64,8 @@ class Controller():
 
         try:
             repo = self.get_repository(repo_address)
+            if (repo == None):
+                return
         except:
             #self.view.display_error_repoMissing()
             return
