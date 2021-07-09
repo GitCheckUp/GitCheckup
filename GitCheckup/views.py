@@ -249,7 +249,7 @@ def home(request):
             data['visual'] = controller.display_visual(data['data'])
             data['stats'] = controller.show_stats()
         else:
-            data['repo_name'] = "GitCheckup/GitCheckup"
+            data['repo_name'] = "GitCheckup/demo"
 
     return render(request, 'GitCheckup/index.html', data)
 
