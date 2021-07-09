@@ -16,7 +16,7 @@ from github import Github
 class Controller():
     def __init__(self, model):
         # Our GitHub token for accessing the GitHub API
-        self.git_access = [Github("bd0d1460b6fd6e9edc00926b1f6a2b9c8b8339f0"), Github("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"), Github("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")]
+        self.git_access = [Github("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"), Github("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"), Github("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")]
         self.model = model
         self.repoName = None
 
