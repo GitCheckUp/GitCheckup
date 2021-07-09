@@ -236,3 +236,7 @@ fabric.properties
 .idea/modules.xml
 .idea/vcs.xml
 .idea/.name
+
+# Secret Settings
+secret_settings.py
+secret_key.py

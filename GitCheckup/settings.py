@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import random
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,11 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ko6lx%*+*qmsd(l@c5cb(ms0ui2-yjfn9#q0n%&(ues#!jzaml'
+secret_key_file = "secret_key.py"
+if not os.path.exists(secret_key_file):
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    key = ''.join(random.SystemRandom().choice(chars) for _ in range(50))
+    secret_key = open("secret_key.py", "w")
+    secret_key.write("key = '%s'" % (key,))
+    secret_key.close()
+import secret_key
+SECRET_KEY = secret_key.key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#'ko6lx%*+*qmsd(l@c5cb(ms0ui2-yjfn9#q0n%&(ues#!jzaml'
 
 ALLOWED_HOSTS = [".herokuapp.com",".github.io","*"] #For docker container. Development only.
 
