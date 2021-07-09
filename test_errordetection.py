@@ -129,7 +129,7 @@ class TestED_UnnecessaryFiles(unittest.TestCase):
 class TestED_OriginMasterBranchName(unittest.TestCase):
 
     irepo = mockedbranches()
-    irepo.addBranch("origin/origin/master")
+    irepo.addBranch("origin/master")
     irepo.addBranch("origin/pattern_change")
 
     def test_ED_OriginMasterBranchName(self):
