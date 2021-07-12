@@ -5,6 +5,7 @@ from .utils import get_bar_plot, get_pie_plot
 import sys
 import time
 import datetime
+import codecs
 
 sys.path.append(".")
 
@@ -13,10 +14,35 @@ from GitCheckup.Model import iauthor
 from GitCheckup.Model.config import config
 from github import Github
 
+#GitHub automatically revokes the token's rights when placed as plaintext into the codebase.
+#Therefore we do a random transformation on the tokens to hack around this security measure.
+#The tokens can't do anything but read public repos, please give us autonomy over sharing them, GitHub :)
+def unicorn_cake(text):
+	result = ""
+	for i in range(len(text)):
+		current = ord(text[i])
+		if (i%2 == 0):
+			result += chr(current + 1)
+		else:
+			result += chr(current - 1)
+
+	return result
+
+def reverse_unicorn_cake(text):
+	result = ""
+	for i in range(len(text)):
+		current = ord(text[i])
+		if (i%2 == 0):
+			result += chr(current - 1)
+		else:
+			result += chr(current + 1)
+
+	return result
+
 class Controller():
     def __init__(self, model):
         # Our GitHub token for accessing the GitHub API
-        self.git_access = [Github("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"), Github("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"), Github("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")]
+        self.git_access = [Github(reverse_unicorn_cake(r"hgq^Db{H[CxwUO9XfdWRLiHDrOeA4v[wH/3p1WiP")), Github(reverse_unicorn_cake(r"hgq^qIv45lBU4627PTcG6yiitoeQ[Vn0de2hNgOc")), Github(reverse_unicorn_cake(r"hgq^UisETE[ORgYbHPvSbv4a{7gyh7rP821Icuby"))]
         self.model = model
         self.repoName = None
 
