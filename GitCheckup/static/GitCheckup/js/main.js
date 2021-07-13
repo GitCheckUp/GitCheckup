@@ -1,7 +1,6 @@
 $(document).ready(function(){
     "use strict";
 
-    console.log(document.getElementById("state").value)
     if(document.getElementById("state").value == true){
       $('#se-pre-con').display = "-moz-flex";
       $('#se-pre-con').display = "-webkit-flex";
