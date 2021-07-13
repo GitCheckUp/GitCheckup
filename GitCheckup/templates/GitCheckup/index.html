@@ -46,8 +46,18 @@
         </style>
     </head>
     <body>
+        <input type="hidden" id="state" name="variable" value="{{ state }}">
+
         <!-- Page Loading -->
-        <div class="se-pre-con"></div>
+        {% if state %}
+          <div id="se-pre-con" style="display:flex"><span class="se-pre-con-txt">
+            Analyzing the repository... Please wait.<br><br><br><br>
+          </span></div>
+        {% else %}
+          <div id="se-pre-con" style="display:none;"><span class="se-pre-con-txt">
+            Analyzing the repository... Please wait.<br><br><br><br>
+          </span></div>
+        {% endif %}
 
         <!-- ========== Start Navbar ========== -->
         <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
@@ -106,10 +116,11 @@
 
         <!-- ========== Start Get Started ========== -->
         <section class="get-started" id="get-started">
-            <p class="p-17-w mb-30">Enter the repository you want to analyze for errors and poor practices.</p>
+            <p class="p-17-w mb-10">Enter the repository you want to analyze for errors and poor practices.</p>
+            <p class="p-warn-txt mb-10">Please note that larger repositories may take a while to analyze.</p>
         	<form action="#" method = "get">
   			<input type="text" id="repo" name="repo" style="min-width:400px;" value={{repo_name | escape}}>
-  			<input type="submit" value="Analyze" alt="Analyze" class="btn-white d-inline-block">
+  			<input type="submit" value="Analyze" alt="Analyze" class="btn-white d-inline-block" onclick="onSendForm()">
                 <br>
                 <div class="config" id="config">
 			<button type="button" class="collapsible" alt="Configuration"><i class="fas fa-cog"></i> Configuration</button>

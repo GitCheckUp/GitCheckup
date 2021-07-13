@@ -34,6 +34,7 @@ body {
 #config .collapsible{
     background: none;
     text-align: center;
+    font-size: 18px;
 }
 
 #config .content{
@@ -172,14 +173,17 @@ ul.ascii > li > ul > li:last-child > ul > li:last-child > ul > li:last-child > u
 .h2 { font-size: 30px; color: #3f4451; font-weight: 600; line-height: 40px; margin: 0; padding: 0;}
 .h2-w { font-size: 25px; font-weight: 700; margin: 0; padding: 0; color: #ffffff;}
 .p-17-w { font-size: 17px; font-weight: 400; margin: 0; padding: 0; color: #ffffff;}
+.p-19-w { font-size: 19px; font-weight: 400; margin: 0; padding: 0; color: #ffffff;}
+.p-warn-txt { font-size: 17px; font-weight: 400; margin: 0; padding: 0; color: #daa;}
 .h3-bk { font-size: 17px; font-weight: 700; color: #222d39; margin: 0; padding: 0;}
 .h3-blk-sb { font-size: 18px; font-weight: 600; color: #222d39; margin: 0; padding: 0;}
-.p-w { font-size: 15px; font-weight: 400; color: #ffffff; line-height: 30px; margin: 0; padding: 0;}
+.p-w { font-size: 18px; font-weight: 400; color: #ffffff; line-height: 30px; margin: 0; padding: 0;}
 .p-bk { font-size: 15px; font-weight: 400; color: #677294; line-height: 30px; margin: 0; padding: 0;}
 .span-sm { font-size: 14px; font-weight: 300; color: #677294; margin: 0; padding: 0;}
 /* Padding & Margin */
 .mb-20 { margin-bottom: 20px;}
 .mb-30 { margin-bottom: 30px;}
+.mb-10 { margin-bottom: 10px;}
 .mt-60 { margin-top: 60px;}
 .mt-25 { margin-top: 25px;}
 .m-section-120 {margin: 120px 0;}
@@ -197,9 +201,9 @@ ul.ascii > li > ul > li:last-child > ul > li:last-child > ul > li:last-child > u
     background: #ffffff;
     padding: 12px 35px;
     border-radius: 50px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 400;
-    color: #5040a0;
+    color: #004;
     text-decoration: none;
     transition: all .4s ease-in-out;
 }
@@ -254,7 +258,7 @@ a {
 }
 .navbar .nav-item .nav-link {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     margin-left: 30px;
 }
@@ -292,8 +296,7 @@ a {
     background: #24292e;
     background-size: cover;
     text-align: center;
-    padding: 120px 0;
-
+    padding: 20px 0;
 }
 .get-started .repo {
 
@@ -636,7 +639,12 @@ opacity: .99;
     left: 100px;
     top: 0;
 }
-.se-pre-con {
+#se-pre-con {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    align-items: center;
     position: fixed;
     left: 0;
     top: 0;
@@ -644,6 +652,14 @@ opacity: .99;
     height: 100%;
     z-index: 9999;
     background: url("../img/loader/preloader.svg") center no-repeat #fff;
+}
+
+#se-pre-con .se-pre-con-txt {
+  font-size: 2rem;
+  margin: auto;
+  text-align: center;
+  color:#005;
+  top:50%;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
