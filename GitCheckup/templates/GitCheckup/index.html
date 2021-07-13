@@ -18,6 +18,7 @@
         <!-- Main CSS -->
         {% load static %}
         <link rel = "stylesheet" href="{% static 'GitCheckup/css/main.css' %}">
+        <link rel="shortcut icon" href="{% static "GitCheckup/img/favicon.ico" %}">
         <style>
           .collapsible {
           background-color: #777;
@@ -64,7 +65,7 @@
             <div class="container">
                 <a class="navbar-brand" href="#">
                   {% load static %}
-                  <img src="{% static 'GitCheckup/img/logo.png' %}" alt="">
+                  <img src="{% static 'GitCheckup/img/gitcheckup.png' %}" alt="">
                   GitCheckup
                 </a>
                 <button
@@ -275,7 +276,7 @@
             <footer class="footer">
                     <div class="container text-center text-white">
                         {% load static %}
-                        <img src="{% static 'GitCheckup/img/fork.png' %}" alt="">
+                        <img src="{% static 'GitCheckup/img/gitcheckup.png' %}" alt="">
                         <h2>GitCheckup <i class="far fa-copyright"></i> All Rights Reserved.</h2>
                     </div>
                 </footer>
